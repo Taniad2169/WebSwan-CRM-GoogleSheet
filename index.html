@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSwan CRM & Task Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ...styles unchanged, same as previous version... */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .header {
+            background-color: #2F3746;
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .target-widget {
+            background: #14395d;
+            border-radius: 22px 38px 33px 33px/38px 38px 33px 33px;
+            width: 85px;
+            height: 75px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 10px 0 0 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.10);
+            z-index: 10;
+        }
+        .target-btn {
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            line-height:1;
+            cursor: pointer;
+            margin-bottom: 3px;
+        }
+        .target-count {
+            color:#fff;
+            font-size:1.1rem;
+            font-weight: bold;
+            margin-left: 7px;
+        }
+        .target-reset-btn {
+            background: #e5f1fa;
+            border: none;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            color:#14395d;
+            font-weight: bold;
+            width: 34px;
+            height: 27px;
+            margin-top:7px;
+            margin-left: 23px;
+            cursor: pointer;
+        }
+        .footer {
+            background-color: #2F3746;
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .footer-laptop-container {
+            width: 150px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        .footer-verse {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .footer-countdown-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-countdown-label {
+            font-size: 1rem;
+        }
+        .footer-countdown-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #4B5563;
+            background-color: #374151;
+            color: white;
+        }
+        .footer-countdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 5px 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .footer-lock-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        #countdownDisplay {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+        }
+        #countdown {
+            color: red;
+            font-size: 20px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4B5563;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        .form-row > .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="mainApp" class="container">
+    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+        <div class="header">
+            <!-- Target Counter Widget -->
+            <div class="target-widget">
+                <button id="targetBtn" class="target-btn">
+                    <span style="color:#ff2222;">🎯</span>
+                </button>
+                <div id="targetCount" class="target-count">0</div>
+                <button id="targetResetBtn" class="target-reset-btn">
+                    0
+                </button>
+            </div>
+            <h1 class="text-4xl font-bold">Free Custom Website Demo—Here's What I Can Do for You:</h1>
+            <ul class="info-box mb-4 text-sm md:text-base">
+                <li>Show you a custom website demo, so you can see how professional your online presence could be.</li>
+                <li>Do a free analysis of your current website to identify why it may not be getting you business.</li>
+                <li>Create a custom calendar and task management system for your appointments, so staying organized is easy and stress-free.</li>
+            </ul>
+            <p class="slogan mt-4 text-center">No pressure, no obligation—if you like what you see, we can talk about working together. If not, you won't pay a thing.</p>
+            <p class="mt-4 text-center">Let's make your business shine online—because a professional website isn't just a page, it's your first impression, your credibility, and your opportunity to attract the right clients.</p>
+        </div>
+        <div id="countdownDisplay">Submissions left: <span id="countdown">100</span></div>
+
+        <div id="frontOffice" class="content-section">
+            <button id="toggleViewBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 mt-4">Go to Back Office</button>
+
+            <h2 class="text-2xl font-bold mb-6 mt-10">Lead/Application Information</h2>
+            <form id="leadForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state">
+                            <option value="">Select State</option>
+                            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                            <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                            <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                            <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                            <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                            <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                            <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+                            <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                            <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                            <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                            <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                            <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                            <option>Wisconsin</option><option>Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" name="website" placeholder="https://www.">
+                    </div>
+                    <div class="form-group">
+                        <label for="hasWebsite">Do you have a website?</label>
+                        <select id="hasWebsite" name="hasWebsite">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="industry">Type of Industry</label>
+                        <select id="industry" name="industry">
+                            <option value="">Select Industry</option>
+                            <option>Doctor</option>
+                            <option>Lawyer</option>
+                            <option>Real Estate Broker</option>
+                            <option>Mortgage Broker</option>
+                            <option>Chiropractor</option>
+                            <option>Cosmetic/Plastic Surgeon</option>
+                            <option>Solar Company</option>
+                            <option>Restaurant</option>
+                            <option>Beautician/Hairdresser/Barber</option>
+                            <option>High-Tech</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="otherIndustry">If Other, Describe</label>
+                        <input type="text" id="otherIndustry" name="otherIndustry" maxlength="120" placeholder="Describe your industry (20 words max)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="howlonginbusiness">How long in business?</label>
+                        <select id="howlonginbusiness" name="howlonginbusiness">
+                            <option value="">Select</option>
+                            <option value="0-6 months">Start up to 6 months</option>
+                            <option value="6-12 months">6-12 months</option>
+                            <option value="1-2 years">1-2 years</option>
+                            <option value="2-5 years">2-5 years</option>
+                            <option value="5-10 years">5-10 years</option>
+                            <option value="10+ years">10 years+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeofbusiness">Type of Business (e.g. S-Corp, LLC, Sole Prop)</label>
+                        <input type="text" id="typeofbusiness" name="typeofbusiness">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceinterestedin">Service Interested In</label>
+                        <select id="serviceinterestedin" name="serviceinterestedin">
+                            <option value="">Select Service</option>
+                            <option>Free Demo</option>
+                            <option>Website</option>
+                            <option>Reputation Management</option>
+                            <option>Ad Campaign</option>
+                            <option>Video/Script/Social Media</option>
+                            <option>SEO</option>
+                            <option>Calendar</option>
+                            <option>Form</option>
+                            <option>Lead Generating Form</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="besttime">Best Time to Contact</label>
+                        <input type="text" id="besttime" name="besttime" placeholder="e.g. 1-3pm, Mornings, etc.">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Anything else we should know?"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">Submit Application</button>
+            </form>
+        </div>
+        <div class="footer" id="mainFooter">
+            <div class="footer-laptop-container">
+                <p>Custom Web Design</p>
+                <img src="https://via.placeholder.com/100x60.png?text=Animated+Laptop" alt="Animated laptop placeholder" style="width:100px; height:60px;">
+            </div>
+            <div class="footer-verse">
+                I can do all things through Christ Who strengthen me Philippians 4:13
+            </div>
+            <div class="footer-countdown-section">
+                <div class="footer-countdown-label">Countdown:</div>
+                <select id="countdownSelect" class="footer-countdown-select">
+                </select>
+                <div class="footer-countdown-value" id="countdownValue">100</div>
+            </div>
+            <button class="footer-lock-btn" id="backOfficeLock" title="Login to Back Office">
+                <span role="img" aria-label="lock">🔒</span>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    // Target Counter JavaScript
+    let targetCount = 0;
+    const targetBtn = document.getElementById('targetBtn');
+    const targetResetBtn = document.getElementById('targetResetBtn');
+    const targetCountDisplay = document.getElementById('targetCount');
+
+    function updateTargetDisplay() {
+        targetCountDisplay.textContent = targetCount;
+    }
+
+    targetBtn.addEventListener('click', () => {
+        if (targetCount < 200) {
+            targetCount++;
+            updateTargetDisplay();
+        }
+    });
+
+    targetResetBtn.addEventListener('click', () => {
+        targetCount = 0;
+        updateTargetDisplay();
+    });
+
+    updateTargetDisplay();
+</script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBarSNp6ml5UeYAPylj4QEOmmyU4GFuJuU",
+    authDomain: "crmleads-3f1a7.firebaseapp.com",
+    projectId: "crmleads-3f1a7",
+    storageBucket: "crmleads-3f1a7.firebasestorage.app",
+    messagingSenderId: "317614128849",
+    appId: "1:317614128849:web:86be5c842c0f0e84768ff0",
+    measurementId: "G-MMJK40SY3N"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
+  // Submit form and save to Firestore
+  document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      let data = {};
+      for (let [key, value] of formData.entries()) {
+          data[key] = value;
+      }
+      try {
+          await addDoc(collection(db, "leads"), {
+              ...data,
+              createdAt: new Date().toISOString()
+          });
+          alert('Your application has been submitted!');
+          this.reset();
+      } catch (error) {
+          alert('Error saving your application. Please try again.');
+          console.error(error);
+      }
+  });
+</script>
+</body>
+</html>
