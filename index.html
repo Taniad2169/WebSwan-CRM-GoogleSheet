@@ -1,3 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSwan CRM & Task Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        body.modal-open {
+            overflow: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .header {
+            background-color: #2F3746;
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .target-widget {
+            background: #14395d;
+            border-radius: 22px 38px 33px 33px/38px 38px 33px 33px;
+            width: 85px;
+            height: 75px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 10px 0 0 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.10);
+            z-index: 10;
+        }
+        .target-btn {
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            line-height:1;
+            cursor: pointer;
+            margin-bottom: 3px;
+        }
+        .target-count {
+            color:#fff;
+            font-size:1.1rem;
+            font-weight: bold;
+            margin-left: 7px;
+        }
+        .target-reset-btn {
+            background: #e5f1fa;
+            border: none;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            color:#14395d;
+            font-weight: bold;
+            width: 34px;
+            height: 27px;
+            margin-top:7px;
+            margin-left: 23px;
+            cursor: pointer;
+        }
+        .footer {
+            background-color: #2F3746;
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .footer-laptop-container {
+            width: 150px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        .footer-verse {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .footer-countdown-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-countdown-label {
+            font-size: 1rem;
+        }
+        .footer-countdown-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #4B5563;
+            background-color: #374151;
+            color: white;
+        }
+        .footer-countdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 5px 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .footer-lock-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        #countdownDisplay {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+        }
+        #countdown {
+            color: red;
+            font-size: 20px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4B5563;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        .form-row > .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .hidden {
+            display: none;
+        }
+        .google-sheet-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 15px;
+            background: #0F9D58;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .google-sheet-button:hover {
+            background: #0c8047;
+            transform: translateY(-2px);
+        }
+        .laptop-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .laptop {
+            width: 200px;
+            height: 150px;
+            background: #e0e0e0;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: perspective(500px) rotateY(10deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        .laptop-screen {
+            width: 180px;
+            height: 120px;
+            background: #4285F4;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        .laptop-screen::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shine 2s infinite;
+        }
+        .laptop-keyboard {
+            width: 190px;
+            height: 10px;
+            background: #333;
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            bottom: 10px;
+            left: 5px;
+        }
+        .laptop-base {
+            width: 220px;
+            height: 10px;
+            background: #c0c0c0;
+            border-radius: 0 0 10px 10px;
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+        }
+        @keyframes float {
+            0%, 100% { transform: perspective(500px) rotateY(10deg) translateY(0); }
+            50% { transform: perspective(500px) rotateY(10deg) translateY(-10px); }
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .swan-image {
+            width: 100px;
+            height: 80px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            position: relative;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 50px auto;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .modal-button {
+            background-color: #4285F4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        #backOffice {
+            display: none;
+        }
+        .back-office-header {
+            background-color: #2F3746;
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .tasks-container, .leads-container {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .task-item, .lead-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .task-item:last-child, .lead-item:last-child {
+            border-bottom: none;
+        }
+        .task-item:hover, .lead-item:hover {
+            background-color: #f9fafb;
+        }
+        .back-to-front {
+            background-color: #4F46E5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .detail-view {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .action-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-complete {
+            background-color: #10B981;
+            color: white;
+        }
+        .btn-edit {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #EF4444;
+            color: white;
+        }
+        .btn-cancel {
+            background-color: #6B7280;
+            color: white;
+        }
+        .btn-save {
+            background-color: #10B981;
+            color: white;
+        }
+        .status-filter {
+            margin-bottom: 15px;
+        }
+        .comment-box {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            background-color: #f9fafb;
+        }
+        .comment-toolbar {
+            margin-bottom: 10px;
+        }
+        .comment-toolbar button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .comment-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        #submissionModal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+        }
+        #submissionModal .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        #submissionModal .ok-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #celebration {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            pointer-events:none; display:none; z-index:9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            line-height: 1.2;
+            text-align: center;
+            color: white;
+        }
+        .emoji-animated {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); z-index: 999;
+        }
+        .overlay.active { display: block; }
+        
+        .move-modal {
+            display: none; position: fixed; top: 10%; left: 50%;
+            transform: translateX(-50%);
+            background: #fff; border: 1px solid #ccc;
+            padding: 20px; width: 500px; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .move-modal.active { display: block; }
+        
+        .action-buttons-lead {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .action-button-lead {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .action-button-lead:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn-view-lead {
+            background-color: #10B981;
+            color: white;
+        }
+        .btn-edit-lead {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .btn-delete-lead {
+            background-color: #EF4444;
+            color: white;
+        }
+        .btn-move-lead {
+            background-color: #8B5CF6;
+            color: white;
+        }
+        
+        .lead-detail-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .lead-detail-label {
+            font-weight: bold;
+            color: #4B5563;
+            margin-bottom: 5px;
+        }
+        .lead-detail-value {
+            color: #374151;
+        }
+        
+        .move-modal {
+            display: none; 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff; 
+            border: 1px solid #ccc;
+            padding: 20px; 
+            width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+        .move-modal.active { display: block; }
+        .move-modal ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .move-modal li {
+            margin-bottom: 10px;
+        }
+        .move-modal button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .move-modal button:hover {
+            background-color: #4338CA;
+            transform: translateY(-2px);
+        }
+        .move-modal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .move-modal h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2F3746;
+        }
+        
+        .search-lead-container {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #4F46E5;
+        }
+        .search-results {
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .search-result-item {
+            padding: 15px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .search-result-item:hover {
+            background-color: #F3F4F6;
+            border-color: #4F46E5;
+        }
+        .search-result-name {
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+        .search-result-details {
+            font-size: 14px;
+            color: #6B7280;
+        }
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #9CA3AF;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .roi-container {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+        .roi-input-group {
+            margin-bottom: 15px;
+        }
+        .roi-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #4B5563;
+        }
+        .roi-input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 5px;
+        }
+        .roi-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+        .roi-result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .roi-result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .roi-result-label {
+            font-weight: 500;
+            color: #4B5563;
+        }
+        .roi-result-value {
+            font-weight: 600;
+            color: #1F2937;
+        }
+        .roi-highlight {
+            color: #10B981;
+            font-weight: 700;
+        }
+        .roi-percentage {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #10B981;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ECFDF5;
+            border-radius: 8px;
+        }
+        .roi-button {
+            background-color: #4F46E5;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .roi-button:hover {
+            background-color: #4338CA;
+        }
+        .roi-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .roi-link:hover {
+            text-decoration: underline;
+        }
+        .roi-toggle-button {
+            background-color: #10B981;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .roi-toggle-button:hover {
+            background-color: #0da271;
+            transform: translateY(-2px);
+        }
+        .crm-toggle-button {
+            background-color: #3B82F6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .crm-toggle-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        .telemarketing-toggle-button {
+            background-color: #F59E0B;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .telemarketing-toggle-button:hover {
+            background-color: #D97706;
+            transform: translateY(-2px);
+        }
+        
+        .analysis-toggle-button {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .analysis-toggle-button:hover {
+            background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+        
+        .prayer-emoji {
+            display: inline-block;
+            animation: bounce 2s infinite;
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .prayer-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="mainApp" class="container">
+    <div id="frontOffice">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+            <div class="header">
+                <div class="target-widget">
+                    <button id="targetBtn" class="target-btn">
+                        <span style="color:#ff2222;">🎯</span>
+                    </button>
+                    <div id="targetCount" class="target-count">0</div>
+                    <button id="targetResetBtn" class="target-reset-btn">
+                        0
+                    </button>
+                </div>
+                <h1 class="text-4xl font-bold">Free Custom Website Demo—Here's What I Can Do for You:</h1>
+                <ul class="info-box mb-4 text-sm md:text-base">
+                    <li>Show you a custom website demo, so you can see how professional your online presence could be.</li>
+                    <li>Do a free analysis of your current website to identify why it may not be getting you business.</li>
+                    <li>Create a custom calendar and task management system for your appointments, so staying organized is easy and stress-free.</li>
+                </ul>
+                <p class="slogan mt-4 text-center">No pressure, no obligation—if you like what you see, we can talk about working together. If not, you won't pay a thing.</p>
+                <p class="mt-4 text-center">Let's make your business shine online—because a professional website isn't just a page, it's your first impression, your credibility, and your opportunity to attract the right clients.</p>
+            </div>
+            <div id="countdownDisplay">Submissions left: <span id="countdown">100</span></div>
+
+            <div class="content-section">
+                <button id="toggleViewBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 mt-4">Go to Back Office</button>
+
+                <h2 class="text-2xl font-bold mb-6 mt-10">Lead/Application Information</h2>
+                <form id="leadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="(555)555-5555">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" name="state">
+                                <option value="">Select State</option>
+                                <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                                <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                                <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                                <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                                <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                                <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                                <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                                <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                                <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                                <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                                <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                                <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                                <option>Wisconsin</option><option>Wyoming</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="url" id="website" name="website" placeholder="https://www.">
+                        </div>
+                        <div class="form-group">
+                            <label for="hasWebsite">Do you have a website?</label>
+                            <select id="hasWebsite" name="hasWebsite">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="industry">Type of Industry</label>
+                            <select id="industry" name="industry">
+                                <option value="">Select Industry</option>
+                                <option>Doctor</option>
+                                <option>Lawyer</option>
+                                <option>Real Estate Broker</option>
+                                <option>Mortgage Broker</option>
+                                <option>Chiropractor</option>
+                                <option>Cosmetic/Plastic Surgeon</option>
+                                <option>Solar Company</option>
+                                <option>Restaurant</option>
+                                <option>Beautician/Hairdresser/Barber</option>
+                                <option>High-Tech</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="otherIndustry">If Other, Describe</label>
+                            <input type="text" id="otherIndustry" name="otherIndustry" maxlength="120" placeholder="Describe your industry (20 words max)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="howlonginbusiness">How long in business?</label>
+                            <select id="howlonginbusiness" name="howlonginbusiness">
+                                <option value="">Select</option>
+                                <option value="0-6 months">Start up to 6 months</option>
+                                <option value="6-12 months">6-12 months</option>
+                                <option value="1-2 years">1-2 years</option>
+                                <option value="2-5 years">2-5 years</option>
+                                <option value="5-10 years">5-10 years</option>
+                                <option value="10+ years">10 years+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeofbusiness">Type of Business (e.g. S-Corp, LLC, Sole Prop)</label>
+                            <input type="text" id="typeofbusiness" name="typeofbusiness">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="serviceinterestedin">Service Interested In</label>
+                            <select id="serviceinterestedin" name="serviceinterestedin">
+                                <option value="">Select Service</option>
+                                <option>Free Demo</option>
+                                <option>Website</option>
+                                <option>Reputation Management</option>
+                                <option>Ad Campaign</option>
+                                <option>Video/Script/Social Media</option>
+                                <option>SEO</option>
+                                <option>Calendar</option>
+                                <option>Form</option>
+                                <option>Lead Generating Form</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="besttime">Best Time to Contact</label>
+                            <select id="besttime" name="besttime">
+                                <option value="">Select Time</option>
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactway">Best Way to Contact</label>
+                            <select id="contactway" name="contactway">
+                                <option value="">Select Way</option>
+                                <option value="call">Call</option>
+                                <option value="text">Text</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Anything else we should know?"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">Submit Application</button>
+                </form>
+
+                <button id="openSheetBtn" class="google-sheet-button">
+                    <i class="fab fa-google"></i> Open Google Sheet
+                </button>
+
+                <div class="laptop-animation">
+                    <div class="laptop">
+                        <div class="laptop-screen">CRM SYNC</div>
+                        <div class="laptop-keyboard"></div>
+                        <div class="laptop-base"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" id="mainFooter">
+                <div class="footer-laptop-container">
+                    <p>WebSwan CRM</p>
+                    <img src="https://cdn-icons-png.flaticon.com/512/6168/6168976.png" alt="White Swan" class="swan-image">
+                </div>
+                <div class="footer-verse">
+                    I can do all things through Christ Who strengthen me Philippians 4:13
+                </div>
+                <div class="footer-countdown-section">
+                    <div class="footer-countdown-label">Countdown:</div>
+                    <select id="countdownSelect" class="footer-countdown-select">
+                        <option value="">Select number</option>
+                    </select>
+                    <div class="footer-countdown-value" id="countdownValue">100</div>
+                </div>
+                <button class="footer-lock-btn" id="backOfficeLock" title="Login to Back Office">
+                    <span role="img" aria-label="lock">🔒</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="backOffice">
+        <button class="back-to-front" id="backToFrontBtn">← Back to Front Office</button>
+        
+        <div class="back-office-header">
+            <h1 class="text-xl font-bold">WebSwan CRM Back Office</h1>
+            <div class="prayer-text">
+                "Father, thank You for keeping me here. Open every door that leads to the life You still want for me, I surrender my call to You, help me find my clients today and close whatever no longer serves Your plan amen!" 
+                <span class="prayer-emoji">�</span>
+            </div>
+        </div>
+
+        <!-- ROI, CRM, Telemarketing and Analysis Toggle Buttons -->
+        <div class="flex gap-4 mb-4">
+            <button id="roiToggleButton" class="roi-toggle-button">
+                <i class="fas fa-calculator"></i> ROI Calculator
+            </button>
+            <button id="crmToggleButton" class="crm-toggle-button">
+                <i class="fas fa-users"></i> CRM Dashboard
+            </button>
+            <button id="telemarketingToggleButton" class="telemarketing-toggle-button">
+                <i class="fas fa-lightbulb"></i> Telemarketing Form
+            </button>
+            <button id="analysisToggleButton" class="analysis-toggle-button">
+                <i class="fas fa-chart-line"></i> Analysis Result
+            </button>
+        </div>
+
+        <!-- ROI Calculator Section -->
+        <div class="roi-container" id="roiContainer">
+            <h2 class="text-2xl font-bold mb-6">ROI Calculator</h2>
+            <p class="mb-4">Calculate your potential return on investment with our services.</p>
+            
+            <div class="roi-input-group">
+                <label for="monthlyLeads">Current Monthly Leads</label>
+                <input type="number" id="monthlyLeads" min="0" value="10">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="conversionRate">Current Conversion Rate (%)</label>
+                <input type="number" id="conversionRate" min="0" max="100" value="5">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="averageSale">Average Sale Value ($)</label>
+                <input type="number" id="averageSale" min="0" value="1000">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="expectedIncrease">Expected Increase in Leads (%)</label>
+                <input type="number" id="expectedIncrease" min="0" max="1000" value="50">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="serviceCost">Monthly Service Cost ($)</label>
+                <input type="number" id="serviceCost" min="0" value="500">
+            </div>
+            
+            <button id="calculateROI" class="roi-button">Calculate ROI</button>
+            
+            <div class="roi-results" id="roiResults" style="display: none;">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Current Monthly Revenue:</span>
+                    <span class="roi-result-value" id="currentRevenue">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Projected Monthly Revenue:</span>
+                    <span class="roi-result-value" id="projectedRevenue">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Monthly Revenue Increase:</span>
+                    <span class="roi-result-value" id="revenueIncrease">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Monthly Profit After Service Cost:</span>
+                    <span class="roi-result-value" id="monthlyProfit">$0</span>
+                </div>
+                <div class="roi-percentage" id="roiPercentage">0% ROI</div>
+            </div>
+            
+            <a href="https://taniad2169.github.io/WebSwan-ROI/" target="_blank" class="roi-link">View Full ROI Calculator →</a>
+        </div>
+
+        <!-- CRM Dashboard Section -->
+        <div id="crmDashboard">
+            <div class="search-lead-container">
+                <h2 class="text-2xl font-bold mb-4">Search Leads by Industry</h2>
+                <input 
+                    type="text" 
+                    id="searchLeadInput" 
+                    class="search-input" 
+                    placeholder="Type industry: Real Estate, Mortgage, Chiropractor, Doctor, Lawyer, etc..."
+                >
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <div class="tasks-container">
+                <h2 class="text-2xl font-bold mb-4">Task Management</h2>
+                
+                <div class="status-filter">
+                    <label for="taskFilter">Filter Tasks: </label>
+                    <select id="taskFilter">
+                        <option value="all">All Tasks</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                    <button id="addNewTaskBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">New Task</button>
+                </div>
+                
+                <div class="task-list">
+                </div>
+            </div>
+
+            <div id="taskDetail" class="detail-view">
+                <h2 class="text-2xl font-bold mb-4">Task Details</h2>
+                <div class="form-group">
+                    <label for="taskType">Task Type</label>
+                    <select id="taskType">
+                        <option value="call client">Call Client</option>
+                        <option value="work on demo">Work on Demo</option>
+                        <option value="send text">Send Text Message</option>
+                        <option value="send email">Send Email</option>
+                        <option value="zoom meeting">Zoom Meeting</option>
+                        <option value="phone call">Phone Call</option>
+                        <option value="face to face">Face to Face Meeting</option>
+                        <option value="collaboration">Collaboration</option>
+                        <option value="website analysis">Website Analysis</option>
+                        <option value="website demo">Website Demo</option>
+                        <option value="call backs">Call Backs</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div id="otherTaskContainer" class="form-group" style="display: none;">
+                    <label for="otherTask">Other Task Description</label>
+                    <textarea id="otherTask" placeholder="Describe the task (max 50 words)" maxlength="300"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Task Description</label>
+                    <textarea id="taskDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Due Date</label>
+                    <input type="date" id="taskDueDate">
+                </div>
+                <div class="action-buttons">
+                    <button class="action-button btn-complete">Complete</button>
+                    <button class="action-button btn-edit">Edit</button>
+                    <button class="action-button btn-delete">Delete</button>
+                    <button class="action-button btn-cancel">Cancel</button>
+                    <button class="action-button btn-save">Save</button>
+                </div>
+            </div>
+
+            <div class="leads-container">
+                <h2 class="text-2xl font-bold mb-4">Leads Management</h2>
+                
+                <div class="status-filter">
+                    <label for="leadFilter">Filter Leads: </label>
+                    <select id="leadFilter">
+                        <option value="all">All Leads</option>
+                        <option value="new">New Leads</option>
+                        <option value="hot">Hot Leads</option>
+                        <option value="interested">Interested</option>
+                        <option value="demo">Free Demo Scheduled</option>
+                        <option value="client">Client</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="referral">Referral Leads</option>
+                        <option value="website_analysis">Website Analysis</option>
+                        <option value="website_demo">Website Demo</option>
+                        <option value="call_backs">Call Backs</option>
+                        <option value="send_email">Send Email</option>
+                    </select>
+                </div>
+                
+                <div id="leadsList" class="leads-list">
+                </div>
+            </div>
+        </div>
+
+        <!-- Telemarketing Section -->
+        <div id="telemarketingSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">Telemarketing Form</h2>
+            <p class="mb-4">Access your telemarketing form to manage calls and track performance.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Form Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Call Tracking, Performance Metrics</span>
+                </div>
+            </div>
+            
+            <button id="openTelemarketingForm" class="roi-button" style="background-color: #F59E0B;">
+                <i class="fas fa-external-link-alt"></i> Open Telemarketing Form
+            </button>
+            
+            <a href="https://taniad2169.github.io/Telemarketing/" target="_blank" class="roi-link">View Telemarketing Form →</a>
+        </div>
+    </div>
+</div>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="text-xl font-bold mb-4">Back Office Login</h2>
+        <input type="password" class="modal-input" placeholder="Password" id="password">
+        <button class="modal-button" id="modalLoginBtn">Login</button>
+    </div>
+</div>
+
+<div id="submissionModal" class="modal">
+    <div class="modal-content">
+        <p>Application submitted successfully!</p>
+        <button class="ok-button">OK</button>
+    </div>
+</div>
+
+<div id="celebration">
+    <div id="celebrationEmojis"></div>
+</div>
+
+<audio id="bellSound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" preload="auto"></audio>
+
+<div class="overlay" id="overlay" onclick="closeModals()"></div>
+
+<div class="modal" id="leadModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModals()">&times;</span>
+        <h2>Lead Details</h2>
+        <div class="modal-body">
+            <div id="leadDetailsView">
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Name</div>
+                    <div id="leadNameDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Company</div>
+                    <div id="leadCompanyDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Email</div>
+                    <div id="leadEmailDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Phone</div>
+                    <div id="leadPhoneDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">City</div>
+                    <div id="leadCityDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">State</div>
+                    <div id="leadStateDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Website</div>
+                    <div id="leadWebsiteDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Has Website</div>
+                    <div id="leadHasWebsiteDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Industry</div>
+                    <div id="leadIndustryDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Other Industry</div>
+                    <div id="leadOtherIndustryDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">How Long in Business</div>
+                    <div id="leadHowLongDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Type of Business</div>
+                    <div id="leadBusinessTypeDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Service Interested In</div>
+                    <div id="leadServiceDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Best Time to Contact</div>
+                    <div id="leadBestTimeDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Best Way to Contact</div>
+                    <div id="leadContactWayDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Additional Notes</div>
+                    <div id="leadNotesDisplay" class="lead-detail-value"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons-lead">
+                <button class="action-button-lead btn-edit-lead" id="editLeadBtn">Edit</button>
+                <button class="action-button-lead btn-delete-lead" id="deleteLeadBtn">Delete</button>
+                <button class="action-button-lead btn-move-lead" id="moveLeadBtn">Move</button>
+            </div>
+
+            <div class="toolbar flex items-center mt-4">
+                <button class="p-2 border rounded" onclick="formatText('bold')"><b>B</b></button>
+                <button class="p-2 border rounded" onclick="highlightText()">Highlight</button>
+                <button class="p-2 border rounded" onclick="removeHighlight()">Remove Highlight</button>
+                <input type="color" id="colorPicker" onchange="changeColor()" title="Font Color">
+            </div>
+
+            <div id="commentBox" class="comment-box" contenteditable="true" oninput="limitWords(this, 350)"></div>
+        </div>
+    </div>
+</div>
+
+<div class="move-modal" id="moveModal">
+    <span class="close" onclick="closeModals()">&times;</span>
+    <h3>Move Lead To:</h3>
+    <ul>
+        <li><button onclick="moveLead('new')">New Leads</button></li>
+        <li><button onclick="moveLead('hot')">Hot Leads</button></li>
+        <li><button onclick="moveLead('interested')">Interested</button></li>
+        <li><button onclick="moveLead('demo')">Free Demo Scheduled</button></li>
+        <li><button onclick="moveLead('client')">Client</button></li>
+        <li><button onclick="moveLead('cancelled')">Cancelled</button></li>
+        <li><button onclick="moveLead('referral')">Referral Leads</button></li>
+        <li><button onclick="moveLead('website_analysis')">Website Analysis</button></li>
+        <li><button onclick="moveLead('website_demo')">Website Demo</button></li>
+        <li><button onclick="moveLead('call_backs')">Call Backs</button></li>
+        <li><button onclick="moveLead('send_email')">Send Email</button></li>
+    </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    let applicationsRemaining = 100;
+    let targetCount = 0;
+    let isEditingTask = false;
+    let isEditingLead = false;
+    let currentLeadId = null;
+    let db = null;
+    let currentLeadData = null;
+
+    function formatPhoneNumber(value) {
+        const phoneNumber = value.replace(/\D/g, '');
+        if (phoneNumber.length === 10) {
+            return `(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6)}`;
+        }
+        return value;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const phoneInput = document.getElementById('phone');
+        
+        phoneInput.addEventListener('blur', function() {
+            this.value = formatPhoneNumber(this.value);
+        });
+        
+        phoneInput.addEventListener('input', function() {
+            const digits = this.value.replace(/\D/g, '');
+            if (digits.length > 10) {
+                this.value = this.value.slice(0, -1);
+            }
+        });
+        
+        const countSelector = document.getElementById("countdownSelect");
+        for(let i=1; i<=100; i++){
+            const option = document.createElement("option");
+            option.value = i;
+            option.textContent = i;
+            countSelector.appendChild(option);
+        }
+        
+        document.getElementById('calculateROI').addEventListener('click', calculateROI);
+        
+        document.getElementById('roiToggleButton').addEventListener('click', showROICalculator);
+        document.getElementById('crmToggleButton').addEventListener('click', showCRMDashboard);
+        document.getElementById('telemarketingToggleButton').addEventListener('click', showTelemarketingForm);
+        document.getElementById('analysisToggleButton').addEventListener('click', showAnalysisResult);
+        
+        document.getElementById('openTelemarketingForm').addEventListener('click', openTelemarketingForm);
+        
+        showCRMDashboard();
+        
+        document.getElementById('editLeadBtn').addEventListener('click', editLead);
+        document.getElementById('deleteLeadBtn').addEventListener('click', deleteLead);
+        document.getElementById('moveLeadBtn').addEventListener('click', showMoveModal);
+        
+        document.querySelectorAll('#taskDetail .action-button').forEach(button => {
+            if (button.classList.contains('btn-complete')) {
+                button.addEventListener('click', completeTask);
+            } else if (button.classList.contains('btn-edit')) {
+                button.addEventListener('click', editTask);
+            } else if (button.classList.contains('btn-delete')) {
+                button.addEventListener('click', deleteTask);
+            } else if (button.classList.contains('btn-cancel')) {
+                button.addEventListener('click', cancelTask);
+            } else if (button.classList.contains('btn-save')) {
+                button.addEventListener('click', saveTask);
+            }
+        });
+    });
+
+    const countSelector = document.getElementById("countdownSelect");
+    const countdownDisplay = document.getElementById("countdown");
+    const countdownValueDisplay = document.getElementById("countdownValue");
+    
+    countSelector.addEventListener("change", () => {
+        applicationsRemaining = parseInt(countSelector.value);
+        countdownDisplay.textContent = applicationsRemaining;
+        countdownValueDisplay.textContent = applicationsRemaining;
+    });
+
+    const targetBtn = document.getElementById("targetBtn");
+    const targetCountDisplay = document.getElementById("targetCount");
+    const targetResetBtn = document.getElementById("targetResetBtn");
+
+    if (targetBtn) {
+        targetBtn.addEventListener('click', () => {
+            targetCount++;
+            targetCountDisplay.textContent = targetCount;
+        });
+    }
+
+    if (targetResetBtn) {
+        targetResetBtn.addEventListener('click', () => {
+            targetCount = 0;
+            targetCountDisplay.textContent = targetCount;
+        });
+    }
+
+    const lockBtn = document.getElementById('backOfficeLock');
+    const loginModal = document.getElementById('loginModal');
+    const loginClose = document.getElementsByClassName('close')[0];
+
+    lockBtn.addEventListener('click', () => {
+        stopCelebration();
+        loginModal.style.display = 'block';
+        document.body.classList.add('modal-open');
+    });
+    
+    loginClose.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target == loginModal) {
+            loginModal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+    });
+
+    document.getElementById('modalLoginBtn').addEventListener('click', function() {
+        const password = document.getElementById('password').value;
+        const correctPassword = 'colbertp';
+        
+        if (password === correctPassword) {
+            document.getElementById('frontOffice').style.display = 'none';
+            document.getElementById('backOffice').style.display = 'block';
+            loginModal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            document.getElementById('backOffice').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                if (window.loadLeadsFunction) {
+                    window.loadLeadsFunction();
   }
             }, 100);
         } else {
