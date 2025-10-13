@@ -810,6 +810,44 @@
             transform: translateY(-2px);
         }
         
+        .credit-repair-toggle-button {
+            background-color: #EC4899;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .credit-repair-toggle-button:hover {
+            background-color: #DB2777;
+            transform: translateY(-2px);
+        }
+        
+        .web-analysis-toggle-button {
+            background-color: #06B6D4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .web-analysis-toggle-button:hover {
+            background-color: #0891B2;
+            transform: translateY(-2px);
+        }
+        
         .prayer-emoji {
             display: inline-block;
             animation: bounce 2s infinite;
@@ -1051,7 +1089,7 @@
             <h1 class="text-xl font-bold">WebSwan CRM Back Office</h1>
             <div class="prayer-text">
                 "Father, thank You for keeping me here. Open every door that leads to the life You still want for me, I surrender my call to You, help me find my clients today and close whatever no longer serves Your plan amen!" 
-                <span class="prayer-emoji">�</span>
+                <span class="prayer-emoji">🙏</span>
             </div>
         </div>
 
@@ -1068,6 +1106,12 @@
             </button>
             <button id="analysisToggleButton" class="analysis-toggle-button">
                 <i class="fas fa-chart-line"></i> Analysis Result
+            </button>
+            <button id="creditRepairToggleButton" class="credit-repair-toggle-button">
+                <i class="fas fa-wrench"></i> Credit Repair CRM
+            </button>
+            <button id="webAnalysisToggleButton" class="web-analysis-toggle-button">
+                <i class="fas fa-search"></i> Web Analysis
             </button>
         </div>
 
@@ -1247,6 +1291,87 @@
             </button>
             
             <a href="https://taniad2169.github.io/Telemarketing/" target="_blank" class="roi-link">View Telemarketing Form →</a>
+        </div>
+
+        <!-- Analysis Result Section -->
+        <div id="analysisResultSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">Website Analysis Result</h2>
+            <p class="mb-4">View detailed analysis of your website performance and recommendations.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Analysis Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Performance Metrics, SEO Analysis, Recommendations</span>
+                </div>
+            </div>
+            
+            <button id="openAnalysisResult" class="roi-button" style="background-color: #8B5CF6;">
+                <i class="fas fa-external-link-alt"></i> Open Analysis Result
+            </button>
+            
+            <a href="https://taniad2169.github.io/WS-Analysis-Result/" target="_blank" class="roi-link">View Analysis Result →</a>
+        </div>
+
+        <!-- Credit Repair CRM Section -->
+        <div id="creditRepairSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">Credit Repair CRM</h2>
+            <p class="mb-4">Access your Credit Repair CRM to manage clients and track progress.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">CRM Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Client Management, Progress Tracking, Document Management</span>
+                </div>
+            </div>
+            
+            <button id="openCreditRepairCRM" class="roi-button" style="background-color: #EC4899;">
+                <i class="fas fa-external-link-alt"></i> Open Credit Repair CRM
+            </button>
+            
+            <a href="https://taniad2169.github.io/Domingue_Crp/" target="_blank" class="roi-link">View Credit Repair CRM →</a>
+        </div>
+
+        <!-- Web Analysis Section -->
+        <div id="webAnalysisSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">Web Analysis</h2>
+            <p class="mb-4">Access your Web Analysis tool to evaluate website performance and SEO.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">SEO Analysis, Performance Metrics, Recommendations</span>
+                </div>
+            </div>
+            
+            <button id="openWebAnalysis" class="roi-button" style="background-color: #06B6D4;">
+                <i class="fas fa-external-link-alt"></i> Open Web Analysis
+            </button>
+            
+            <a href="https://taniad2169.github.io/WebSwan-Web-Analysis/" target="_blank" class="roi-link">View Web Analysis →</a>
         </div>
     </div>
 </div>
@@ -1430,8 +1555,13 @@
         document.getElementById('crmToggleButton').addEventListener('click', showCRMDashboard);
         document.getElementById('telemarketingToggleButton').addEventListener('click', showTelemarketingForm);
         document.getElementById('analysisToggleButton').addEventListener('click', showAnalysisResult);
+        document.getElementById('creditRepairToggleButton').addEventListener('click', showCreditRepairCRM);
+        document.getElementById('webAnalysisToggleButton').addEventListener('click', showWebAnalysis);
         
         document.getElementById('openTelemarketingForm').addEventListener('click', openTelemarketingForm);
+        document.getElementById('openAnalysisResult').addEventListener('click', openAnalysisResult);
+        document.getElementById('openCreditRepairCRM').addEventListener('click', openCreditRepairCRM);
+        document.getElementById('openWebAnalysis').addEventListener('click', openWebAnalysis);
         
         showCRMDashboard();
         
@@ -1517,7 +1647,7 @@
             setTimeout(() => {
                 if (window.loadLeadsFunction) {
                     window.loadLeadsFunction();
-  }
+                }
             }, 100);
         } else {
             alert('Incorrect password. Please try again.');
@@ -1650,26 +1780,70 @@
         document.getElementById('roiContainer').style.display = 'block';
         document.getElementById('crmDashboard').style.display = 'none';
         document.getElementById('telemarketingSection').style.display = 'none';
+        document.getElementById('analysisResultSection').style.display = 'none';
+        document.getElementById('creditRepairSection').style.display = 'none';
+        document.getElementById('webAnalysisSection').style.display = 'none';
     }
 
     function showCRMDashboard() {
         document.getElementById('roiContainer').style.display = 'none';
         document.getElementById('crmDashboard').style.display = 'block';
         document.getElementById('telemarketingSection').style.display = 'none';
+        document.getElementById('analysisResultSection').style.display = 'none';
+        document.getElementById('creditRepairSection').style.display = 'none';
+        document.getElementById('webAnalysisSection').style.display = 'none';
     }
 
     function showTelemarketingForm() {
         document.getElementById('roiContainer').style.display = 'none';
         document.getElementById('crmDashboard').style.display = 'none';
         document.getElementById('telemarketingSection').style.display = 'block';
+        document.getElementById('analysisResultSection').style.display = 'none';
+        document.getElementById('creditRepairSection').style.display = 'none';
+        document.getElementById('webAnalysisSection').style.display = 'none';
+    }
+
+    function showAnalysisResult() {
+        document.getElementById('roiContainer').style.display = 'none';
+        document.getElementById('crmDashboard').style.display = 'none';
+        document.getElementById('telemarketingSection').style.display = 'none';
+        document.getElementById('analysisResultSection').style.display = 'block';
+        document.getElementById('creditRepairSection').style.display = 'none';
+        document.getElementById('webAnalysisSection').style.display = 'none';
+    }
+
+    function showCreditRepairCRM() {
+        document.getElementById('roiContainer').style.display = 'none';
+        document.getElementById('crmDashboard').style.display = 'none';
+        document.getElementById('telemarketingSection').style.display = 'none';
+        document.getElementById('analysisResultSection').style.display = 'none';
+        document.getElementById('creditRepairSection').style.display = 'block';
+        document.getElementById('webAnalysisSection').style.display = 'none';
+    }
+
+    function showWebAnalysis() {
+        document.getElementById('roiContainer').style.display = 'none';
+        document.getElementById('crmDashboard').style.display = 'none';
+        document.getElementById('telemarketingSection').style.display = 'none';
+        document.getElementById('analysisResultSection').style.display = 'none';
+        document.getElementById('creditRepairSection').style.display = 'none';
+        document.getElementById('webAnalysisSection').style.display = 'block';
     }
 
     function openTelemarketingForm() {
         window.open('https://taniad2169.github.io/Telemarketing/', '_blank');
     }
 
-    function showAnalysisResult() {
+    function openAnalysisResult() {
         window.open('https://taniad2169.github.io/WS-Analysis-Result/', '_blank');
+    }
+
+    function openCreditRepairCRM() {
+        window.open('https://taniad2169.github.io/Domingue_Crp/', '_blank');
+    }
+
+    function openWebAnalysis() {
+        window.open('https://taniad2169.github.io/WebSwan-Web-Analysis/', '_blank');
     }
 
     const frontOffice = document.getElementById('frontOffice');
