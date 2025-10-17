@@ -848,7 +848,7 @@
             transform: translateY(-2px);
         }
         
-        /* NEW: WebSwan Analysis Insight Button Styling */
+        /* WebSwan Analysis Insight Button Styling */
         .analysis-insight-toggle-button {
             background-color: #8B4513;
             color: white;
@@ -865,6 +865,26 @@
         }
         .analysis-insight-toggle-button:hover {
             background-color: #654321;
+            transform: translateY(-2px);
+        }
+        
+        /* NEW: WebSwan Intake Button Styling */
+        .intake-toggle-button {
+            background-color: #1E40AF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .intake-toggle-button:hover {
+            background-color: #1E3A8A;
             transform: translateY(-2px);
         }
         
@@ -1133,9 +1153,13 @@
             <button id="webAnalysisToggleButton" class="web-analysis-toggle-button">
                 <i class="fas fa-search"></i> Web Analysis
             </button>
-            <!-- NEW: WebSwan Analysis Insight Button -->
+            <!-- WebSwan Analysis Insight Button -->
             <button id="analysisInsightToggleButton" class="analysis-insight-toggle-button">
                 <i class="fas fa-chart-bar"></i> WebSwan Analysis Insight
+            </button>
+            <!-- NEW: WebSwan Intake Button -->
+            <button id="intakeToggleButton" class="intake-toggle-button">
+                <i class="fas fa-file-alt"></i> WebSwan Intake
             </button>
         </div>
 
@@ -1402,7 +1426,7 @@
             <a href="https://taniad2169.github.io/WebSwan-Web-Analysis/" target="_blank" class="roi-link">View Web Analysis →</a>
         </div>
 
-        <!-- NEW: WebSwan Analysis Insight Section -->
+        <!-- WebSwan Analysis Insight Section -->
         <div id="analysisInsightSection" class="roi-container">
             <h2 class="text-2xl font-bold mb-6">WebSwan Analysis Insight</h2>
             <p class="mb-4">Access your WebSwan Analysis Insight tool for comprehensive website analysis and insights.</p>
@@ -1613,14 +1637,14 @@
         document.getElementById('analysisToggleButton').addEventListener('click', showAnalysisResult);
         document.getElementById('creditRepairToggleButton').addEventListener('click', showCreditRepairCRM);
         document.getElementById('webAnalysisToggleButton').addEventListener('click', showWebAnalysis);
-        // NEW: Add event listener for WebSwan Analysis Insight button
         document.getElementById('analysisInsightToggleButton').addEventListener('click', showAnalysisInsight);
+        // NEW: Add event listener for WebSwan Intake button
+        document.getElementById('intakeToggleButton').addEventListener('click', openIntakeForm);
         
         document.getElementById('openTelemarketingForm').addEventListener('click', openTelemarketingForm);
         document.getElementById('openAnalysisResult').addEventListener('click', openAnalysisResult);
         document.getElementById('openCreditRepairCRM').addEventListener('click', openCreditRepairCRM);
         document.getElementById('openWebAnalysis').addEventListener('click', openWebAnalysis);
-        // NEW: Add event listener for WebSwan Analysis Insight button
         document.getElementById('openAnalysisInsight').addEventListener('click', openAnalysisInsight);
         
         showCRMDashboard();
@@ -1900,7 +1924,6 @@
         document.getElementById('analysisInsightSection').style.display = 'none';
     }
 
-    // NEW: Function to show WebSwan Analysis Insight
     function showAnalysisInsight() {
         document.getElementById('roiContainer').style.display = 'none';
         document.getElementById('crmDashboard').style.display = 'none';
@@ -1927,9 +1950,13 @@
         window.open('https://taniad2169.github.io/WebSwan-Web-Analysis/', '_blank');
     }
 
-    // NEW: Function to open WebSwan Analysis Insight
     function openAnalysisInsight() {
         window.open('https://taniad2169.github.io/WebSwan-Analysis-Overview/', '_blank');
+    }
+
+    // NEW: Function to open WebSwan Intake
+    function openIntakeForm() {
+        window.open('https://taniad2169.github.io/WebSwan-Intake/', '_blank');
     }
 
     const frontOffice = document.getElementById('frontOffice');
