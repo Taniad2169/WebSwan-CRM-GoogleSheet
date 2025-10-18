@@ -868,24 +868,24 @@
             transform: translateY(-2px);
         }
         
-        /* NEW: Live CRM Dashboard Button Styling */
-        .crm-live-toggle-button {
-            background-color: #10B981;
+        /* NEW: WebSwan Spin Button Styling */
+        .webswan-spin-toggle-button {
+            background: linear-gradient(135deg, #08c6d4 0%, #daeced 100%);
             color: white;
+            font-weight: bold;
             padding: 10px 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
         }
-        .crm-live-toggle-button:hover {
-            background-color: #0da271;
+        .webswan-spin-toggle-button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         .prayer-emoji {
@@ -911,80 +911,6 @@
             font-size: 1.1rem;
             line-height: 1.6;
             font-style: italic;
-            margin-top: 10px;
-        }
-        
-        /* NEW: Security Modal Styling */
-        .security-modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-        }
-        .security-modal-content {
-            background-color: #fefefe;
-            padding: 30px;
-            border: 1px solid #888;
-            border-radius: 12px;
-            position: relative;
-            max-width: 400px;
-            margin: 100px auto;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .security-modal h2 {
-            color: #2F3746;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        .security-modal input {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 2px solid #D1D5DB;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        .security-modal input:focus {
-            outline: none;
-            border-color: #10B981;
-        }
-        .security-modal button {
-            background-color: #10B981;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        .security-modal button:hover {
-            background-color: #0da271;
-        }
-        .security-modal .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-        }
-        .security-modal .close:hover {
-            color: black;
-        }
-        .click-counter {
-            font-size: 0.9rem;
-            color: #6B7280;
             margin-top: 10px;
         }
     </style>
@@ -1231,9 +1157,9 @@
             <button id="analysisInsightToggleButton" class="analysis-insight-toggle-button">
                 <i class="fas fa-chart-bar"></i> WebSwan Analysis Insight
             </button>
-            <!-- NEW: Live CRM Dashboard Button -->
-            <button id="crmLiveToggleButton" class="crm-live-toggle-button">
-                <i class="fas fa-external-link-alt"></i> Live CRM Dashboard
+            <!-- NEW: WebSwan Spin Button -->
+            <button id="webswanSpinToggleButton" class="webswan-spin-toggle-button">
+                <i class="fas fa-sync-alt"></i> WebSwan Spin
             </button>
         </div>
 
@@ -1527,44 +1453,32 @@
             <a href="https://taniad2169.github.io/WebSwan-Analysis-Overview/" target="_blank" class="roi-link">View WebSwan Analysis Insight →</a>
         </div>
 
-        <!-- NEW: Live CRM Dashboard Section -->
-        <div id="crmLiveSection" class="roi-container">
-            <h2 class="text-2xl font-bold mb-6">Live CRM Dashboard</h2>
-            <p class="mb-4">Access your live CRM dashboard to manage leads, tasks, and client interactions in real-time.</p>
+        <!-- NEW: WebSwan Spin Section -->
+        <div id="webswanSpinSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">WebSwan Spin</h2>
+            <p class="mb-4">Access your WebSwan Spin tool for additional features and functionality.</p>
             
             <div class="roi-results">
                 <div class="roi-result-item">
-                    <span class="roi-result-label">Dashboard Status:</span>
-                    <span class="roi-result-value">Live & Active</span>
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
                 </div>
                 <div class="roi-result-item">
                     <span class="roi-result-label">Last Updated:</span>
-                    <span class="roi-result-value">Real-time</span>
+                    <span class="roi-result-value">Recently</span>
                 </div>
                 <div class="roi-result-item">
                     <span class="roi-result-label">Features:</span>
-                    <span class="roi-result-value">Lead Management, Task Tracking, Client Communication</span>
+                    <span class="roi-result-value">Additional CRM Features and Tools</span>
                 </div>
             </div>
             
-            <button id="openLiveCRM" class="roi-button" style="background-color: #10B981;">
-                <i class="fas fa-external-link-alt"></i> Open Live CRM Dashboard
+            <button id="openWebSwanSpin" class="roi-button" style="background: linear-gradient(135deg, #08c6d4 0%, #daeced 100%);">
+                <i class="fas fa-external-link-alt"></i> Open WebSwan Spin
             </button>
             
-            <a href="https://taniad2169.github.io/WebSwan-Insight-/" target="_blank" class="roi-link">View Live CRM Dashboard →</a>
+            <a href="https://taniad2169.github.io/WebSwan_spin/" target="_blank" class="roi-link">View WebSwan Spin →</a>
         </div>
-    </div>
-</div>
-
-<!-- NEW: Security Modal for Live CRM Dashboard -->
-<div id="securityModal" class="security-modal">
-    <div class="security-modal-content">
-        <span class="close" id="securityModalClose">&times;</span>
-        <h2>Security Verification</h2>
-        <p>Please enter the password to access the Live CRM Dashboard:</p>
-        <input type="password" id="securityPassword" placeholder="Enter password">
-        <button id="securityLoginBtn">Login</button>
-        <div class="click-counter" id="clickCounter">Clicks: 0/3</div>
     </div>
 </div>
 
@@ -1711,10 +1625,6 @@
     let currentTaskId = null;
     let db = null;
     let currentLeadData = null;
-    
-    // NEW: Security variables for Live CRM Dashboard
-    let liveCrmClickCount = 0;
-    let clickTimeout = null;
 
     function formatPhoneNumber(value) {
         const phoneNumber = value.replace(/\D/g, '');
@@ -1756,8 +1666,8 @@
         document.getElementById('webAnalysisToggleButton').addEventListener('click', showWebAnalysis);
         // NEW: Add event listener for WebSwan Analysis Insight button
         document.getElementById('analysisInsightToggleButton').addEventListener('click', showAnalysisInsight);
-        // NEW: Add event listener for Live CRM Dashboard button
-        document.getElementById('crmLiveToggleButton').addEventListener('click', handleLiveCrmClick);
+        // NEW: Add event listener for WebSwan Spin button
+        document.getElementById('webswanSpinToggleButton').addEventListener('click', showWebSwanSpin);
         
         document.getElementById('openTelemarketingForm').addEventListener('click', openTelemarketingForm);
         document.getElementById('openAnalysisResult').addEventListener('click', openAnalysisResult);
@@ -1765,12 +1675,8 @@
         document.getElementById('openWebAnalysis').addEventListener('click', openWebAnalysis);
         // NEW: Add event listener for WebSwan Analysis Insight button
         document.getElementById('openAnalysisInsight').addEventListener('click', openAnalysisInsight);
-        // NEW: Add event listener for Live CRM Dashboard button
-        document.getElementById('openLiveCRM').addEventListener('click', openLiveCRM);
-        
-        // NEW: Security modal event listeners
-        document.getElementById('securityModalClose').addEventListener('click', closeSecurityModal);
-        document.getElementById('securityLoginBtn').addEventListener('click', verifySecurityPassword);
+        // NEW: Add event listener for WebSwan Spin button
+        document.getElementById('openWebSwanSpin').addEventListener('click', openWebSwanSpin);
         
         showCRMDashboard();
         
@@ -1795,60 +1701,6 @@
         // Add refresh tasks button event listener
         document.getElementById('refreshTasksBtn').addEventListener('click', loadTasks);
     });
-
-    // NEW: Handle Live CRM Dashboard button click with security
-    function handleLiveCrmClick() {
-        liveCrmClickCount++;
-        document.getElementById('clickCounter').textContent = `Clicks: ${liveCrmClickCount}/3`;
-        
-        // Reset the timeout if user clicks again
-        if (clickTimeout) {
-            clearTimeout(clickTimeout);
-        }
-        
-        // Set timeout to reset click count after 3 seconds
-        clickTimeout = setTimeout(() => {
-            liveCrmClickCount = 0;
-            document.getElementById('clickCounter').textContent = `Clicks: ${liveCrmClickCount}/3`;
-        }, 3000);
-        
-        // If clicked 3 times, show security modal
-        if (liveCrmClickCount >= 3) {
-            showSecurityModal();
-            liveCrmClickCount = 0; // Reset for next time
-        }
-    }
-    
-    // NEW: Show security modal
-    function showSecurityModal() {
-        document.getElementById('securityModal').style.display = 'block';
-        document.body.classList.add('modal-open');
-        document.getElementById('securityPassword').focus();
-    }
-    
-    // NEW: Close security modal
-    function closeSecurityModal() {
-        document.getElementById('securityModal').style.display = 'none';
-        document.body.classList.remove('modal-open');
-        document.getElementById('securityPassword').value = '';
-        liveCrmClickCount = 0;
-        document.getElementById('clickCounter').textContent = `Clicks: ${liveCrmClickCount}/3`;
-    }
-    
-    // NEW: Verify security password
-    function verifySecurityPassword() {
-        const password = document.getElementById('securityPassword').value;
-        const correctPassword = 'admin@777';
-        
-        if (password === correctPassword) {
-            closeSecurityModal();
-            showLiveCRMDashboard();
-        } else {
-            alert('Incorrect password. Please try again.');
-            document.getElementById('securityPassword').value = '';
-            document.getElementById('securityPassword').focus();
-        }
-    }
 
     const countSelector = document.getElementById("countdownSelect");
     const countdownDisplay = document.getElementById("countdown");
@@ -1897,10 +1749,6 @@
         if (event.target == loginModal) {
             loginModal.style.display = 'none';
             document.body.classList.remove('modal-open');
-        }
-        // NEW: Close security modal when clicking outside
-        if (event.target == document.getElementById('securityModal')) {
-            closeSecurityModal();
         }
     });
 
@@ -2055,7 +1903,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     function showCRMDashboard() {
@@ -2066,7 +1914,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     function showTelemarketingForm() {
@@ -2077,7 +1925,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     function showAnalysisResult() {
@@ -2088,7 +1936,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     function showCreditRepairCRM() {
@@ -2099,7 +1947,7 @@
         document.getElementById('creditRepairSection').style.display = 'block';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     function showWebAnalysis() {
@@ -2110,7 +1958,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'block';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
     // NEW: Function to show WebSwan Analysis Insight
@@ -2122,11 +1970,11 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'block';
-        document.getElementById('crmLiveSection').style.display = 'none';
+        document.getElementById('webswanSpinSection').style.display = 'none';
     }
 
-    // NEW: Function to show Live CRM Dashboard
-    function showLiveCRMDashboard() {
+    // NEW: Function to show WebSwan Spin
+    function showWebSwanSpin() {
         document.getElementById('roiContainer').style.display = 'none';
         document.getElementById('crmDashboard').style.display = 'none';
         document.getElementById('telemarketingSection').style.display = 'none';
@@ -2134,7 +1982,7 @@
         document.getElementById('creditRepairSection').style.display = 'none';
         document.getElementById('webAnalysisSection').style.display = 'none';
         document.getElementById('analysisInsightSection').style.display = 'none';
-        document.getElementById('crmLiveSection').style.display = 'block';
+        document.getElementById('webswanSpinSection').style.display = 'block';
     }
 
     function openTelemarketingForm() {
@@ -2158,9 +2006,9 @@
         window.open('https://taniad2169.github.io/WebSwan-Analysis-Overview/', '_blank');
     }
 
-    // NEW: Function to open Live CRM Dashboard
-    function openLiveCRM() {
-        window.open('https://taniad2169.github.io/WebSwan-Insight-/', '_blank');
+    // NEW: Function to open WebSwan Spin
+    function openWebSwanSpin() {
+        window.open('https://taniad2169.github.io/WebSwan_spin/', '_blank');
     }
 
     const frontOffice = document.getElementById('frontOffice');
@@ -2590,7 +2438,7 @@
             
             leadItem.innerHTML = `
                 <div class="font-bold">${lead.name}</div>
-                <div class="text-sm text-gray-600">${lead.company} - ${statusDisplay}</div>
+                <div class="text-sm text-gray-600">${lead.company || 'No company'} - ${statusDisplay}</div>
             `;
             leadsList.appendChild(leadItem);
         });
