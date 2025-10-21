@@ -940,6 +940,27 @@
             transform: translateY(-2px);
         }
         
+        /* NEW CALENDAR BUTTON STYLES */
+        .calendar-toggle-button {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .calendar-toggle-button:hover {
+            background: linear-gradient(135deg, #FF5252, #FF7B7B);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
         .prayer-emoji {
             display: inline-block;
             animation: bounce 2s infinite;
@@ -1217,8 +1238,13 @@
             </div>
         </div>
 
-        <!-- ALL TOGGLE BUTTONS PROPERLY IMPLEMENTED -->
+        <!-- ALL TOGGLE BUTTONS WITH NEW CALENDAR BUTTON -->
         <div class="flex gap-4 mb-4 flex-wrap">
+            <!-- NEW CALENDAR BUTTON -->
+            <button id="calendarToggleButton" class="calendar-toggle-button">
+                <i class="fas fa-calendar-alt"></i> My Calendar
+            </button>
+            
             <button id="roiToggleButton" class="roi-toggle-button">
                 <i class="fas fa-calculator"></i> ROI Calculator
             </button>
@@ -1243,7 +1269,6 @@
             <button id="webswanSpinToggleButton" class="webswan-spin-toggle-button">
                 <i class="fas fa-sync-alt"></i> WebSwan Spin
             </button>
-            <!-- NEW BUTTONS ADDED AS REQUESTED -->
             <button id="wsInsightToggleButton" class="ws-insight-toggle-button">
                 <i class="fas fa-eye"></i> WS Insight
             </button>
@@ -2147,6 +2172,7 @@
     // Setup toggle buttons
     function setupToggleButtons() {
         const toggleButtons = [
+            { id: 'calendarToggleButton', func: openCalendar },
             { id: 'roiToggleButton', func: showROICalculator },
             { id: 'crmToggleButton', func: showCRMDashboard },
             { id: 'telemarketingToggleButton', func: showTelemarketingForm },
@@ -2356,6 +2382,12 @@
         
         document.getElementById('roiResults').style.display = 'block';
         console.log("ROI calculated:", roiPercentage.toFixed(1) + "%");
+    }
+
+    // NEW CALENDAR FUNCTION
+    function openCalendar() {
+        window.open('https://taniad2169.github.io/Webswan-Booking-FREE-Website-Demo/', '_blank');
+        console.log("Opening Calendar");
     }
 
     // Section display functions
