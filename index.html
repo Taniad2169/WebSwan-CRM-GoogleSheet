@@ -939,10 +939,10 @@
             background-color: #047857;
             transform: translateY(-2px);
         }
-        
-        /* NEW CALENDAR BUTTON STYLES */
-        .calendar-toggle-button {
-            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+
+        /* NEW COOKIE & ACCESSIBILITY BUTTON STYLES */
+        .cookie-accessibility-toggle-button {
+            background-color: #DC2626;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -955,10 +955,9 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        .calendar-toggle-button:hover {
-            background: linear-gradient(135deg, #FF5252, #FF7B7B);
+        .cookie-accessibility-toggle-button:hover {
+            background-color: #B91C1C;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         .prayer-emoji {
@@ -1238,13 +1237,8 @@
             </div>
         </div>
 
-        <!-- ALL TOGGLE BUTTONS WITH NEW CALENDAR BUTTON -->
+        <!-- ALL TOGGLE BUTTONS PROPERLY IMPLEMENTED -->
         <div class="flex gap-4 mb-4 flex-wrap">
-            <!-- NEW CALENDAR BUTTON -->
-            <button id="calendarToggleButton" class="calendar-toggle-button">
-                <i class="fas fa-calendar-alt"></i> My Calendar
-            </button>
-            
             <button id="roiToggleButton" class="roi-toggle-button">
                 <i class="fas fa-calculator"></i> ROI Calculator
             </button>
@@ -1269,11 +1263,16 @@
             <button id="webswanSpinToggleButton" class="webswan-spin-toggle-button">
                 <i class="fas fa-sync-alt"></i> WebSwan Spin
             </button>
+            <!-- NEW BUTTONS ADDED AS REQUESTED -->
             <button id="wsInsightToggleButton" class="ws-insight-toggle-button">
                 <i class="fas fa-eye"></i> WS Insight
             </button>
             <button id="webswanIntakeToggleButton" class="webswan-intake-toggle-button">
                 <i class="fas fa-clipboard-list"></i> WebSwan Intake
+            </button>
+            <!-- NEW COOKIE & ACCESSIBILITY BUTTON -->
+            <button id="cookieAccessibilityToggleButton" class="cookie-accessibility-toggle-button">
+                <i class="fas fa-cookie"></i> Cookie & Accessibility
             </button>
         </div>
 
@@ -1652,6 +1651,33 @@
             </button>
             
             <a href="https://taniad2169.github.io/WebSwan-Intake/" target="_blank" class="roi-link">View WebSwan Intake →</a>
+        </div>
+
+        <!-- Cookie & Accessibility Section -->
+        <div id="cookieAccessibilitySection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">Cookie & Accessibility</h2>
+            <p class="mb-4">Access your Cookie & Accessibility settings and compliance tools.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Cookie Management, Accessibility Compliance, Privacy Settings</span>
+                </div>
+            </div>
+            
+            <button id="openCookieAccessibility" class="roi-button" style="background-color: #DC2626;">
+                <i class="fas fa-external-link-alt"></i> Open Cookie & Accessibility
+            </button>
+            
+            <a href="https://taniad2169.github.io/WS-Cookie/" target="_blank" class="roi-link">View Cookie & Accessibility →</a>
         </div>
     </div>
 </div>
@@ -2172,7 +2198,6 @@
     // Setup toggle buttons
     function setupToggleButtons() {
         const toggleButtons = [
-            { id: 'calendarToggleButton', func: openCalendar },
             { id: 'roiToggleButton', func: showROICalculator },
             { id: 'crmToggleButton', func: showCRMDashboard },
             { id: 'telemarketingToggleButton', func: showTelemarketingForm },
@@ -2182,7 +2207,8 @@
             { id: 'analysisInsightToggleButton', func: showAnalysisInsight },
             { id: 'webswanSpinToggleButton', func: showWebSwanSpin },
             { id: 'wsInsightToggleButton', func: showWSInsight },
-            { id: 'webswanIntakeToggleButton', func: showWebSwanIntake }
+            { id: 'webswanIntakeToggleButton', func: showWebSwanIntake },
+            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility } // NEW COOKIE BUTTON
         ];
         
         toggleButtons.forEach(button => {
@@ -2206,7 +2232,8 @@
             { id: 'openAnalysisInsight', func: openAnalysisInsight },
             { id: 'openWebSwanSpin', func: openWebSwanSpin },
             { id: 'openWSInsight', func: openWSInsight },
-            { id: 'openWebSwanIntake', func: openWebSwanIntake }
+            { id: 'openWebSwanIntake', func: openWebSwanIntake },
+            { id: 'openCookieAccessibility', func: openCookieAccessibility } // NEW COOKIE BUTTON
         ];
         
         externalButtons.forEach(button => {
@@ -2384,20 +2411,16 @@
         console.log("ROI calculated:", roiPercentage.toFixed(1) + "%");
     }
 
-    // NEW CALENDAR FUNCTION
-    function openCalendar() {
-        window.open('https://taniad2169.github.io/Webswan-Booking-FREE-Website-Demo/', '_blank');
-        console.log("Opening Calendar");
-    }
-
-    // Section display functions
+    // Section display functions - FIXED VERSION
     function showROICalculator() {
-        toggleSection('roiContainer');
+        hideAllSections();
+        document.getElementById('roiContainer').style.display = 'block';
         console.log("Showing ROI Calculator");
     }
 
     function showCRMDashboard() {
-        toggleSection('crmDashboard');
+        hideAllSections();
+        document.getElementById('crmDashboard').style.display = 'block';
         console.log("Showing CRM Dashboard");
         
         // Load data when CRM dashboard is shown
@@ -2408,57 +2431,72 @@
     }
 
     function showTelemarketingForm() {
-        toggleSection('telemarketingSection');
+        hideAllSections();
+        document.getElementById('telemarketingSection').style.display = 'block';
         console.log("Showing Telemarketing Form");
     }
 
     function showAnalysisResult() {
-        toggleSection('analysisResultSection');
+        hideAllSections();
+        document.getElementById('analysisResultSection').style.display = 'block';
         console.log("Showing Analysis Result");
     }
 
     function showCreditRepairCRM() {
-        toggleSection('creditRepairSection');
+        hideAllSections();
+        document.getElementById('creditRepairSection').style.display = 'block';
         console.log("Showing Credit Repair CRM");
     }
 
     function showWebAnalysis() {
-        toggleSection('webAnalysisSection');
+        hideAllSections();
+        document.getElementById('webAnalysisSection').style.display = 'block';
         console.log("Showing Web Analysis");
     }
 
     function showAnalysisInsight() {
-        toggleSection('analysisInsightSection');
+        hideAllSections();
+        document.getElementById('analysisInsightSection').style.display = 'block';
         console.log("Showing Analysis Insight");
     }
 
     function showWebSwanSpin() {
-        toggleSection('webswanSpinSection');
+        hideAllSections();
+        document.getElementById('webswanSpinSection').style.display = 'block';
         console.log("Showing WebSwan Spin");
     }
 
     function showWSInsight() {
-        toggleSection('wsInsightSection');
+        hideAllSections();
+        document.getElementById('wsInsightSection').style.display = 'block';
         console.log("Showing WS Insight");
     }
 
     function showWebSwanIntake() {
-        toggleSection('webswanIntakeSection');
+        hideAllSections();
+        document.getElementById('webswanIntakeSection').style.display = 'block';
         console.log("Showing WebSwan Intake");
     }
 
-    function toggleSection(sectionId) {
+    // NEW COOKIE & ACCESSIBILITY FUNCTION
+    function showCookieAccessibility() {
+        hideAllSections();
+        document.getElementById('cookieAccessibilitySection').style.display = 'block';
+        console.log("Showing Cookie & Accessibility");
+    }
+
+    function hideAllSections() {
         const sections = [
             'roiContainer', 'crmDashboard', 'telemarketingSection', 
             'analysisResultSection', 'creditRepairSection', 'webAnalysisSection',
             'analysisInsightSection', 'webswanSpinSection',
-            'wsInsightSection', 'webswanIntakeSection'
+            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection' // ADDED COOKIE SECTION
         ];
         
         sections.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.style.display = id === sectionId ? 'block' : 'none';
+                element.style.display = 'none';
             }
         });
     }
@@ -2502,6 +2540,12 @@
     function openWebSwanIntake() {
         window.open('https://taniad2169.github.io/WebSwan-Intake/', '_blank');
         console.log("Opening WebSwan Intake");
+    }
+
+    // NEW COOKIE & ACCESSIBILITY FUNCTION
+    function openCookieAccessibility() {
+        window.open('https://taniad2169.github.io/WS-Cookie/', '_blank');
+        console.log("Opening Cookie & Accessibility");
     }
 
     // Lead management functions
