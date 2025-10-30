@@ -146,6 +146,7 @@
             transition: transform 0.1s ease;
             user-select: none;
             z-index: 1000;
+            color: gold;
         }
         .footer-lock-btn:active {
             transform: scale(0.95) !important;
@@ -960,6 +961,26 @@
             transform: translateY(-2px);
         }
         
+        /* NEW CALENDAR BUTTON STYLES */
+        .calendar-toggle-button {
+            background-color: #9333EA;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .calendar-toggle-button:hover {
+            background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+        
         .prayer-emoji {
             display: inline-block;
             animation: bounce 2s infinite;
@@ -1239,6 +1260,11 @@
 
         <!-- ALL TOGGLE BUTTONS PROPERLY IMPLEMENTED -->
         <div class="flex gap-4 mb-4 flex-wrap">
+            <!-- NEW CALENDAR BUTTON -->
+            <button id="calendarToggleButton" class="calendar-toggle-button">
+                <i class="fas fa-calendar-alt"></i> My Calendar
+            </button>
+            
             <button id="roiToggleButton" class="roi-toggle-button">
                 <i class="fas fa-calculator"></i> ROI Calculator
             </button>
@@ -2198,6 +2224,7 @@
     // Setup toggle buttons
     function setupToggleButtons() {
         const toggleButtons = [
+            { id: 'calendarToggleButton', func: openCalendar }, // NEW CALENDAR BUTTON
             { id: 'roiToggleButton', func: showROICalculator },
             { id: 'crmToggleButton', func: showCRMDashboard },
             { id: 'telemarketingToggleButton', func: showTelemarketingForm },
@@ -2245,6 +2272,12 @@
                 console.log("External button not found:", button.id);
             }
         });
+    }
+
+    // NEW CALENDAR FUNCTION
+    function openCalendar() {
+        window.open('https://taniad2169.github.io/Webswan-Booking-FREE-Website-Demo/', '_blank');
+        console.log("Opening Calendar");
     }
 
     // Handle form submission
