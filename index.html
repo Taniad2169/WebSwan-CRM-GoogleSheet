@@ -981,6 +981,26 @@
             transform: translateY(-2px);
         }
         
+        /* NEW COMPLIANCE AUDIT BUTTON STYLES */
+        .compliance-audit-toggle-button {
+            background-color: #1E40AF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .compliance-audit-toggle-button:hover {
+            background-color: #1E3A8A;
+            transform: translateY(-2px);
+        }
+        
         .prayer-emoji {
             display: inline-block;
             animation: bounce 2s infinite;
@@ -1299,6 +1319,10 @@
             <!-- NEW COOKIE & ACCESSIBILITY BUTTON -->
             <button id="cookieAccessibilityToggleButton" class="cookie-accessibility-toggle-button">
                 <i class="fas fa-cookie"></i> Cookie & Accessibility
+            </button>
+            <!-- NEW COMPLIANCE AUDIT BUTTON -->
+            <button id="complianceAuditToggleButton" class="compliance-audit-toggle-button">
+                <i class="fas fa-clipboard-check"></i> WebSwan Compliance Audit
             </button>
         </div>
 
@@ -1704,6 +1728,33 @@
             </button>
             
             <a href="https://access-coo-ws.vercel.app/" target="_blank" class="roi-link">View Cookie & Accessibility →</a>
+        </div>
+
+        <!-- NEW COMPLIANCE AUDIT SECTION -->
+        <div id="complianceAuditSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6">WebSwan Compliance Audit</h2>
+            <p class="mb-4">Access your WebSwan Compliance Audit tool for comprehensive compliance checking and reporting.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Compliance Checking, Audit Reporting, Standards Verification</span>
+                </div>
+            </div>
+            
+            <button id="openComplianceAudit" class="roi-button" style="background-color: #1E40AF;">
+                <i class="fas fa-external-link-alt"></i> Open WebSwan Compliance Audit
+            </button>
+            
+            <a href="https://taniad2169.github.io/WS-Audit/" target="_blank" class="roi-link">View WebSwan Compliance Audit →</a>
         </div>
     </div>
 </div>
@@ -2235,7 +2286,8 @@
             { id: 'webswanSpinToggleButton', func: showWebSwanSpin },
             { id: 'wsInsightToggleButton', func: showWSInsight },
             { id: 'webswanIntakeToggleButton', func: showWebSwanIntake },
-            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility } // NEW COOKIE BUTTON
+            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility }, // NEW COOKIE BUTTON
+            { id: 'complianceAuditToggleButton', func: showComplianceAudit } // NEW COMPLIANCE AUDIT BUTTON
         ];
         
         toggleButtons.forEach(button => {
@@ -2260,7 +2312,8 @@
             { id: 'openWebSwanSpin', func: openWebSwanSpin },
             { id: 'openWSInsight', func: openWSInsight },
             { id: 'openWebSwanIntake', func: openWebSwanIntake },
-            { id: 'openCookieAccessibility', func: openCookieAccessibility } // NEW COOKIE BUTTON
+            { id: 'openCookieAccessibility', func: openCookieAccessibility }, // NEW COOKIE BUTTON
+            { id: 'openComplianceAudit', func: openComplianceAudit } // NEW COMPLIANCE AUDIT BUTTON
         ];
         
         externalButtons.forEach(button => {
@@ -2518,12 +2571,20 @@
         console.log("Showing Cookie & Accessibility");
     }
 
+    // NEW COMPLIANCE AUDIT FUNCTION
+    function showComplianceAudit() {
+        hideAllSections();
+        document.getElementById('complianceAuditSection').style.display = 'block';
+        console.log("Showing Compliance Audit");
+    }
+
     function hideAllSections() {
         const sections = [
             'roiContainer', 'crmDashboard', 'telemarketingSection', 
             'analysisResultSection', 'creditRepairSection', 'webAnalysisSection',
             'analysisInsightSection', 'webswanSpinSection',
-            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection' // ADDED COOKIE SECTION
+            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection',
+            'complianceAuditSection' // ADDED COMPLIANCE AUDIT SECTION
         ];
         
         sections.forEach(id => {
@@ -2579,6 +2640,12 @@
     function openCookieAccessibility() {
         window.open('https://access-coo-ws.vercel.app/', '_blank');
         console.log("Opening Cookie & Accessibility");
+    }
+
+    // NEW COMPLIANCE AUDIT FUNCTION
+    function openComplianceAudit() {
+        window.open('https://taniad2169.github.io/WS-Audit/', '_blank');
+        console.log("Opening Compliance Audit");
     }
 
     // Lead management functions
