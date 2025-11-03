@@ -7,21 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Inter', sans-serif;
+        }
+        
+        body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            color: #333;
+            line-height: 1.6;
         }
+        
         body.modal-open {
             overflow: hidden;
         }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
+        
         .header {
             background-color: #2F3746;
             color: white;
@@ -31,6 +42,7 @@
             text-align: center;
             position: relative;
         }
+        
         .target-widget {
             background: #14395d;
             border-radius: 22px 38px 33px 33px/38px 38px 33px 33px;
@@ -47,6 +59,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.10);
             z-index: 1000;
         }
+        
         .target-btn {
             background: none;
             border: none;
@@ -57,15 +70,18 @@
             transition: transform 0.1s ease;
             user-select: none;
         }
+        
         .target-btn:active {
             transform: scale(0.95) !important;
         }
+        
         .target-count {
             color:#fff;
             font-size:1.1rem;
             font-weight: bold;
             margin-left: 7px;
         }
+        
         .target-reset-btn {
             background: #e5f1fa;
             border: none;
@@ -81,9 +97,11 @@
             transition: transform 0.1s ease;
             user-select: none;
         }
+        
         .target-reset-btn:active {
             transform: scale(0.95) !important;
         }
+        
         .footer {
             background-color: #2F3746;
             color: white;
@@ -98,6 +116,7 @@
             justify-content: center;
             gap: 10px;
         }
+        
         .footer-laptop-container {
             width: 150px;
             height: 100px;
@@ -109,19 +128,23 @@
             border-radius: 8px;
             font-size: 0.875rem;
         }
+        
         .footer-verse {
             font-size: 1.125rem;
             font-style: italic;
             margin-bottom: 10px;
         }
+        
         .footer-countdown-section {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        
         .footer-countdown-label {
             font-size: 1rem;
         }
+        
         .footer-countdown-select {
             padding: 5px;
             border-radius: 5px;
@@ -129,6 +152,7 @@
             background-color: #374151;
             color: white;
         }
+        
         .footer-countdown-value {
             font-size: 1.5rem;
             font-weight: bold;
@@ -138,6 +162,7 @@
             min-width: 60px;
             text-align: center;
         }
+        
         .footer-lock-btn {
             background-color: transparent;
             border: none;
@@ -148,36 +173,44 @@
             z-index: 1000;
             color: gold;
         }
+        
         .footer-lock-btn:active {
             transform: scale(0.95) !important;
         }
+        
         #countdownDisplay {
             font-size: 18px;
             font-weight: bold;
             color: #333;
             margin: 15px 0;
         }
+        
         #countdown {
             color: red;
             font-size: 20px;
         }
+        
         .form-group {
             margin-bottom: 1.5rem;
         }
+        
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #4B5563;
         }
+        
         .form-row {
             display: flex;
             gap: 1rem;
         }
+        
         .form-row > .form-group {
             flex: 1;
             margin-bottom: 0;
         }
+        
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.75rem;
@@ -185,9 +218,11 @@
             border-radius: 0.5rem;
             font-size: 1rem;
         }
+        
         .hidden {
             display: none;
         }
+        
         .google-sheet-button {
             display: flex;
             align-items: center;
@@ -203,16 +238,19 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        
         .google-sheet-button:hover {
             background: #0c8047;
             transform: translateY(-2px);
         }
+        
         .laptop-animation {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 20px 0;
         }
+        
         .laptop {
             width: 200px;
             height: 150px;
@@ -223,6 +261,7 @@
             transform: perspective(500px) rotateY(10deg);
             animation: float 3s ease-in-out infinite;
         }
+        
         .laptop-screen {
             width: 180px;
             height: 120px;
@@ -238,6 +277,7 @@
             font-weight: bold;
             overflow: hidden;
         }
+        
         .laptop-screen::before {
             content: "";
             position: absolute;
@@ -246,6 +286,7 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             animation: shine 2s infinite;
         }
+        
         .laptop-keyboard {
             width: 190px;
             height: 10px;
@@ -255,6 +296,7 @@
             bottom: 10px;
             left: 5px;
         }
+        
         .laptop-base {
             width: 220px;
             height: 10px;
@@ -264,20 +306,24 @@
             bottom: -10px;
             left: -10px;
         }
+        
         @keyframes float {
             0%, 100% { transform: perspective(500px) rotateY(10deg) translateY(0); }
             50% { transform: perspective(500px) rotateY(10deg) translateY(-10px); }
         }
+        
         @keyframes shine {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+        
         .swan-image {
             width: 100px;
             height: 80px;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
+        
         .modal {
             display: none;
             position: fixed;
@@ -288,6 +334,7 @@
             height: 100%;
             background-color: rgba(0,0,0,0.5);
         }
+        
         .modal-content {
             background-color: #fefefe;
             padding: 20px;
@@ -299,6 +346,7 @@
             overflow-y: auto;
             margin: 50px auto;
         }
+        
         .close {
             color: #aaa;
             float: right;
@@ -309,12 +357,14 @@
             right: 15px;
             cursor: pointer;
         }
+        
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+        
         .modal-input {
             width: 100%;
             padding: 10px;
@@ -322,6 +372,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        
         .modal-button {
             background-color: #4285F4;
             color: white;
@@ -332,9 +383,11 @@
             width: 100%;
             margin-top: 10px;
         }
+        
         #backOffice {
             display: none;
         }
+        
         .back-office-header {
             background-color: #2F3746;
             color: white;
@@ -344,6 +397,7 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        
         .tasks-container, .leads-container {
             background: white;
             padding: 20px;
@@ -351,17 +405,21 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+        
         .task-item, .lead-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
         }
+        
         .task-item:last-child, .lead-item:last-child {
             border-bottom: none;
         }
+        
         .task-item:hover, .lead-item:hover {
             background-color: #f9fafb;
         }
+        
         .back-to-front {
             background-color: #4F46E5;
             color: white;
@@ -371,6 +429,7 @@
             cursor: pointer;
             margin-bottom: 20px;
         }
+        
         .detail-view {
             display: none;
             background: white;
@@ -379,40 +438,49 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+        
         .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 15px;
         }
+        
         .action-button {
             padding: 8px 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
         }
+        
         .btn-complete {
             background-color: #10B981;
             color: white;
         }
+        
         .btn-edit {
             background-color: #3B82F6;
             color: white;
         }
+        
         .btn-delete {
             background-color: #EF4444;
             color: white;
         }
+        
         .btn-cancel {
             background-color: #6B7280;
             color: white;
         }
+        
         .btn-save {
             background-color: #10B981;
             color: white;
         }
+        
         .status-filter {
             margin-bottom: 15px;
         }
+        
         .comment-box {
             margin-top: 15px;
             padding: 10px;
@@ -420,9 +488,11 @@
             border-radius: 6px;
             background-color: #f9fafb;
         }
+        
         .comment-toolbar {
             margin-bottom: 10px;
         }
+        
         .comment-toolbar button {
             padding: 5px 10px;
             margin-right: 5px;
@@ -431,6 +501,7 @@
             background-color: white;
             cursor: pointer;
         }
+        
         .comment-textarea {
             width: 100%;
             min-height: 100px;
@@ -439,12 +510,15 @@
             border-radius: 6px;
             resize: vertical;
         }
+        
         .highlight {
             background-color: yellow;
         }
+        
         .bold {
             font-weight: bold;
         }
+        
         #submissionModal {
             position: fixed;
             top: 0; left: 0;
@@ -453,6 +527,7 @@
             display: none;
             z-index: 1000;
         }
+        
         #submissionModal .modal-content {
             background: white;
             padding: 20px;
@@ -461,6 +536,7 @@
             margin: 100px auto;
             text-align: center;
         }
+        
         #submissionModal .ok-button {
             margin-top: 10px;
             padding: 10px 20px;
@@ -470,6 +546,7 @@
             border: none;
             border-radius: 5px;
         }
+        
         #celebration {
             position: fixed;
             top:0; left:0; width:100%; height:100%;
@@ -482,19 +559,23 @@
             text-align: center;
             color: white;
         }
+        
         .emoji-animated {
             animation: pulse 1s infinite;
         }
+        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
+        
         .overlay {
             display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5); z-index: 999;
         }
+        
         .overlay.active { display: block; }
         
         .move-modal {
@@ -504,6 +585,7 @@
             padding: 20px; width: 500px; z-index: 1000;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        
         .move-modal.active { display: block; }
         
         .action-buttons-lead {
@@ -513,6 +595,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+        
         .action-button-lead {
             padding: 8px 15px;
             border: none;
@@ -521,22 +604,27 @@
             font-size: 14px;
             transition: all 0.3s ease;
         }
+        
         .action-button-lead:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        
         .btn-view-lead {
             background-color: #10B981;
             color: white;
         }
+        
         .btn-edit-lead {
             background-color: #3B82F6;
             color: white;
         }
+        
         .btn-delete-lead {
             background-color: #EF4444;
             color: white;
         }
+        
         .btn-move-lead {
             background-color: #8B5CF6;
             color: white;
@@ -547,11 +635,13 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
         }
+        
         .lead-detail-label {
             font-weight: bold;
             color: #4B5563;
             margin-bottom: 5px;
         }
+        
         .lead-detail-value {
             color: #374151;
         }
@@ -572,15 +662,19 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             border-radius: 8px;
         }
+        
         .move-modal.active { display: block; }
+        
         .move-modal ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+        
         .move-modal li {
             margin-bottom: 10px;
         }
+        
         .move-modal button {
             width: 100%;
             padding: 10px;
@@ -591,10 +685,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        
         .move-modal button:hover {
             background-color: #4338CA;
             transform: translateY(-2px);
         }
+        
         .move-modal .close {
             position: absolute;
             top: 10px;
@@ -603,6 +699,7 @@
             cursor: pointer;
             color: #aaa;
         }
+        
         .move-modal h3 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -616,6 +713,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+        
         .search-input {
             width: 100%;
             padding: 12px;
@@ -624,15 +722,18 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
+        
         .search-input:focus {
             outline: none;
             border-color: #4F46E5;
         }
+        
         .search-results {
             margin-top: 15px;
             max-height: 400px;
             overflow-y: auto;
         }
+        
         .search-result-item {
             padding: 15px;
             border: 1px solid #E5E7EB;
@@ -641,24 +742,29 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        
         .search-result-item:hover {
             background-color: #F3F4F6;
             border-color: #4F46E5;
         }
+        
         .search-result-name {
             font-weight: bold;
             color: #1F2937;
             margin-bottom: 5px;
         }
+        
         .search-result-details {
             font-size: 14px;
             color: #6B7280;
         }
+        
         .no-results {
             text-align: center;
             padding: 20px;
             color: #9CA3AF;
         }
+        
         html {
             scroll-behavior: smooth;
         }
@@ -671,21 +777,25 @@
             margin-bottom: 20px;
             display: none;
         }
+        
         .roi-input-group {
             margin-bottom: 15px;
         }
+        
         .roi-input-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
             color: #4B5563;
         }
+        
         .roi-input-group input {
             width: 100%;
             padding: 10px;
             border: 1px solid #D1D5DB;
             border-radius: 5px;
         }
+        
         .roi-results {
             margin-top: 20px;
             padding: 15px;
@@ -693,6 +803,7 @@
             border-radius: 8px;
             border: 1px solid #E5E7EB;
         }
+        
         .roi-result-item {
             display: flex;
             justify-content: space-between;
@@ -700,23 +811,28 @@
             padding-bottom: 10px;
             border-bottom: 1px solid #E5E7EB;
         }
+        
         .roi-result-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
+        
         .roi-result-label {
             font-weight: 500;
             color: #4B5563;
         }
+        
         .roi-result-value {
             font-weight: 600;
             color: #1F2937;
         }
+        
         .roi-highlight {
             color: #10B981;
             font-weight: 700;
         }
+        
         .roi-percentage {
             font-size: 1.2rem;
             font-weight: 700;
@@ -727,6 +843,7 @@
             background-color: #ECFDF5;
             border-radius: 8px;
         }
+        
         .roi-button {
             background-color: #4F46E5;
             color: white;
@@ -739,9 +856,11 @@
             margin-top: 10px;
             transition: background-color 0.3s;
         }
+        
         .roi-button:hover {
             background-color: #4338CA;
         }
+        
         .roi-link {
             display: block;
             text-align: center;
@@ -750,9 +869,11 @@
             text-decoration: none;
             font-weight: 500;
         }
+        
         .roi-link:hover {
             text-decoration: underline;
         }
+        
         .roi-toggle-button {
             background-color: #10B981;
             color: white;
@@ -767,10 +888,12 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .roi-toggle-button:hover {
             background-color: #0da271;
             transform: translateY(-2px);
         }
+        
         .crm-toggle-button {
             background-color: #3B82F6;
             color: white;
@@ -785,10 +908,12 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .crm-toggle-button:hover {
             background-color: #2563eb;
             transform: translateY(-2px);
         }
+        
         .telemarketing-toggle-button {
             background-color: #F59E0B;
             color: white;
@@ -803,6 +928,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .telemarketing-toggle-button:hover {
             background-color: #D97706;
             transform: translateY(-2px);
@@ -822,6 +948,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .analysis-toggle-button:hover {
             background-color: #7C3AED;
             transform: translateY(-2px);
@@ -841,6 +968,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .credit-repair-toggle-button:hover {
             background-color: #DB2777;
             transform: translateY(-2px);
@@ -860,6 +988,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .web-analysis-toggle-button:hover {
             background-color: #0891B2;
             transform: translateY(-2px);
@@ -879,6 +1008,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .analysis-insight-toggle-button:hover {
             background-color: #654321;
             transform: translateY(-2px);
@@ -898,6 +1028,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .webswan-spin-toggle-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -917,6 +1048,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .ws-insight-toggle-button:hover {
             background-color: #6D28D9;
             transform: translateY(-2px);
@@ -936,8 +1068,30 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .webswan-intake-toggle-button:hover {
             background-color: #047857;
+            transform: translateY(-2px);
+        }
+
+        /* NEW COLLABORATOR BUTTON STYLES */
+        .collaborator-toggle-button {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .collaborator-toggle-button:hover {
+            background-color: #7C3AED;
             transform: translateY(-2px);
         }
 
@@ -956,6 +1110,7 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .cookie-accessibility-toggle-button:hover {
             background-color: #B91C1C;
             transform: translateY(-2px);
@@ -976,28 +1131,9 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
+        
         .calendar-toggle-button:hover {
             background-color: #7C3AED;
-            transform: translateY(-2px);
-        }
-        
-        /* NEW COMPLIANCE AUDIT BUTTON STYLES */
-        .compliance-audit-toggle-button {
-            background-color: #1E40AF;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        .compliance-audit-toggle-button:hover {
-            background-color: #1E3A8A;
             transform: translateY(-2px);
         }
         
@@ -1163,6 +1299,7 @@
                                 <option>Restaurant</option>
                                 <option>Beautician/Hairdresser/Barber</option>
                                 <option>High-Tech</option>
+                                <option>Collaborator</option>
                                 <option>Other</option>
                             </select>
                         </div>
@@ -1278,7 +1415,7 @@
             </div>
         </div>
 
-        <!-- ALL TOGGLE BUTTONS PROPERLY IMPLEMENTED -->
+        <!-- ALL TOGGLE BUTTONS INCLUDING COLLABORATOR -->
         <div class="flex gap-4 mb-4 flex-wrap">
             <!-- NEW CALENDAR BUTTON -->
             <button id="calendarToggleButton" class="calendar-toggle-button">
@@ -1291,6 +1428,12 @@
             <button id="crmToggleButton" class="crm-toggle-button">
                 <i class="fas fa-users"></i> CRM Dashboard
             </button>
+            
+            <!-- NEW COLLABORATOR BUTTON -->
+            <button id="collaboratorToggleButton" class="collaborator-toggle-button">
+                <i class="fas fa-handshake"></i> Collaborator Leads
+            </button>
+            
             <button id="telemarketingToggleButton" class="telemarketing-toggle-button">
                 <i class="fas fa-lightbulb"></i> Telemarketing Form
             </button>
@@ -1319,10 +1462,6 @@
             <!-- NEW COOKIE & ACCESSIBILITY BUTTON -->
             <button id="cookieAccessibilityToggleButton" class="cookie-accessibility-toggle-button">
                 <i class="fas fa-cookie"></i> Cookie & Accessibility
-            </button>
-            <!-- NEW COMPLIANCE AUDIT BUTTON -->
-            <button id="complianceAuditToggleButton" class="compliance-audit-toggle-button">
-                <i class="fas fa-clipboard-check"></i> WebSwan Compliance Audit
             </button>
         </div>
 
@@ -1472,6 +1611,7 @@
                         <option value="website_demo">Website Demo</option>
                         <option value="call_backs">Call Backs</option>
                         <option value="send_email">Send Email</option>
+                        <option value="collaborator">Collaborator</option> <!-- ADDED COLLABORATOR OPTION -->
                     </select>
                     <button id="refreshLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ml-2">
                         <i class="fas fa-sync-alt"></i> Refresh Leads
@@ -1483,6 +1623,24 @@
                 </div>
                 
                 <div id="leadsList" class="leads-list">
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW COLLABORATOR SECTION -->
+        <div id="collaboratorSection" class="roi-container" style="display: none;">
+            <h2 class="text-2xl font-bold mb-6">Collaborator Leads</h2>
+            <p class="mb-4">Manage your collaborator relationships and partnerships.</p>
+            
+            <div class="leads-container">
+                <div class="status-filter">
+                    <button id="refreshCollaboratorLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                        <i class="fas fa-sync-alt"></i> Refresh Collaborator Leads
+                    </button>
+                </div>
+                
+                <div id="collaboratorLeadsList" class="leads-list">
+                    <!-- Collaborator leads will be displayed here -->
                 </div>
             </div>
         </div>
@@ -1729,33 +1887,6 @@
             
             <a href="https://access-coo-ws.vercel.app/" target="_blank" class="roi-link">View Cookie & Accessibility →</a>
         </div>
-
-        <!-- NEW COMPLIANCE AUDIT SECTION -->
-        <div id="complianceAuditSection" class="roi-container">
-            <h2 class="text-2xl font-bold mb-6">WebSwan Compliance Audit</h2>
-            <p class="mb-4">Access your WebSwan Compliance Audit tool for comprehensive compliance checking and reporting.</p>
-            
-            <div class="roi-results">
-                <div class="roi-result-item">
-                    <span class="roi-result-label">Tool Status:</span>
-                    <span class="roi-result-value">Ready to Use</span>
-                </div>
-                <div class="roi-result-item">
-                    <span class="roi-result-label">Last Updated:</span>
-                    <span class="roi-result-value">Recently</span>
-                </div>
-                <div class="roi-result-item">
-                    <span class="roi-result-label">Features:</span>
-                    <span class="roi-result-value">Compliance Checking, Audit Reporting, Standards Verification</span>
-                </div>
-            </div>
-            
-            <button id="openComplianceAudit" class="roi-button" style="background-color: #1E40AF;">
-                <i class="fas fa-external-link-alt"></i> Open WebSwan Compliance Audit
-            </button>
-            
-            <a href="https://taniad2169.github.io/WS-Audit/" target="_blank" class="roi-link">View WebSwan Compliance Audit →</a>
-        </div>
     </div>
 </div>
 
@@ -1889,6 +2020,7 @@
         <li><button onclick="moveLead('website_demo')">Website Demo</button></li>
         <li><button onclick="moveLead('call_backs')">Call Backs</button></li>
         <li><button onclick="moveLead('send_email')">Send Email</button></li>
+        <li><button onclick="moveLead('collaborator')">Collaborator</button></li> <!-- ADDED COLLABORATOR OPTION -->
     </ul>
 </div>
 
@@ -2133,6 +2265,12 @@
             refreshLeadsBtn.addEventListener('click', loadLeads);
         }
 
+        // Refresh collaborator leads button
+        const refreshCollaboratorLeadsBtn = document.getElementById('refreshCollaboratorLeadsBtn');
+        if (refreshCollaboratorLeadsBtn) {
+            refreshCollaboratorLeadsBtn.addEventListener('click', loadCollaboratorLeads);
+        }
+
         // Search functionality
         const searchLeadInput = document.getElementById('searchLeadInput');
         if (searchLeadInput) {
@@ -2275,9 +2413,10 @@
     // Setup toggle buttons
     function setupToggleButtons() {
         const toggleButtons = [
-            { id: 'calendarToggleButton', func: openCalendar }, // NEW CALENDAR BUTTON
+            { id: 'calendarToggleButton', func: openCalendar },
             { id: 'roiToggleButton', func: showROICalculator },
             { id: 'crmToggleButton', func: showCRMDashboard },
+            { id: 'collaboratorToggleButton', func: showCollaboratorLeads }, // NEW COLLABORATOR BUTTON
             { id: 'telemarketingToggleButton', func: showTelemarketingForm },
             { id: 'analysisToggleButton', func: showAnalysisResult },
             { id: 'creditRepairToggleButton', func: showCreditRepairCRM },
@@ -2286,8 +2425,7 @@
             { id: 'webswanSpinToggleButton', func: showWebSwanSpin },
             { id: 'wsInsightToggleButton', func: showWSInsight },
             { id: 'webswanIntakeToggleButton', func: showWebSwanIntake },
-            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility }, // NEW COOKIE BUTTON
-            { id: 'complianceAuditToggleButton', func: showComplianceAudit } // NEW COMPLIANCE AUDIT BUTTON
+            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility }
         ];
         
         toggleButtons.forEach(button => {
@@ -2312,8 +2450,7 @@
             { id: 'openWebSwanSpin', func: openWebSwanSpin },
             { id: 'openWSInsight', func: openWSInsight },
             { id: 'openWebSwanIntake', func: openWebSwanIntake },
-            { id: 'openCookieAccessibility', func: openCookieAccessibility }, // NEW COOKIE BUTTON
-            { id: 'openComplianceAudit', func: openComplianceAudit } // NEW COMPLIANCE AUDIT BUTTON
+            { id: 'openCookieAccessibility', func: openCookieAccessibility }
         ];
         
         externalButtons.forEach(button => {
@@ -2344,7 +2481,13 @@
         
         // Add timestamp and default status
         data.createdAt = new Date();
-        data.status = "all";
+        
+        // Set status based on industry selection
+        if (data.industry === 'Collaborator') {
+            data.status = "collaborator";
+        } else {
+            data.status = "all";
+        }
         
         try {
             // Show loading state
@@ -2516,6 +2659,16 @@
         }, 100);
     }
 
+    // NEW COLLABORATOR FUNCTION
+    function showCollaboratorLeads() {
+        hideAllSections();
+        document.getElementById('collaboratorSection').style.display = 'block';
+        console.log("Showing Collaborator Leads");
+        
+        // Load collaborator leads
+        loadCollaboratorLeads();
+    }
+
     function showTelemarketingForm() {
         hideAllSections();
         document.getElementById('telemarketingSection').style.display = 'block';
@@ -2564,27 +2717,18 @@
         console.log("Showing WebSwan Intake");
     }
 
-    // NEW COOKIE & ACCESSIBILITY FUNCTION
     function showCookieAccessibility() {
         hideAllSections();
         document.getElementById('cookieAccessibilitySection').style.display = 'block';
         console.log("Showing Cookie & Accessibility");
     }
 
-    // NEW COMPLIANCE AUDIT FUNCTION
-    function showComplianceAudit() {
-        hideAllSections();
-        document.getElementById('complianceAuditSection').style.display = 'block';
-        console.log("Showing Compliance Audit");
-    }
-
     function hideAllSections() {
         const sections = [
-            'roiContainer', 'crmDashboard', 'telemarketingSection', 
+            'roiContainer', 'crmDashboard', 'collaboratorSection', 'telemarketingSection', 
             'analysisResultSection', 'creditRepairSection', 'webAnalysisSection',
             'analysisInsightSection', 'webswanSpinSection',
-            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection',
-            'complianceAuditSection' // ADDED COMPLIANCE AUDIT SECTION
+            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection'
         ];
         
         sections.forEach(id => {
@@ -2636,16 +2780,9 @@
         console.log("Opening WebSwan Intake");
     }
 
-    // NEW COOKIE & ACCESSIBILITY FUNCTION
     function openCookieAccessibility() {
         window.open('https://access-coo-ws.vercel.app/', '_blank');
         console.log("Opening Cookie & Accessibility");
-    }
-
-    // NEW COMPLIANCE AUDIT FUNCTION
-    function openComplianceAudit() {
-        window.open('https://taniad2169.github.io/WS-Audit/', '_blank');
-        console.log("Opening Compliance Audit");
     }
 
     // Lead management functions
@@ -2846,6 +2983,64 @@
         if (taskDetail) {
             taskDetail.style.display = 'none';
         }
+    }
+
+    // NEW COLLABORATOR LEAD FUNCTIONS
+    async function loadCollaboratorLeads() {
+        try {
+            const leadsRef = collection(db, "leads");
+            const q = query(leadsRef, where("status", "==", "collaborator"));
+            const querySnapshot = await getDocs(q);
+            
+            const leads = [];
+            querySnapshot.forEach((docSnap) => {
+                const leadData = { 
+                    id: docSnap.id, 
+                    ...docSnap.data()
+                };
+                leads.push(leadData);
+            });
+            
+            displayCollaboratorLeads(leads);
+        } catch (error) {
+            console.error("Error loading collaborator leads:", error);
+        }
+    }
+
+    function displayCollaboratorLeads(leads) {
+        const container = document.getElementById('collaboratorLeadsList');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        if (leads.length === 0) {
+            container.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No collaborator leads found.</div>';
+            return;
+        }
+        
+        leads.forEach(lead => {
+            const leadItem = document.createElement('div');
+            leadItem.classList.add('lead-item');
+            leadItem.dataset.id = lead.id;
+            leadItem.dataset.lead = JSON.stringify(lead);
+            
+            leadItem.innerHTML = `
+                <div class="font-bold">${lead.name}</div>
+                <div class="text-sm text-gray-600">${lead.company || 'No company'} - Collaborator</div>
+                <div class="text-xs text-gray-500">${lead.industry || ''} | ${lead.email || ''}</div>
+            `;
+            container.appendChild(leadItem);
+        });
+
+        // Add click event to open lead details
+        container.addEventListener('click', function(e) {
+            const leadItem = e.target.closest('.lead-item');
+            if (leadItem) {
+                const leadData = JSON.parse(leadItem.dataset.lead);
+                currentLeadId = leadItem.dataset.id;
+                openLead(leadData);
+            }
+        });
     }
 
     // Make functions globally available
@@ -3100,6 +3295,7 @@
             else if (lead.status === 'website_demo') statusDisplay = 'Website Demo';
             else if (lead.status === 'call_backs') statusDisplay = 'Call Backs';
             else if (lead.status === 'send_email') statusDisplay = 'Send Email';
+            else if (lead.status === 'collaborator') statusDisplay = 'Collaborator';
             
             leadItem.innerHTML = `
                 <div class="font-bold">${lead.name}</div>
@@ -3165,7 +3361,7 @@
       try {
         const leadData = {
           ...data,
-          status: "all",
+          status: data.industry === 'Collaborator' ? "collaborator" : "all",
           createdAt: new Date()
         };
         
