@@ -7,32 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-        
         body {
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            color: #333;
-            line-height: 1.6;
         }
-        
         body.modal-open {
             overflow: hidden;
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
-        
         .header {
             background-color: #2F3746;
             color: white;
@@ -42,7 +31,6 @@
             text-align: center;
             position: relative;
         }
-        
         .target-widget {
             background: #14395d;
             border-radius: 22px 38px 33px 33px/38px 38px 33px 33px;
@@ -59,7 +47,6 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.10);
             z-index: 1000;
         }
-        
         .target-btn {
             background: none;
             border: none;
@@ -70,18 +57,15 @@
             transition: transform 0.1s ease;
             user-select: none;
         }
-        
         .target-btn:active {
             transform: scale(0.95) !important;
         }
-        
         .target-count {
             color:#fff;
             font-size:1.1rem;
             font-weight: bold;
             margin-left: 7px;
         }
-        
         .target-reset-btn {
             background: #e5f1fa;
             border: none;
@@ -97,11 +81,9 @@
             transition: transform 0.1s ease;
             user-select: none;
         }
-        
         .target-reset-btn:active {
             transform: scale(0.95) !important;
         }
-        
         .footer {
             background-color: #2F3746;
             color: white;
@@ -116,7 +98,6 @@
             justify-content: center;
             gap: 10px;
         }
-        
         .footer-laptop-container {
             width: 150px;
             height: 100px;
@@ -128,23 +109,19 @@
             border-radius: 8px;
             font-size: 0.875rem;
         }
-        
         .footer-verse {
             font-size: 1.125rem;
             font-style: italic;
             margin-bottom: 10px;
         }
-        
         .footer-countdown-section {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
         .footer-countdown-label {
             font-size: 1rem;
         }
-        
         .footer-countdown-select {
             padding: 5px;
             border-radius: 5px;
@@ -152,7 +129,6 @@
             background-color: #374151;
             color: white;
         }
-        
         .footer-countdown-value {
             font-size: 1.5rem;
             font-weight: bold;
@@ -162,7 +138,6 @@
             min-width: 60px;
             text-align: center;
         }
-        
         .footer-lock-btn {
             background-color: transparent;
             border: none;
@@ -173,44 +148,36 @@
             z-index: 1000;
             color: gold;
         }
-        
         .footer-lock-btn:active {
             transform: scale(0.95) !important;
         }
-        
         #countdownDisplay {
             font-size: 18px;
             font-weight: bold;
             color: #333;
             margin: 15px 0;
         }
-        
         #countdown {
             color: red;
             font-size: 20px;
         }
-        
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #4B5563;
         }
-        
         .form-row {
             display: flex;
             gap: 1rem;
         }
-        
         .form-row > .form-group {
             flex: 1;
             margin-bottom: 0;
         }
-        
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.75rem;
@@ -218,11 +185,9 @@
             border-radius: 0.5rem;
             font-size: 1rem;
         }
-        
         .hidden {
             display: none;
         }
-        
         .google-sheet-button {
             display: flex;
             align-items: center;
@@ -238,19 +203,16 @@
             margin-top: 20px;
             font-weight: bold;
         }
-        
         .google-sheet-button:hover {
             background: #0c8047;
             transform: translateY(-2px);
         }
-        
         .laptop-animation {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 20px 0;
         }
-        
         .laptop {
             width: 200px;
             height: 150px;
@@ -261,7 +223,6 @@
             transform: perspective(500px) rotateY(10deg);
             animation: float 3s ease-in-out infinite;
         }
-        
         .laptop-screen {
             width: 180px;
             height: 120px;
@@ -277,7 +238,6 @@
             font-weight: bold;
             overflow: hidden;
         }
-        
         .laptop-screen::before {
             content: "";
             position: absolute;
@@ -286,7 +246,6 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             animation: shine 2s infinite;
         }
-        
         .laptop-keyboard {
             width: 190px;
             height: 10px;
@@ -296,7 +255,6 @@
             bottom: 10px;
             left: 5px;
         }
-        
         .laptop-base {
             width: 220px;
             height: 10px;
@@ -306,24 +264,20 @@
             bottom: -10px;
             left: -10px;
         }
-        
         @keyframes float {
             0%, 100% { transform: perspective(500px) rotateY(10deg) translateY(0); }
             50% { transform: perspective(500px) rotateY(10deg) translateY(-10px); }
         }
-        
         @keyframes shine {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        
         .swan-image {
             width: 100px;
             height: 80px;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
-        
         .modal {
             display: none;
             position: fixed;
@@ -334,7 +288,6 @@
             height: 100%;
             background-color: rgba(0,0,0,0.5);
         }
-        
         .modal-content {
             background-color: #fefefe;
             padding: 20px;
@@ -346,7 +299,6 @@
             overflow-y: auto;
             margin: 50px auto;
         }
-        
         .close {
             color: #aaa;
             float: right;
@@ -357,14 +309,12 @@
             right: 15px;
             cursor: pointer;
         }
-        
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-        
         .modal-input {
             width: 100%;
             padding: 10px;
@@ -372,7 +322,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        
         .modal-button {
             background-color: #4285F4;
             color: white;
@@ -383,11 +332,9 @@
             width: 100%;
             margin-top: 10px;
         }
-        
         #backOffice {
             display: none;
         }
-        
         .back-office-header {
             background-color: #2F3746;
             color: white;
@@ -397,7 +344,6 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        
         .tasks-container, .leads-container {
             background: white;
             padding: 20px;
@@ -405,21 +351,17 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-        
         .task-item, .lead-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
         }
-        
         .task-item:last-child, .lead-item:last-child {
             border-bottom: none;
         }
-        
         .task-item:hover, .lead-item:hover {
             background-color: #f9fafb;
         }
-        
         .back-to-front {
             background-color: #4F46E5;
             color: white;
@@ -429,7 +371,6 @@
             cursor: pointer;
             margin-bottom: 20px;
         }
-        
         .detail-view {
             display: none;
             background: white;
@@ -438,49 +379,40 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-        
         .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 15px;
         }
-        
         .action-button {
             padding: 8px 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
         }
-        
         .btn-complete {
             background-color: #10B981;
             color: white;
         }
-        
         .btn-edit {
             background-color: #3B82F6;
             color: white;
         }
-        
         .btn-delete {
             background-color: #EF4444;
             color: white;
         }
-        
         .btn-cancel {
             background-color: #6B7280;
             color: white;
         }
-        
         .btn-save {
             background-color: #10B981;
             color: white;
         }
-        
         .status-filter {
             margin-bottom: 15px;
         }
-        
         .comment-box {
             margin-top: 15px;
             padding: 10px;
@@ -488,11 +420,9 @@
             border-radius: 6px;
             background-color: #f9fafb;
         }
-        
         .comment-toolbar {
             margin-bottom: 10px;
         }
-        
         .comment-toolbar button {
             padding: 5px 10px;
             margin-right: 5px;
@@ -501,7 +431,6 @@
             background-color: white;
             cursor: pointer;
         }
-        
         .comment-textarea {
             width: 100%;
             min-height: 100px;
@@ -510,15 +439,12 @@
             border-radius: 6px;
             resize: vertical;
         }
-        
         .highlight {
             background-color: yellow;
         }
-        
         .bold {
             font-weight: bold;
         }
-        
         #submissionModal {
             position: fixed;
             top: 0; left: 0;
@@ -527,7 +453,6 @@
             display: none;
             z-index: 1000;
         }
-        
         #submissionModal .modal-content {
             background: white;
             padding: 20px;
@@ -536,7 +461,6 @@
             margin: 100px auto;
             text-align: center;
         }
-        
         #submissionModal .ok-button {
             margin-top: 10px;
             padding: 10px 20px;
@@ -546,7 +470,6 @@
             border: none;
             border-radius: 5px;
         }
-        
         #celebration {
             position: fixed;
             top:0; left:0; width:100%; height:100%;
@@ -559,23 +482,19 @@
             text-align: center;
             color: white;
         }
-        
         .emoji-animated {
             animation: pulse 1s infinite;
         }
-        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-        
         .overlay {
             display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5); z-index: 999;
         }
-        
         .overlay.active { display: block; }
         
         .move-modal {
@@ -585,7 +504,6 @@
             padding: 20px; width: 500px; z-index: 1000;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        
         .move-modal.active { display: block; }
         
         .action-buttons-lead {
@@ -595,7 +513,6 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        
         .action-button-lead {
             padding: 8px 15px;
             border: none;
@@ -604,27 +521,22 @@
             font-size: 14px;
             transition: all 0.3s ease;
         }
-        
         .action-button-lead:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        
         .btn-view-lead {
             background-color: #10B981;
             color: white;
         }
-        
         .btn-edit-lead {
             background-color: #3B82F6;
             color: white;
         }
-        
         .btn-delete-lead {
             background-color: #EF4444;
             color: white;
         }
-        
         .btn-move-lead {
             background-color: #8B5CF6;
             color: white;
@@ -635,13 +547,11 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
         }
-        
         .lead-detail-label {
             font-weight: bold;
             color: #4B5563;
             margin-bottom: 5px;
         }
-        
         .lead-detail-value {
             color: #374151;
         }
@@ -662,19 +572,15 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             border-radius: 8px;
         }
-        
         .move-modal.active { display: block; }
-        
         .move-modal ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        
         .move-modal li {
             margin-bottom: 10px;
         }
-        
         .move-modal button {
             width: 100%;
             padding: 10px;
@@ -685,12 +591,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
         .move-modal button:hover {
             background-color: #4338CA;
             transform: translateY(-2px);
         }
-        
         .move-modal .close {
             position: absolute;
             top: 10px;
@@ -699,7 +603,6 @@
             cursor: pointer;
             color: #aaa;
         }
-        
         .move-modal h3 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -713,7 +616,6 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-        
         .search-input {
             width: 100%;
             padding: 12px;
@@ -722,18 +624,15 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
-        
         .search-input:focus {
             outline: none;
             border-color: #4F46E5;
         }
-        
         .search-results {
             margin-top: 15px;
             max-height: 400px;
             overflow-y: auto;
         }
-        
         .search-result-item {
             padding: 15px;
             border: 1px solid #E5E7EB;
@@ -742,29 +641,24 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
         .search-result-item:hover {
             background-color: #F3F4F6;
             border-color: #4F46E5;
         }
-        
         .search-result-name {
             font-weight: bold;
             color: #1F2937;
             margin-bottom: 5px;
         }
-        
         .search-result-details {
             font-size: 14px;
             color: #6B7280;
         }
-        
         .no-results {
             text-align: center;
             padding: 20px;
             color: #9CA3AF;
         }
-        
         html {
             scroll-behavior: smooth;
         }
@@ -777,25 +671,21 @@
             margin-bottom: 20px;
             display: none;
         }
-        
         .roi-input-group {
             margin-bottom: 15px;
         }
-        
         .roi-input-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
             color: #4B5563;
         }
-        
         .roi-input-group input {
             width: 100%;
             padding: 10px;
             border: 1px solid #D1D5DB;
             border-radius: 5px;
         }
-        
         .roi-results {
             margin-top: 20px;
             padding: 15px;
@@ -803,7 +693,6 @@
             border-radius: 8px;
             border: 1px solid #E5E7EB;
         }
-        
         .roi-result-item {
             display: flex;
             justify-content: space-between;
@@ -811,28 +700,23 @@
             padding-bottom: 10px;
             border-bottom: 1px solid #E5E7EB;
         }
-        
         .roi-result-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
-        
         .roi-result-label {
             font-weight: 500;
             color: #4B5563;
         }
-        
         .roi-result-value {
             font-weight: 600;
             color: #1F2937;
         }
-        
         .roi-highlight {
             color: #10B981;
             font-weight: 700;
         }
-        
         .roi-percentage {
             font-size: 1.2rem;
             font-weight: 700;
@@ -843,7 +727,6 @@
             background-color: #ECFDF5;
             border-radius: 8px;
         }
-        
         .roi-button {
             background-color: #4F46E5;
             color: white;
@@ -856,11 +739,9 @@
             margin-top: 10px;
             transition: background-color 0.3s;
         }
-        
         .roi-button:hover {
             background-color: #4338CA;
         }
-        
         .roi-link {
             display: block;
             text-align: center;
@@ -869,11 +750,9 @@
             text-decoration: none;
             font-weight: 500;
         }
-        
         .roi-link:hover {
             text-decoration: underline;
         }
-        
         .roi-toggle-button {
             background-color: #10B981;
             color: white;
@@ -888,12 +767,10 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .roi-toggle-button:hover {
             background-color: #0da271;
             transform: translateY(-2px);
         }
-        
         .crm-toggle-button {
             background-color: #3B82F6;
             color: white;
@@ -908,12 +785,10 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .crm-toggle-button:hover {
             background-color: #2563eb;
             transform: translateY(-2px);
         }
-        
         .telemarketing-toggle-button {
             background-color: #F59E0B;
             color: white;
@@ -928,7 +803,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .telemarketing-toggle-button:hover {
             background-color: #D97706;
             transform: translateY(-2px);
@@ -948,7 +822,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .analysis-toggle-button:hover {
             background-color: #7C3AED;
             transform: translateY(-2px);
@@ -968,7 +841,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .credit-repair-toggle-button:hover {
             background-color: #DB2777;
             transform: translateY(-2px);
@@ -988,7 +860,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .web-analysis-toggle-button:hover {
             background-color: #0891B2;
             transform: translateY(-2px);
@@ -1008,7 +879,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .analysis-insight-toggle-button:hover {
             background-color: #654321;
             transform: translateY(-2px);
@@ -1028,7 +898,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .webswan-spin-toggle-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -1048,7 +917,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .ws-insight-toggle-button:hover {
             background-color: #6D28D9;
             transform: translateY(-2px);
@@ -1068,30 +936,8 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .webswan-intake-toggle-button:hover {
             background-color: #047857;
-            transform: translateY(-2px);
-        }
-
-        /* NEW COLLABORATOR BUTTON STYLES */
-        .collaborator-toggle-button {
-            background-color: #8B5CF6;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .collaborator-toggle-button:hover {
-            background-color: #7C3AED;
             transform: translateY(-2px);
         }
 
@@ -1110,7 +956,6 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .cookie-accessibility-toggle-button:hover {
             background-color: #B91C1C;
             transform: translateY(-2px);
@@ -1131,9 +976,28 @@
             gap: 8px;
             transition: all 0.3s ease;
         }
-        
         .calendar-toggle-button:hover {
             background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+
+        /* NEW BRAND HUB BUTTON STYLES */
+        .brand-hub-toggle-button {
+            background-color: #FF6B6B;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .brand-hub-toggle-button:hover {
+            background-color: #FF5252;
             transform: translateY(-2px);
         }
         
@@ -1192,49 +1056,9 @@
             color: #1E40AF;
         }
 
-        /* REPORTS & ANALYSIS STYLES */
-        .reports-analysis-toggle-button {
-            background-color: #059669;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .reports-analysis-toggle-button:hover {
-            background-color: #047857;
-            transform: translateY(-2px);
-        }
-
-        .reports-tab-content {
-            display: none;
-        }
-
-        .reports-tab-content.active {
-            display: block;
-        }
-
-        .reports-tab.active {
-            border-bottom-color: #3B82F6;
-            color: #3B82F6;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* SMOOTH SCROLL STYLES */
-        .smooth-scroll-target {
-            scroll-margin-top: 20px;
+        /* Smooth scroll offset for back office sections */
+        .scroll-target {
+            scroll-margin-top: 150px;
         }
     </style>
 </head>
@@ -1344,7 +1168,6 @@
                                 <option>Restaurant</option>
                                 <option>Beautician/Hairdresser/Barber</option>
                                 <option>High-Tech</option>
-                                <option>Collaborator</option>
                                 <option>Other</option>
                             </select>
                         </div>
@@ -1460,7 +1283,7 @@
             </div>
         </div>
 
-        <!-- ALL TOGGLE BUTTONS INCLUDING REPORTS & ANALYSIS -->
+        <!-- ALL TOGGLE BUTTONS PROPERLY IMPLEMENTED -->
         <div class="flex gap-4 mb-4 flex-wrap">
             <!-- NEW CALENDAR BUTTON -->
             <button id="calendarToggleButton" class="calendar-toggle-button">
@@ -1473,17 +1296,6 @@
             <button id="crmToggleButton" class="crm-toggle-button">
                 <i class="fas fa-users"></i> CRM Dashboard
             </button>
-            
-            <!-- NEW REPORTS & ANALYSIS BUTTON -->
-            <button id="reportsAnalysisToggleButton" class="reports-analysis-toggle-button">
-                <i class="fas fa-chart-pie"></i> Reports & Analysis
-            </button>
-            
-            <!-- NEW COLLABORATOR BUTTON -->
-            <button id="collaboratorToggleButton" class="collaborator-toggle-button">
-                <i class="fas fa-handshake"></i> Collaborator Leads
-            </button>
-            
             <button id="telemarketingToggleButton" class="telemarketing-toggle-button">
                 <i class="fas fa-lightbulb"></i> Telemarketing Form
             </button>
@@ -1513,11 +1325,15 @@
             <button id="cookieAccessibilityToggleButton" class="cookie-accessibility-toggle-button">
                 <i class="fas fa-cookie"></i> Cookie & Accessibility
             </button>
+            <!-- NEW INTERACTIVE BRAND HUB BUTTON -->
+            <button id="brandHubToggleButton" class="brand-hub-toggle-button">
+                <i class="fas fa-palette"></i> Interactive Brand Hub
+            </button>
         </div>
 
         <!-- ROI Calculator Section -->
-        <div class="roi-container" id="roiContainer">
-            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">ROI Calculator</h2>
+        <div class="roi-container scroll-target" id="roiContainer">
+            <h2 class="text-2xl font-bold mb-6">ROI Calculator</h2>
             <p class="mb-4">Calculate your potential return on investment with our services.</p>
             
             <div class="roi-input-group">
@@ -1573,7 +1389,7 @@
         <!-- CRM Dashboard Section -->
         <div id="crmDashboard">
             <div class="search-lead-container">
-                <h2 class="text-2xl font-bold mb-4 smooth-scroll-target">Search Leads by Industry</h2>
+                <h2 class="text-2xl font-bold mb-4">Search Leads by Industry</h2>
                 <input 
                     type="text" 
                     id="searchLeadInput" 
@@ -1661,7 +1477,6 @@
                         <option value="website_demo">Website Demo</option>
                         <option value="call_backs">Call Backs</option>
                         <option value="send_email">Send Email</option>
-                        <option value="collaborator">Collaborator</option> <!-- ADDED COLLABORATOR OPTION -->
                     </select>
                     <button id="refreshLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ml-2">
                         <i class="fas fa-sync-alt"></i> Refresh Leads
@@ -1677,248 +1492,1968 @@
             </div>
         </div>
 
-        <!-- NEW REPORTS & ANALYSIS SECTION -->
-        <div id="reportsAnalysisSection" class="roi-container" style="display: none;">
-            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Reports & Analysis Dashboard</h2>
-            <p class="mb-4">Comprehensive analytics and reporting for your business performance.</p>
-            
-            <!-- Quick Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                    <div class="text-blue-600 font-bold text-lg">Total Hot Leads</div>
-                    <div id="totalLeadsCount" class="text-2xl font-bold">0</div>
-                    <div class="text-sm text-gray-600">Hot Leads Only</div>
-                </div>
-                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                    <div class="text-green-600 font-bold text-lg">Active Clients</div>
-                    <div id="activeClientsCount" class="text-2xl font-bold">0</div>
-                    <div class="text-sm text-gray-600">Current</div>
-                </div>
-                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                    <div class="text-purple-600 font-bold text-lg">Conversion Rate</div>
-                    <div id="conversionRate" class="text-2xl font-bold">0%</div>
-                    <div class="text-sm text-gray-600">Leads to Clients</div>
-                </div>
-            </div>
-            
-            <!-- Reports Tabs -->
-            <div class="mb-6">
-                <div class="flex border-b">
-                    <button class="py-2 px-4 border-b-2 border-blue-500 font-medium text-blue-600 reports-tab active" data-tab="lead-analysis">Lead Analysis</button>
-                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="performance">Performance Metrics</button>
-                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="industry">Industry Analysis</button>
-                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="custom">Custom Reports</button>
-                </div>
-            </div>
-            
-            <!-- Lead Analysis Tab -->
-            <div id="lead-analysis-tab" class="reports-tab-content active">
-                <h3 class="text-xl font-bold mb-4">Lead Analysis</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white p-4 rounded-lg border border-gray-200">
-                        <h4 class="font-bold mb-2">Leads by Status</h4>
-                        <div id="leadsByStatusChart" class="h-64"></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg border border-gray-200">
-                        <h4 class="font-bold mb-2">Leads by Industry</h4>
-                        <div id="leadsByIndustryChart" class="h-64"></div>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
-                    <h4 class="font-bold mb-2">Monthly Lead Trends</h4>
-                    <div id="monthlyLeadTrendsChart" class="h-64"></div>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200">
-                    <h4 class="font-bold mb-2">Lead Source Analysis</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Leads</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leadSourceTable" class="bg-white divide-y divide-gray-200">
-                                <!-- Data will be populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Performance Metrics Tab -->
-            <div id="performance-tab" class="reports-tab-content">
-                <h3 class="text-xl font-bold mb-4">Performance Metrics</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white p-4 rounded-lg border border-gray-200">
-                        <h4 class="font-bold mb-2">Task Completion Rate</h4>
-                        <div id="taskCompletionChart" class="h-64"></div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg border border-gray-200">
-                        <h4 class="font-bold mb-2">Response Time Analysis</h4>
-                        <div id="responseTimeChart" class="h-64"></div>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200">
-                    <h4 class="font-bold mb-2">Performance KPIs</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                        <div class="text-center p-4 bg-blue-50 rounded-lg">
-                            <div class="text-2xl font-bold text-blue-600" id="avgResponseTime">0h</div>
-                            <div class="text-sm text-gray-600">Avg Response Time</div>
-                        </div>
-                        <div class="text-center p-4 bg-green-50 rounded-lg">
-                            <div class="text-2xl font-bold text-green-600" id="leadToClientRate">0%</div>
-                            <div class="text-sm text-gray-600">Lead to Client Rate</div>
-                        </div>
-                        <div class="text-center p-4 bg-purple-50 rounded-lg">
-                            <div class="text-2xl font-bold text-purple-600" id="taskCompletionRate">0%</div>
-                            <div class="text-sm text-gray-600">Task Completion</div>
-                        </div>
-                        <div class="text-center p-4 bg-yellow-50 rounded-lg">
-                            <div class="text-2xl font-bold text-yellow-600" id="clientRetention">0%</div>
-                            <div class="text-sm text-gray-600">Client Retention</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Industry Analysis Tab -->
-            <div id="industry-tab" class="reports-tab-content">
-                <h3 class="text-xl font-bold mb-4">Industry Analysis</h3>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
-                    <h4 class="font-bold mb-2">Leads by Industry Type</h4>
-                    <div id="industryBreakdownChart" class="h-64"></div>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200">
-                    <h4 class="font-bold mb-2">Industry Performance Metrics</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Industry</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Leads</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Deal Size</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                                </tr>
-                            </thead>
-                            <tbody id="industryMetricsTable" class="bg-white divide-y divide-gray-200">
-                                <!-- Data will be populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Custom Reports Tab -->
-            <div id="custom-tab" class="reports-tab-content">
-                <h3 class="text-xl font-bold mb-4">Custom Reports</h3>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
-                    <h4 class="font-bold mb-2">Generate Custom Report</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
-                            <select id="reportDateRange" class="w-full p-2 border border-gray-300 rounded">
-                                <option value="7">Last 7 days</option>
-                                <option value="30" selected>Last 30 days</option>
-                                <option value="90">Last 90 days</option>
-                                <option value="365">Last 12 months</option>
-                                <option value="custom">Custom Range</option>
-                            </select>
-                        </div>
-                        <div id="customDateRange" class="hidden">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Custom Date Range</label>
-                            <div class="flex gap-2">
-                                <input type="date" id="reportStartDate" class="flex-1 p-2 border border-gray-300 rounded">
-                                <input type="date" id="reportEndDate" class="flex-1 p-2 border border-gray-300 rounded">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Report Type</label>
-                            <select id="reportType" class="w-full p-2 border border-gray-300 rounded">
-                                <option value="lead-performance">Lead Performance</option>
-                                <option value="conversion-funnel">Conversion Funnel</option>
-                                <option value="revenue-analysis">Revenue Analysis</option>
-                                <option value="task-efficiency">Task Efficiency</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Filters</label>
-                            <select id="reportFilters" class="w-full p-2 border border-gray-300 rounded" multiple>
-                                <option value="industry">By Industry</option>
-                                <option value="status">By Status</option>
-                                <option value="service">By Service</option>
-                                <option value="location">By Location</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button id="generateReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Generate Report
-                    </button>
-                </div>
-                
-                <div id="customReportResults" class="bg-white p-4 rounded-lg border border-gray-200 hidden">
-                    <h4 class="font-bold mb-2">Custom Report Results</h4>
-                    <div id="customReportContent">
-                        <!-- Report content will be generated here -->
-                    </div>
-                    <div class="mt-4 flex justify-end">
-                        <button id="exportReportBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
-                            Export to CSV
-                        </button>
-                        <button id="saveReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Save Report
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-4 rounded-lg border border-gray-200">
-                    <h4 class="font-bold mb-2">Saved Reports</h4>
-                    <div id="savedReportsList" class="space-y-2">
-                        <!-- Saved reports will be listed here -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Export Options -->
-            <div class="mt-6 flex justify-end space-x-2">
-                <button id="exportDataBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Export All Data
-                </button>
-                <button id="saveAnalysisBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Save Analysis
-                </button>
-            </div>
-        </div>
-
-        <!-- NEW COLLABORATOR SECTION - FIXED -->
-        <div id="collaboratorSection" class="roi-container" style="display: none;">
-            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Collaborator Leads</h2>
-            <p class="mb-4">Manage your collaborator relationships and partnerships.</p>
-            
-            <div class="leads-container">
-                <div class="status-filter">
-                    <button id="refreshCollaboratorLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-                        <i class="fas fa-sync-alt"></i> Refresh Collaborator Leads
-                    </button>
-                </div>
-                
-                <div id="collaboratorLeadsList" class="leads-list">
-                    <!-- Collaborator leads will be displayed here -->
-                </div>
-            </div>
-        </div>
-
         <!-- Telemarketing Section -->
-        <div id="telemarketingSection" class="roi-container">
-            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Telemark
+        <div id="telemarketingSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Telemarketing Form</h2>
+            <p class="mb-4">Access your telemarketing form to manage calls and track performance.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Form Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Call Tracking, Performance Metrics</span>
+                </div>
+            </div>
+            
+            <button id="openTelemarketingForm" class="roi-button" style="background-color: #F59E0B;">
+                <i class="fas fa-external-link-alt"></i> Open Telemarketing Form
+            </button>
+            
+            <a href="https://taniad2169.github.io/Telemarketing/" target="_blank" class="roi-link">View Telemarketing Form →</a>
+        </div>
+
+        <!-- Analysis Result Section -->
+        <div id="analysisResultSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Website Analysis Result</h2>
+            <p class="mb-4">View detailed analysis of your website performance and recommendations.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Analysis Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Performance Metrics, SEO Analysis, Recommendations</span>
+                </div>
+            </div>
+            
+            <button id="openAnalysisResult" class="roi-button" style="background-color: #8B5CF6;">
+                <i class="fas fa-external-link-alt"></i> Open Analysis Result
+            </button>
+            
+            <a href="https://taniad2169.github.io/WS-Analysis-Result/" target="_blank" class="roi-link">View Analysis Result →</a>
+        </div>
+
+        <!-- Credit Repair CRM Section -->
+        <div id="creditRepairSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Credit Repair CRM</h2>
+            <p class="mb-4">Access your Credit Repair CRM to manage clients and track progress.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">CRM Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Client Management, Progress Tracking, Document Management</span>
+                </div>
+            </div>
+            
+            <button id="openCreditRepairCRM" class="roi-button" style="background-color: #EC4899;">
+                <i class="fas fa-external-link-alt"></i> Open Credit Repair CRM
+            </button>
+            
+            <a href="https://taniad2169.github.io/Domingue_Crp/" target="_blank" class="roi-link">View Credit Repair CRM →</a>
+        </div>
+
+        <!-- Web Analysis Section -->
+        <div id="webAnalysisSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Web Analysis</h2>
+            <p class="mb-4">Access your Web Analysis tool to evaluate website performance and SEO.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">SEO Analysis, Performance Metrics, Recommendations</span>
+                </div>
+            </div>
+            
+            <button id="openWebAnalysis" class="roi-button" style="background-color: #06B6D4;">
+                <i class="fas fa-external-link-alt"></i> Open Web Analysis
+            </button>
+            
+            <a href="https://taniad2169.github.io/Test_WS/" target="_blank" class="roi-link">View Web Analysis →</a>
+        </div>
+
+        <!-- Analysis Insight Section -->
+        <div id="analysisInsightSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">WebSwan Analysis Insight</h2>
+            <p class="mb-4">Access your WebSwan Analysis Insight tool for comprehensive website analysis and insights.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Comprehensive Analysis, Performance Insights, Actionable Recommendations</span>
+                </div>
+            </div>
+            
+            <button id="openAnalysisInsight" class="roi-button" style="background-color: #8B4513;">
+                <i class="fas fa-external-link-alt"></i> Open WebSwan Analysis Insight
+            </button>
+            
+            <a href="https://taniad2169.github.io/WebSwan-Analysis-Overview/" target="_blank" class="roi-link">View WebSwan Analysis Insight →</a>
+        </div>
+
+        <!-- WebSwan Spin Section -->
+        <div id="webswanSpinSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">WebSwan Spin</h2>
+            <p class="mb-4">Access your WebSwan Spin tool for additional features and functionality.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Additional CRM Features and Tools</span>
+                </div>
+            </div>
+            
+            <button id="openWebSwanSpin" class="roi-button" style="background: linear-gradient(135deg, #08c6d4 0%, #daeced 100%);">
+                <i class="fas fa-external-link-alt"></i> Open WebSwan Spin
+            </button>
+            
+            <a href="https://taniad2169.github.io/WebSwan_spin/" target="_blank" class="roi-link">View WebSwan Spin →</a>
+        </div>
+
+        <!-- WS Insight Section -->
+        <div id="wsInsightSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">WS Insight</h2>
+            <p class="mb-4">Access your WS Insight tool for detailed business intelligence and analytics.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Business Intelligence, Analytics, Insights</span>
+                </div>
+            </div>
+            
+            <button id="openWSInsight" class="roi-button" style="background-color: #7C3AED;">
+                <i class="fas fa-external-link-alt"></i> Open WS Insight
+            </button>
+            
+            <a href="https://taniad2169.github.io/WS-Insight/" target="_blank" class="roi-link">View WS Insight →</a>
+        </div>
+
+        <!-- WebSwan Intake Section -->
+        <div id="webswanIntakeSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">WebSwan Intake</h2>
+            <p class="mb-4">Access your WebSwan Intake form for client onboarding and information collection.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Form Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Client Onboarding, Information Collection, Form Management</span>
+                </div>
+            </div>
+            
+            <button id="openWebSwanIntake" class="roi-button" style="background-color: #059669;">
+                <i class="fas fa-external-link-alt"></i> Open WebSwan Intake
+            </button>
+            
+            <a href="https://taniad2169.github.io/WebSwan-Intake/" target="_blank" class="roi-link">View WebSwan Intake →</a>
+        </div>
+
+        <!-- Cookie & Accessibility Section -->
+        <div id="cookieAccessibilitySection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Cookie & Accessibility</h2>
+            <p class="mb-4">Access your Cookie & Accessibility settings and compliance tools.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Tool Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Cookie Management, Accessibility Compliance, Privacy Settings</span>
+                </div>
+            </div>
+            
+            <button id="openCookieAccessibility" class="roi-button" style="background-color: #DC2626;">
+                <i class="fas fa-external-link-alt"></i> Open Cookie & Accessibility
+            </button>
+            
+            <a href="https://access-coo-ws.vercel.app/" target="_blank" class="roi-link">View Cookie & Accessibility →</a>
+        </div>
+
+        <!-- NEW INTERACTIVE BRAND HUB SECTION -->
+        <div id="brandHubSection" class="roi-container scroll-target">
+            <h2 class="text-2xl font-bold mb-6">Interactive Brand Hub</h2>
+            <p class="mb-4">Access your Interactive Brand Hub for comprehensive brand management and assets.</p>
+            
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Hub Status:</span>
+                    <span class="roi-result-value">Ready to Use</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Last Updated:</span>
+                    <span class="roi-result-value">Recently</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Features:</span>
+                    <span class="roi-result-value">Brand Assets, Guidelines, Templates, Marketing Materials</span>
+                </div>
+            </div>
+            
+            <button id="openBrandHub" class="roi-button" style="background-color: #FF6B6B;">
+                <i class="fas fa-external-link-alt"></i> Open Interactive Brand Hub
+            </button>
+            
+            <a href="https://taniad2169.github.io/WebSwan-Brand-Hub/" target="_blank" class="roi-link">View Interactive Brand Hub →</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="text-xl font-bold mb-4">Back Office Login</h2>
+        <input type="password" class="modal-input" placeholder="Password" id="password">
+        <button class="modal-button" id="modalLoginBtn">Login</button>
+    </div>
+</div>
+
+<div id="submissionModal" class="modal">
+    <div class="modal-content">
+        <p>Application submitted successfully!</p>
+        <button class="ok-button">OK</button>
+    </div>
+</div>
+
+<div id="celebration">
+    <div id="celebrationEmojis"></div>
+</div>
+
+<audio id="bellSound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" preload="auto"></audio>
+
+<div class="overlay" id="overlay" onclick="closeModals()"></div>
+
+<div class="modal" id="leadModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModals()">&times;</span>
+        <h2>Lead Details</h2>
+        <div class="modal-body">
+            <div id="leadDetailsView">
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Name</div>
+                    <div id="leadNameDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Company</div>
+                    <div id="leadCompanyDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Email</div>
+                    <div id="leadEmailDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Phone</div>
+                    <div id="leadPhoneDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">City</div>
+                    <div id="leadCityDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">State</div>
+                    <div id="leadStateDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Website</div>
+                    <div id="leadWebsiteDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Has Website</div>
+                    <div id="leadHasWebsiteDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Industry</div>
+                    <div id="leadIndustryDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Other Industry</div>
+                    <div id="leadOtherIndustryDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">How Long in Business</div>
+                    <div id="leadHowLongDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Type of Business</div>
+                    <div id="leadBusinessTypeDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Service Interested In</div>
+                    <div id="leadServiceDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Best Time to Contact</div>
+                    <div id="leadBestTimeDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Best Way to Contact</div>
+                    <div id="leadContactWayDisplay" class="lead-detail-value"></div>
+                </div>
+                <div class="lead-detail-group">
+                    <div class="lead-detail-label">Additional Notes</div>
+                    <div id="leadNotesDisplay" class="lead-detail-value"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons-lead">
+                <button class="action-button-lead btn-edit-lead" id="editLeadBtn">Edit</button>
+                <button class="action-button-lead btn-delete-lead" id="deleteLeadBtn">Delete</button>
+                <button class="action-button-lead btn-move-lead" id="moveLeadBtn">Move</button>
+            </div>
+
+            <div class="toolbar flex items-center mt-4">
+                <button class="p-2 border rounded" onclick="formatText('bold')"><b>B</b></button>
+                <button class="p-2 border rounded" onclick="highlightText()">Highlight</button>
+                <button class="p-2 border rounded" onclick="removeHighlight()">Remove Highlight</button>
+                <input type="color" id="colorPicker" onchange="changeColor()" title="Font Color">
+            </div>
+
+            <div id="commentBox" class="comment-box" contenteditable="true" oninput="limitWords(this, 350)"></div>
+        </div>
+    </div>
+</div>
+
+<div class="move-modal" id="moveModal">
+    <span class="close" onclick="closeModals()">&times;</span>
+    <h3>Move Lead To:</h3>
+    <ul>
+        <li><button onclick="moveLead('new')">New Leads</button></li>
+        <li><button onclick="moveLead('hot')">Hot Leads</button></li>
+        <li><button onclick="moveLead('interested')">Interested</button></li>
+        <li><button onclick="moveLead('demo')">Free Demo Scheduled</button></li>
+        <li><button onclick="moveLead('client')">Client</button></li>
+        <li><button onclick="moveLead('cancelled')">Cancelled</button></li>
+        <li><button onclick="moveLead('referral')">Referral Leads</button></li>
+        <li><button onclick="moveLead('website_analysis')">Website Analysis</button></li>
+        <li><button onclick="moveLead('website_demo')">Website Demo</button></li>
+        <li><button onclick="moveLead('call_backs')">Call Backs</button></li>
+        <li><button onclick="moveLead('send_email')">Send Email</button></li>
+    </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    // Global variables
+    let applicationsRemaining = 100;
+    let targetCount = 0;
+    let isEditingTask = false;
+    let isEditingLead = false;
+    let currentLeadId = null;
+    let currentTaskId = null;
+    let db = null;
+    let currentLeadData = null;
+    let leadsUnsubscribe = null;
+    let tasksUnsubscribe = null;
+
+    // Phone number formatting
+    function formatPhoneNumber(value) {
+        const phoneNumber = value.replace(/\D/g, '');
+        if (phoneNumber.length === 10) {
+            return `(${phoneNumber.slice(0, 3)})${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6)}`;
+        }
+        return value;
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("WebSwan CRM Initializing...");
+        
+        // Initialize countdown selector FIRST
+        initializeCountdownSelector();
+        
+        // TARGET WIDGET FIXES
+        const targetBtn = document.getElementById("targetBtn");
+        const targetCountDisplay = document.getElementById("targetCount");
+        const targetResetBtn = document.getElementById("targetResetBtn");
+
+        // Load target count from localStorage
+        if (localStorage.getItem('targetCount')) {
+            targetCount = parseInt(localStorage.getItem('targetCount'));
+            if (targetCountDisplay) {
+                targetCountDisplay.textContent = targetCount;
+            }
+        }
+
+        // Target button click handler
+        if (targetBtn && targetCountDisplay) {
+            targetBtn.addEventListener('click', function() {
+                targetCount++;
+                targetCountDisplay.textContent = targetCount;
+                localStorage.setItem('targetCount', targetCount.toString());
+                console.log("Target button clicked, count:", targetCount);
+                
+                // Add visual feedback
+                this.style.transform = "scale(0.9)";
+                setTimeout(() => {
+                    this.style.transform = "scale(1)";
+                }, 150);
+            });
+        }
+
+        // Target reset button
+        if (targetResetBtn) {
+            targetResetBtn.addEventListener('click', function() {
+                targetCount = 0;
+                if (targetCountDisplay) {
+                    targetCountDisplay.textContent = targetCount;
+                }
+                localStorage.setItem('targetCount', targetCount.toString());
+                console.log("Target reset clicked");
+                
+                // Add visual feedback
+                this.style.transform = "scale(0.9)";
+                setTimeout(() => {
+                    this.style.transform = "scale(1)";
+                }, 150);
+            });
+        }
+
+        // Phone input formatting
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('blur', function() {
+                this.value = formatPhoneNumber(this.value);
+            });
+            
+            phoneInput.addEventListener('input', function() {
+                const digits = this.value.replace(/\D/g, '');
+                if (digits.length > 10) {
+                    this.value = this.value.slice(0, -1);
+                }
+            });
+        }
+
+        // BACK OFFICE LOCK BUTTON FIX
+        const lockBtn = document.getElementById('backOfficeLock');
+        const loginModal = document.getElementById('loginModal');
+        const loginClose = document.querySelector('#loginModal .close');
+
+        if (lockBtn && loginModal) {
+            lockBtn.addEventListener('click', function() {
+                console.log("Back office lock clicked - opening login modal");
+                stopCelebration();
+                loginModal.style.display = 'block';
+                document.body.classList.add('modal-open');
+                
+                // Focus on password field
+                setTimeout(() => {
+                    const passwordField = document.getElementById('password');
+                    if (passwordField) {
+                        passwordField.focus();
+                    }
+                }, 100);
+            });
+        }
+        
+        if (loginClose) {
+            loginClose.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            });
+        }
+
+        // ENTER KEY SUPPORT FOR LOGIN
+        const passwordField = document.getElementById('password');
+        if (passwordField) {
+            passwordField.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('modalLoginBtn').click();
+                }
+            });
+        }
+
+        // Modal login
+        const modalLoginBtn = document.getElementById('modalLoginBtn');
+        if (modalLoginBtn) {
+            modalLoginBtn.addEventListener('click', function() {
+                const password = document.getElementById('password').value;
+                const correctPassword = 'colbertp';
+                
+                if (password === correctPassword) {
+                    document.getElementById('frontOffice').style.display = 'none';
+                    document.getElementById('backOffice').style.display = 'block';
+                    loginModal.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                    document.getElementById('backOffice').scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Initialize real-time listeners after successful login
+                    setTimeout(() => {
+                        if (window.initializeRealTimeListeners) {
+                            window.initializeRealTimeListeners();
+                        }
+                    }, 100);
+                    console.log("Login successful");
+                } else {
+                    alert('Incorrect password. Please try again.');
+                    console.log("Login failed - incorrect password");
+                }
+            });
+        }
+
+        // Submission modal
+        const submissionModal = document.getElementById('submissionModal');
+        const okButton = submissionModal ? submissionModal.querySelector(".ok-button") : null;
+
+        if (okButton) {
+            okButton.addEventListener('click', function() {
+                submissionModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+                
+                if (applicationsRemaining > 0) {
+                    applicationsRemaining--;
+                    document.getElementById("countdown").textContent = applicationsRemaining;
+                    document.getElementById("countdownValue").textContent = applicationsRemaining;
+                    triggerCelebration(applicationsRemaining);
+                } else {
+                    triggerCelebration(0);
+                }
+                console.log("Submission modal closed, remaining:", applicationsRemaining);
+            });
+        }
+
+        // ENSURE GOOGLE SHEET BUTTON WORKS
+        const openSheetBtn = document.getElementById('openSheetBtn');
+        if (openSheetBtn) {
+            openSheetBtn.addEventListener('click', function() {
+                console.log("Google Sheet button clicked");
+                window.open('https://docs.google.com/spreadsheets/d/1mXmwoF2qeJVoCsvK6GjsgV6xsc2x_RhGMs7vLAm1U4I/edit?gid=0#gid=0', '_blank');
+            });
+        }
+
+        // ROI Calculator
+        const calculateROIBtn = document.getElementById('calculateROI');
+        if (calculateROIBtn) {
+            calculateROIBtn.addEventListener('click', calculateROI);
+        }
+        
+        // Section toggle buttons
+        setupToggleButtons();
+        
+        // External link buttons  
+        setupExternalButtons();
+
+        // Default to CRM dashboard
+        showCRMDashboard();
+        
+        // Lead action buttons
+        const editLeadBtn = document.getElementById('editLeadBtn');
+        const deleteLeadBtn = document.getElementById('deleteLeadBtn');
+        const moveLeadBtn = document.getElementById('moveLeadBtn');
+        
+        if (editLeadBtn) editLeadBtn.addEventListener('click', editLead);
+        if (deleteLeadBtn) deleteLeadBtn.addEventListener('click', deleteLead);
+        if (moveLeadBtn) moveLeadBtn.addEventListener('click', showMoveModal);
+        
+        // Task action buttons
+        document.querySelectorAll('#taskDetail .action-button').forEach(button => {
+            if (button.classList.contains('btn-complete')) {
+                button.addEventListener('click', completeTask);
+            } else if (button.classList.contains('btn-edit')) {
+                button.addEventListener('click', editTask);
+            } else if (button.classList.contains('btn-delete')) {
+                button.addEventListener('click', deleteTask);
+            } else if (button.classList.contains('btn-cancel')) {
+                button.addEventListener('click', cancelTask);
+            } else if (button.classList.contains('btn-save')) {
+                button.addEventListener('click', saveTask);
+            }
+        });
+
+        // Refresh tasks button
+        const refreshTasksBtn = document.getElementById('refreshTasksBtn');
+        if (refreshTasksBtn) {
+            refreshTasksBtn.addEventListener('click', loadTasks);
+        }
+
+        // Refresh leads button
+        const refreshLeadsBtn = document.getElementById('refreshLeadsBtn');
+        if (refreshLeadsBtn) {
+            refreshLeadsBtn.addEventListener('click', loadLeads);
+        }
+
+        // Search functionality
+        const searchLeadInput = document.getElementById('searchLeadInput');
+        if (searchLeadInput) {
+            searchLeadInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                const searchResults = document.getElementById('searchResults');
+                
+                if (searchTerm === '') {
+                    if (searchResults) searchResults.innerHTML = '';
+                    return;
+                }
+                
+                searchLeadsByIndustry(searchTerm);
+            });
+        }
+
+        // Task type change handler
+        const taskType = document.getElementById('taskType');
+        const otherTaskContainer = document.getElementById('otherTaskContainer');
+        if (taskType && otherTaskContainer) {
+            taskType.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    otherTaskContainer.style.display = 'block';
+                } else {
+                    otherTaskContainer.style.display = 'none';
+                }
+            });
+        }
+
+        // Back to front office
+        const backToFrontBtn = document.getElementById('backToFrontBtn');
+        const frontOffice = document.getElementById('frontOffice');
+        const backOffice = document.getElementById('backOffice');
+        const taskDetail = document.getElementById('taskDetail');
+        
+        if (backToFrontBtn && frontOffice && backOffice) {
+            backToFrontBtn.addEventListener('click', function() {
+                backOffice.style.display = 'none';
+                frontOffice.style.display = 'block';
+                if (taskDetail) taskDetail.style.display = 'none';
+                
+                // Clean up real-time listeners when leaving back office
+                if (leadsUnsubscribe) {
+                    leadsUnsubscribe();
+                    leadsUnsubscribe = null;
+                }
+                if (tasksUnsubscribe) {
+                    tasksUnsubscribe();
+                    tasksUnsubscribe = null;
+                }
+                console.log("Returned to front office");
+            });
+        }
+
+        // Toggle view button
+        const toggleViewBtn = document.getElementById('toggleViewBtn');
+        if (toggleViewBtn) {
+            toggleViewBtn.addEventListener('click', function() {
+                if (loginModal) {
+                    loginModal.style.display = 'block';
+                    document.body.classList.add('modal-open');
+                    console.log("Toggle view button clicked");
+                }
+            });
+        }
+
+        // Add new task button
+        const addNewTaskBtn = document.getElementById('addNewTaskBtn');
+        if (addNewTaskBtn && taskDetail) {
+            addNewTaskBtn.addEventListener('click', function() {
+                taskDetail.style.display = 'block';
+                isEditingTask = false;
+                currentTaskId = null;
+                document.getElementById('taskType').value = 'call client';
+                document.getElementById('taskDescription').value = '';
+                document.getElementById('taskDueDate').value = '';
+                document.getElementById('otherTask').value = '';
+                document.getElementById('otherTaskContainer').style.display = 'none';
+                console.log("Add new task button clicked");
+            });
+        }
+
+        // Filter change listeners
+        const leadFilter = document.getElementById('leadFilter');
+        const taskFilter = document.getElementById('taskFilter');
+        
+        if (leadFilter) {
+            leadFilter.addEventListener('change', function() {
+                console.log("Lead filter changed to:", this.value);
+                loadLeads();
+            });
+        }
+        if (taskFilter) {
+            taskFilter.addEventListener('change', function() {
+                console.log("Task filter changed to:", this.value);
+                loadTasks();
+            });
+        }
+
+        // Form submission handler
+        const leadForm = document.getElementById('leadForm');
+        if (leadForm) {
+            leadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleFormSubmission(this);
+            });
+        }
+
+        console.log("WebSwan CRM Initialized Successfully");
+    });
+
+    // Initialize countdown selector
+    function initializeCountdownSelector() {
+        const countSelector = document.getElementById("countdownSelect");
+        if (countSelector) {
+            // Clear existing options
+            countSelector.innerHTML = '<option value="">Select number</option>';
+            
+            // Add options 1 to 100
+            for(let i = 1; i <= 100; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                countSelector.appendChild(option);
+            }
+            
+            // Set initial value to 100
+            countSelector.value = 100;
+            applicationsRemaining = 100;
+            
+            countSelector.addEventListener("change", function() {
+                applicationsRemaining = parseInt(this.value);
+                document.getElementById("countdown").textContent = applicationsRemaining;
+                document.getElementById("countdownValue").textContent = applicationsRemaining;
+                console.log("Countdown changed to:", applicationsRemaining);
+            });
+        }
+    }
+
+    // Setup toggle buttons
+    function setupToggleButtons() {
+        const toggleButtons = [
+            { id: 'calendarToggleButton', func: openCalendar }, // NEW CALENDAR BUTTON
+            { id: 'roiToggleButton', func: showROICalculator },
+            { id: 'crmToggleButton', func: showCRMDashboard },
+            { id: 'telemarketingToggleButton', func: showTelemarketingForm },
+            { id: 'analysisToggleButton', func: showAnalysisResult },
+            { id: 'creditRepairToggleButton', func: showCreditRepairCRM },
+            { id: 'webAnalysisToggleButton', func: showWebAnalysis },
+            { id: 'analysisInsightToggleButton', func: showAnalysisInsight },
+            { id: 'webswanSpinToggleButton', func: showWebSwanSpin },
+            { id: 'wsInsightToggleButton', func: showWSInsight },
+            { id: 'webswanIntakeToggleButton', func: showWebSwanIntake },
+            { id: 'cookieAccessibilityToggleButton', func: showCookieAccessibility },
+            { id: 'brandHubToggleButton', func: showBrandHub } // NEW BRAND HUB BUTTON
+        ];
+        
+        toggleButtons.forEach(button => {
+            const element = document.getElementById(button.id);
+            if (element) {
+                element.addEventListener('click', button.func);
+                console.log("Toggle button registered:", button.id);
+            } else {
+                console.log("Toggle button not found:", button.id);
+            }
+        });
+    }
+
+    // Setup external buttons
+    function setupExternalButtons() {
+        const externalButtons = [
+            { id: 'openTelemarketingForm', func: openTelemarketingForm },
+            { id: 'openAnalysisResult', func: openAnalysisResult },
+            { id: 'openCreditRepairCRM', func: openCreditRepairCRM },
+            { id: 'openWebAnalysis', func: openWebAnalysis },
+            { id: 'openAnalysisInsight', func: openAnalysisInsight },
+            { id: 'openWebSwanSpin', func: openWebSwanSpin },
+            { id: 'openWSInsight', func: openWSInsight },
+            { id: 'openWebSwanIntake', func: openWebSwanIntake },
+            { id: 'openCookieAccessibility', func: openCookieAccessibility },
+            { id: 'openBrandHub', func: openBrandHub } // NEW BRAND HUB BUTTON
+        ];
+        
+        externalButtons.forEach(button => {
+            const element = document.getElementById(button.id);
+            if (element) {
+                element.addEventListener('click', button.func);
+                console.log("External button registered:", button.id);
+            } else {
+                console.log("External button not found:", button.id);
+            }
+        });
+    }
+
+    // NEW CALENDAR FUNCTION
+    function openCalendar() {
+        window.open('https://taniad2169.github.io/Webswan-Booking-FREE-Website-Demo/', '_blank');
+        console.log("Opening Calendar");
+    }
+
+    // Handle form submission
+    async function handleFormSubmission(form) {
+        // Get form data
+        const formData = new FormData(form);
+        let data = {};
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+        
+        // Add timestamp and default status
+        data.createdAt = new Date();
+        data.status = "all";
+        
+        try {
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = "Submitting...";
+            submitBtn.disabled = true;
+            
+            // Save to Firebase
+            if (window.saveLeadToFirebase) {
+                const success = await window.saveLeadToFirebase(data);
+                
+                if (success) {
+                    // Reset form
+                    form.reset();
+                    
+                    // Show success modal
+                    const submissionModal = document.getElementById('submissionModal');
+                    if (submissionModal) {
+                        submissionModal.style.display = "flex";
+                        document.body.classList.add('modal-open');
+                    }
+                }
+            } else {
+                console.error("saveLeadToFirebase function not available");
+                alert("Error: CRM not properly initialized. Please refresh the page.");
+            }
+            
+        } catch (error) {
+            alert("Error submitting form: " + error.message);
+            console.error("Submission error:", error);
+        } finally {
+            // Reset button state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.textContent = "Submit Application";
+            submitBtn.disabled = false;
+        }
+    }
+
+    // Celebration functions
+    const celebrationDiv = document.getElementById("celebration");
+    const celebrationEmojis = document.getElementById("celebrationEmojis");
+    const bellSound = document.getElementById("bellSound");
+    let confettiInterval;
+    let emojiInterval;
+
+    const regularEmojis = ['🔔', '💪', '👍', '💰', '💯'];
+    const finalEmojis = ['👏', '💰', '🔥', '🥂', '🎯'];
+
+    function playBell() {
+      if (bellSound) {
+        bellSound.play().catch(err => {
+          console.error("Bell sound blocked until user interacts:", err);
+        });
+      }
+    }
+
+    function startConfetti() {
+        const duration = 7 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+        const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+        confettiInterval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+            if(timeLeft <= 0) {
+                return clearInterval(confettiInterval);
+            }
+            const particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
+    function stopConfetti() {
+        if (confettiInterval) {
+            clearInterval(confettiInterval);
+            confettiInterval = null;
+        }
+    }
+
+    function startEmojiSlideshow(emojis) {
+        let emojiIndex = 0;
+        if (celebrationEmojis) {
+            celebrationEmojis.innerHTML = '';
+            emojiInterval = setInterval(() => {
+                celebrationEmojis.innerHTML = `<span class="emoji-animated">${emojis[emojiIndex]}</span>`;
+                emojiIndex = (emojiIndex + 1) % emojis.length;
+            }, 1000);
+        }
+    }
+
+    function stopEmojiSlideshow() {
+        if (emojiInterval) clearInterval(emojiInterval);
+        if (celebrationEmojis) celebrationEmojis.innerHTML = '';
+    }
+
+    function stopCelebration() {
+        if (celebrationDiv) celebrationDiv.style.display = 'none';
+        stopConfetti();
+        stopEmojiSlideshow();
+        if (bellSound) {
+            bellSound.pause();
+            bellSound.currentTime = 0;
+        }
+    }
+
+    function triggerCelebration(count) {
+        if (celebrationDiv) {
+            celebrationDiv.style.display = 'flex';
+            playBell();
+            
+            if (count > 0) {
+                startEmojiSlideshow(regularEmojis);
+            } else {
+                startEmojiSlideshow(finalEmojis);
+            }
+
+            startConfetti();
+            console.log("Celebration triggered, count:", count);
+        }
+    }
+
+    // ROI Calculation
+    function calculateROI() {
+        const monthlyLeads = parseInt(document.getElementById('monthlyLeads').value) || 0;
+        const conversionRate = parseInt(document.getElementById('conversionRate').value) || 0;
+        const averageSale = parseInt(document.getElementById('averageSale').value) || 0;
+        const expectedIncrease = parseInt(document.getElementById('expectedIncrease').value) || 0;
+        const serviceCost = parseInt(document.getElementById('serviceCost').value) || 0;
+        
+        const currentConversions = monthlyLeads * (conversionRate / 100);
+        const currentRevenue = currentConversions * averageSale;
+        
+        const projectedLeads = monthlyLeads * (1 + expectedIncrease / 100);
+        const projectedConversions = projectedLeads * (conversionRate / 100);
+        const projectedRevenue = projectedConversions * averageSale;
+        
+        const revenueIncrease = projectedRevenue - currentRevenue;
+        const monthlyProfit = revenueIncrease - serviceCost;
+        const roiPercentage = serviceCost > 0 ? (monthlyProfit / serviceCost) * 100 : 0;
+        
+        document.getElementById('currentRevenue').textContent = `$${currentRevenue.toLocaleString()}`;
+        document.getElementById('projectedRevenue').textContent = `$${projectedRevenue.toLocaleString()}`;
+        document.getElementById('revenueIncrease').textContent = `$${revenueIncrease.toLocaleString()}`;
+        document.getElementById('monthlyProfit').textContent = `$${monthlyProfit.toLocaleString()}`;
+        document.getElementById('roiPercentage').textContent = `${roiPercentage.toFixed(1)}% ROI`;
+        
+        document.getElementById('roiResults').style.display = 'block';
+        console.log("ROI calculated:", roiPercentage.toFixed(1) + "%");
+    }
+
+    // Section display functions - FIXED VERSION WITH SMOOTH SCROLL
+    function showROICalculator() {
+        hideAllSections();
+        document.getElementById('roiContainer').style.display = 'block';
+        console.log("Showing ROI Calculator");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('roiContainer').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showCRMDashboard() {
+        hideAllSections();
+        document.getElementById('crmDashboard').style.display = 'block';
+        console.log("Showing CRM Dashboard");
+        
+        // Load data when CRM dashboard is shown
+        setTimeout(() => {
+            if (window.loadLeads) window.loadLeads();
+            if (window.loadTasks) window.loadTasks();
+        }, 100);
+    }
+
+    function showTelemarketingForm() {
+        hideAllSections();
+        document.getElementById('telemarketingSection').style.display = 'block';
+        console.log("Showing Telemarketing Form");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('telemarketingSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showAnalysisResult() {
+        hideAllSections();
+        document.getElementById('analysisResultSection').style.display = 'block';
+        console.log("Showing Analysis Result");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('analysisResultSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showCreditRepairCRM() {
+        hideAllSections();
+        document.getElementById('creditRepairSection').style.display = 'block';
+        console.log("Showing Credit Repair CRM");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('creditRepairSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showWebAnalysis() {
+        hideAllSections();
+        document.getElementById('webAnalysisSection').style.display = 'block';
+        console.log("Showing Web Analysis");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('webAnalysisSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showAnalysisInsight() {
+        hideAllSections();
+        document.getElementById('analysisInsightSection').style.display = 'block';
+        console.log("Showing Analysis Insight");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('analysisInsightSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showWebSwanSpin() {
+        hideAllSections();
+        document.getElementById('webswanSpinSection').style.display = 'block';
+        console.log("Showing WebSwan Spin");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('webswanSpinSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showWSInsight() {
+        hideAllSections();
+        document.getElementById('wsInsightSection').style.display = 'block';
+        console.log("Showing WS Insight");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('wsInsightSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function showWebSwanIntake() {
+        hideAllSections();
+        document.getElementById('webswanIntakeSection').style.display = 'block';
+        console.log("Showing WebSwan Intake");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('webswanIntakeSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    // NEW COOKIE & ACCESSIBILITY FUNCTION
+    function showCookieAccessibility() {
+        hideAllSections();
+        document.getElementById('cookieAccessibilitySection').style.display = 'block';
+        console.log("Showing Cookie & Accessibility");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('cookieAccessibilitySection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    // NEW BRAND HUB FUNCTION
+    function showBrandHub() {
+        hideAllSections();
+        document.getElementById('brandHubSection').style.display = 'block';
+        console.log("Showing Interactive Brand Hub");
+        // Smooth scroll to the section
+        setTimeout(() => {
+            document.getElementById('brandHubSection').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
+    }
+
+    function hideAllSections() {
+        const sections = [
+            'roiContainer', 'crmDashboard', 'telemarketingSection', 
+            'analysisResultSection', 'creditRepairSection', 'webAnalysisSection',
+            'analysisInsightSection', 'webswanSpinSection',
+            'wsInsightSection', 'webswanIntakeSection', 'cookieAccessibilitySection',
+            'brandHubSection' // ADDED BRAND HUB SECTION
+        ];
+        
+        sections.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.display = 'none';
+            }
+        });
+    }
+
+    // External link functions
+    function openTelemarketingForm() {
+        window.open('https://taniad2169.github.io/Telemarketing/', '_blank');
+        console.log("Opening Telemarketing Form");
+    }
+
+    function openAnalysisResult() {
+        window.open('https://taniad2169.github.io/WS-Analysis-Result/', '_blank');
+        console.log("Opening Analysis Result");
+    }
+
+    function openCreditRepairCRM() {
+        window.open('https://taniad2169.github.io/Domingue_Crp/', '_blank');
+        console.log("Opening Credit Repair CRM");
+    }
+
+    function openWebAnalysis() {
+        window.open('https://taniad2169.github.io/Test_WS/', '_blank');
+        console.log("Opening Web Analysis");
+    }
+
+    function openAnalysisInsight() {
+        window.open('https://taniad2169.github.io/WebSwan-Analysis-Overview/', '_blank');
+        console.log("Opening Analysis Insight");
+    }
+
+    function openWebSwanSpin() {
+        window.open('https://taniad2169.github.io/WebSwan_spin/', '_blank');
+        console.log("Opening WebSwan Spin");
+    }
+
+    function openWSInsight() {
+        window.open('https://taniad2169.github.io/WS-Insight/', '_blank');
+        console.log("Opening WS Insight");
+    }
+
+    function openWebSwanIntake() {
+        window.open('https://taniad2169.github.io/WebSwan-Intake/', '_blank');
+        console.log("Opening WebSwan Intake");
+    }
+
+    // NEW COOKIE & ACCESSIBILITY FUNCTION
+    function openCookieAccessibility() {
+        window.open('https://access-coo-ws.vercel.app/', '_blank');
+        console.log("Opening Cookie & Accessibility");
+    }
+
+    // NEW BRAND HUB FUNCTION
+    function openBrandHub() {
+        window.open('https://taniad2169.github.io/WebSwan-Brand-Hub/', '_blank');
+        console.log("Opening Interactive Brand Hub");
+    }
+
+    // Lead management functions
+    function openLead(leadData) {
+        const leadModal = document.getElementById('leadModal');
+        const overlay = document.getElementById('overlay');
+        
+        if (leadModal && overlay) {
+            leadModal.style.display = 'block';
+            overlay.classList.add('active');
+            document.body.classList.add('modal-open');
+
+            currentLeadData = leadData;
+            
+            // Set lead details
+            const fields = [
+                { id: 'leadNameDisplay', value: leadData.name },
+                { id: 'leadCompanyDisplay', value: leadData.company },
+                { id: 'leadEmailDisplay', value: leadData.email },
+                { id: 'leadPhoneDisplay', value: leadData.phone },
+                { id: 'leadCityDisplay', value: leadData.city },
+                { id: 'leadStateDisplay', value: leadData.state },
+                { id: 'leadWebsiteDisplay', value: leadData.website },
+                { id: 'leadHasWebsiteDisplay', value: leadData.hasWebsite },
+                { id: 'leadIndustryDisplay', value: leadData.industry },
+                { id: 'leadOtherIndustryDisplay', value: leadData.otherIndustry },
+                { id: 'leadHowLongDisplay', value: leadData.howlonginbusiness },
+                { id: 'leadBusinessTypeDisplay', value: leadData.typeofbusiness },
+                { id: 'leadServiceDisplay', value: leadData.serviceinterestedin },
+                { id: 'leadBestTimeDisplay', value: leadData.besttime },
+                { id: 'leadContactWayDisplay', value: leadData.contactway },
+                { id: 'leadNotesDisplay', value: leadData.notes }
+            ];
+            
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (element) {
+                    element.textContent = field.value || '';
+                }
+            });
+        }
+    }
+
+    function closeModals() {
+        const modals = ['leadModal', 'moveModal'];
+        const overlay = document.getElementById('overlay');
+        
+        modals.forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+        
+        document.body.classList.remove('modal-open');
+    }
+
+    function formatText(command) {
+        document.execCommand(command);
+    }
+    
+    function highlightText() {
+        document.execCommand('backColor', false, 'yellow');
+    }
+    
+    function removeHighlight() {
+        document.execCommand('removeFormat');
+    }
+    
+    function changeColor() {
+        const color = document.getElementById('colorPicker').value;
+        document.execCommand('foreColor', false, color);
+    }
+    
+    function limitWords(el, maxWords) {
+        const words = el.innerText.trim().split(/\s+/);
+        if (words.length > maxWords) {
+            el.innerText = words.slice(0, maxWords).join(" ");
+            alert("Max 350 words allowed.");
+        }
+    }
+    
+    function showMoveModal() {
+        const moveModal = document.getElementById('moveModal');
+        const overlay = document.getElementById('overlay');
+        
+        if (moveModal && overlay) {
+            moveModal.style.display = 'block';
+            overlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+    }
+    
+    function editLead() {
+        const nameDisplay = document.getElementById('leadNameDisplay');
+        if (nameDisplay) {
+            nameDisplay.contentEditable = true;
+            nameDisplay.style.border = "1px solid #ccc";
+            nameDisplay.style.padding = "5px";
+            nameDisplay.style.borderRadius = "4px";
+        }
+        
+        const fields = ['leadCompanyDisplay', 'leadEmailDisplay', 'leadPhoneDisplay', 'leadNotesDisplay'];
+        fields.forEach(fieldId => {
+            const element = document.getElementById(fieldId);
+            if (element) {
+                element.contentEditable = true;
+                element.style.border = "1px solid #ccc";
+                element.style.padding = "5px";
+                element.style.borderRadius = "4px";
+            }
+        });
+        
+        const editBtn = document.getElementById('editLeadBtn');
+        if (editBtn) {
+            editBtn.textContent = "Save";
+            editBtn.removeEventListener('click', editLead);
+            editBtn.addEventListener('click', saveLeadEdits);
+        }
+    }
+    
+    function saveLeadEdits() {
+        const updatedName = document.getElementById('leadNameDisplay').textContent;
+        const updatedCompany = document.getElementById('leadCompanyDisplay').textContent;
+        const updatedEmail = document.getElementById('leadEmailDisplay').textContent;
+        const updatedPhone = document.getElementById('leadPhoneDisplay').textContent;
+        const updatedNotes = document.getElementById('leadNotesDisplay').textContent;
+        
+        currentLeadData.name = updatedName;
+        currentLeadData.company = updatedCompany;
+        currentLeadData.email = updatedEmail;
+        currentLeadData.phone = updatedPhone;
+        currentLeadData.notes = updatedNotes;
+        
+        if (window.saveLeadEditsToFirebase) {
+            window.saveLeadEditsToFirebase(currentLeadData);
+        }
+        
+        const fields = ['leadNameDisplay', 'leadCompanyDisplay', 'leadEmailDisplay', 'leadPhoneDisplay', 'leadNotesDisplay'];
+        fields.forEach(fieldId => {
+            const element = document.getElementById(fieldId);
+            if (element) {
+                element.contentEditable = false;
+                element.style.border = "none";
+                element.style.padding = "0";
+            }
+        });
+        
+        const saveBtn = document.getElementById('editLeadBtn');
+        if (saveBtn) {
+            saveBtn.textContent = "Edit";
+            saveBtn.removeEventListener('click', saveLeadEdits);
+            saveBtn.addEventListener('click', editLead);
+        }
+    }
+    
+    function deleteLead() {
+        if (confirm("Are you sure you want to delete this lead?")) {
+            if (window.deleteLeadFromFirebase) {
+                window.deleteLeadFromFirebase(currentLeadId);
+            }
+            closeModals();
+        }
+    }
+
+    // Task management functions - FIXED VERSION
+    function openTask(taskData) {
+        const taskDetail = document.getElementById('taskDetail');
+        if (taskDetail) {
+            taskDetail.style.display = 'block';
+            
+            document.getElementById('taskType').value = taskData.type || 'call client';
+            document.getElementById('taskDescription').value = taskData.description || '';
+            document.getElementById('taskDueDate').value = taskData.dueDate || '';
+            document.getElementById('otherTask').value = taskData.otherTask || '';
+            
+            if (taskData.type === 'other') {
+                document.getElementById('otherTaskContainer').style.display = 'block';
+            } else {
+                document.getElementById('otherTaskContainer').style.display = 'none';
+            }
+            
+            currentTaskId = taskData.id;
+            isEditingTask = true;
+            
+            // Scroll to task detail
+            setTimeout(() => {
+                taskDetail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }
+
+    function editTask() {
+        // Handled by openTask function
+    }
+
+    function cancelTask() {
+        const taskDetail = document.getElementById('taskDetail');
+        if (taskDetail) {
+            taskDetail.style.display = 'none';
+        }
+    }
+
+    // Make functions globally available
+    window.openLeadFromSearch = function(id, leadData) {
+        currentLeadId = id;
+        openLead(leadData);
+    };
+    
+    window.openLead = openLead;
+    window.closeModals = closeModals;
+    window.moveLead = function(category) {
+        if (window.moveLeadToFirebase) {
+            window.moveLeadToFirebase(category);
+        }
+    };
+
+    // Basic task functions for demo
+    function loadTasks() {
+        console.log("Loading tasks...");
+        // This will be implemented in Firebase module
+    }
+
+    function loadLeads() {
+        console.log("Loading leads...");
+        // This will be implemented in Firebase module
+    }
+
+    function searchLeadsByIndustry(term) {
+        console.log("Searching leads for:", term);
+        // This will be implemented in Firebase module
+    }
+
+    function completeTask() {
+        console.log("Completing task...");
+        // This will be implemented in Firebase module
+    }
+
+    function deleteTask() {
+        console.log("Deleting task...");
+        // This will be implemented in Firebase module
+    }
+
+    function saveTask() {
+        console.log("Saving task...");
+        // This will be implemented in Firebase module
+    }
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        getDocs, 
+        doc, 
+        deleteDoc, 
+        updateDoc,
+        onSnapshot,
+        query,
+        where
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // SECURE FIREBASE CONFIGURATION
+    const firebaseConfig = {
+      apiKey: "AIzaSyD6VqxUGb5Q2kAVDHQjYkFsp9GHNymBMfg",
+      authDomain: "crmleads-3f1a7.firebaseapp.com",
+      projectId: "crmleads-3f1a7",
+      storageBucket: "crmleads-3f1a7.firebasestorage.app",
+      messagingSenderId: "317614128849",
+      appId: "1:317614128849:web:86be5c842c0f0e84768ff0"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    // Make Firebase functions available globally
+    window.db = db;
+    window.doc = doc;
+    window.deleteDoc = deleteDoc;
+    window.updateDoc = updateDoc;
+    window.collectionFunction = collection;
+    window.getDocsFunction = getDocs;
+    window.addDocFunction = addDoc;
+    window.onSnapshotFunction = onSnapshot;
+    window.queryFunction = query;
+    window.whereFunction = where;
+
+    console.log("Firebase initialized successfully");
+
+    // REAL-TIME LEAD LISTENER
+    function setupRealTimeLeadsListener() {
+        console.log("Setting up real-time leads listener...");
+        
+        try {
+            const leadsRef = collection(db, "leads");
+            
+            // Real-time listener for leads
+            const unsubscribe = onSnapshot(leadsRef, (snapshot) => {
+                console.log("Real-time leads update received:", snapshot.size, "leads found");
+                
+                const leads = [];
+                snapshot.forEach((docSnap) => {
+                    const leadData = { 
+                        id: docSnap.id, 
+                        ...docSnap.data(),
+                        status: docSnap.data().status || "all"
+                    };
+                    leads.push(leadData);
+                });
+                
+                // Update the display
+                displayLeads(leads);
+                
+                // Update search index
+                updateSearchIndex(leads);
+                
+            }, (error) => {
+                console.error("Error in real-time leads listener:", error);
+                const leadsList = document.getElementById('leadsList');
+                if (leadsList) {
+                    leadsList.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Error loading leads: ' + error.message + '</div>';
+                }
+            });
+            
+            return unsubscribe;
+        } catch (error) {
+            console.error("Error setting up leads listener:", error);
+            return null;
+        }
+    }
+
+    // REAL-TIME TASKS LISTENER
+    function setupRealTimeTasksListener() {
+        console.log("Setting up real-time tasks listener...");
+        
+        try {
+            const tasksRef = collection(db, "tasks");
+            
+            // Real-time listener for tasks
+            const unsubscribe = onSnapshot(tasksRef, (snapshot) => {
+                console.log("Real-time tasks update received:", snapshot.size, "tasks found");
+                
+                const tasks = [];
+                snapshot.forEach((docSnap) => {
+                    const taskData = { 
+                        id: docSnap.id, 
+                        ...docSnap.data(),
+                        status: docSnap.data().status || "pending"
+                    };
+                    tasks.push(taskData);
+                });
+                
+                // Update the display
+                displayTasks(tasks);
+                
+            }, (error) => {
+                console.error("Error in real-time tasks listener:", error);
+                const taskList = document.querySelector('.task-list');
+                if (taskList) {
+                    taskList.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Error loading tasks: ' + error.message + '</div>';
+                }
+            });
+            
+            return unsubscribe;
+        } catch (error) {
+            console.error("Error setting up tasks listener:", error);
+            return null;
+        }
+    }
+
+    // Update search index for better performance
+    function updateSearchIndex(leads) {
+        window.allLeads = leads; // Store for quick searching
+    }
+
+    // IMPROVED LOAD LEADS FUNCTION
+    async function loadLeads() {
+        const leadsList = document.getElementById('leadsList');
+        if (!leadsList) {
+            console.log("Leads list element not found");
+            return;
+        }
+        
+        const leadFilter = document.getElementById('leadFilter').value;
+        console.log("Loading leads with filter:", leadFilter);
+        
+        leadsList.innerHTML = '<div style="padding: 20px; text-align: center;">Loading leads...</div>';
+        
+        try {
+            const leadsRef = collection(db, "leads");
+            const querySnapshot = await getDocs(leadsRef);
+            
+            console.log("Firebase snapshot:", querySnapshot.size, "leads found");
+            
+            const leads = [];
+            querySnapshot.forEach((docSnap) => {
+                const leadData = { 
+                    id: docSnap.id, 
+                    ...docSnap.data(),
+                    status: docSnap.data().status || "all"
+                };
+                
+                if (leadFilter === 'all' || leadData.status === leadFilter) {
+                    leads.push(leadData);
+                }
+            });
+            
+            if (leads.length === 0) {
+                leadsList.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No leads found. Submit a form to create your first lead!</div>';
+            } else {
+                displayLeads(leads);
+                updateSearchIndex(leads);
+            }
+        } catch (error) {
+            console.error("Error loading leads:", error);
+            leadsList.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Error loading leads: ' + error.message + '</div>';
+        }
+    }
+
+    // IMPROVED DISPLAY LEADS FUNCTION
+    function displayLeads(leads) {
+        const leadsList = document.getElementById('leadsList');
+        if (!leadsList) {
+            console.log("Leads list element not found for display");
+            return;
+        }
+        
+        leadsList.innerHTML = '';
+        
+        if (leads.length === 0) {
+            leadsList.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No leads match the current filter.</div>';
+            return;
+        }
+        
+        leads.forEach(lead => {
+            const leadItem = document.createElement('div');
+            leadItem.classList.add('lead-item');
+            leadItem.dataset.id = lead.id;
+            leadItem.dataset.lead = JSON.stringify(lead);
+            
+            let statusDisplay = 'All Leads';
+            if (lead.status === 'new') statusDisplay = 'New Leads';
+            else if (lead.status === 'hot') statusDisplay = 'Hot Leads';
+            else if (lead.status === 'interested') statusDisplay = 'Interested';
+            else if (lead.status === 'demo') statusDisplay = 'Free Demo Scheduled';
+            else if (lead.status === 'client') statusDisplay = 'Client';
+            else if (lead.status === 'cancelled') statusDisplay = 'Cancelled';
+            else if (lead.status === 'referral') statusDisplay = 'Referral Leads';
+            else if (lead.status === 'website_analysis') statusDisplay = 'Website Analysis';
+            else if (lead.status === 'website_demo') statusDisplay = 'Website Demo';
+            else if (lead.status === 'call_backs') statusDisplay = 'Call Backs';
+            else if (lead.status === 'send_email') statusDisplay = 'Send Email';
+            
+            leadItem.innerHTML = `
+                <div class="font-bold">${lead.name}</div>
+                <div class="text-sm text-gray-600">${lead.company || 'No company'} - ${statusDisplay}</div>
+            `;
+            leadsList.appendChild(leadItem);
+        });
+
+        leadsList.addEventListener('click', function(e) {
+            const leadItem = e.target.closest('.lead-item');
+            if (leadItem) {
+                const leadData = JSON.parse(leadItem.dataset.lead);
+                currentLeadId = leadItem.dataset.id;
+                openLead(leadData);
+            }
+        });
+    }
+
+    async function saveLeadEditsToFirebase(leadData) {
+        try {
+            const leadRef = doc(db, "leads", currentLeadId);
+            await updateDoc(leadRef, {
+                name: leadData.name,
+                company: leadData.company,
+                email: leadData.email,
+                phone: leadData.phone,
+                notes: leadData.notes,
+                updatedAt: new Date()
+            });
+            alert("Lead details saved successfully!");
+            loadLeads();
+        } catch (error) {
+            alert("Error saving lead: " + error.message);
+        }
+    }
+
+    async function deleteLeadFromFirebase(leadId) {
+        try {
+            const leadRef = doc(db, "leads", leadId);
+            await deleteDoc(leadRef);
+            alert("Lead deleted successfully!");
+            loadLeads();
+        } catch (error) {
+            alert("Error deleting lead: " + error.message);
+        }
+    }
+
+    async function moveLead(category) {
+        try {
+            const leadRef = doc(db, "leads", currentLeadId);
+            await updateDoc(leadRef, {
+                status: category
+            });
+            alert("Lead moved successfully!");
+            loadLeads();
+            closeModals();
+        } catch (error) {
+            alert("Error moving lead: " + error.message);
+        }
+    }
+
+    async function saveLead(data) {
+      try {
+        const leadData = {
+          ...data,
+          status: "all",
+          createdAt: new Date()
+        };
+        
+        await addDoc(collection(db, "leads"), leadData);
+        
+        const submissionModal = document.getElementById('submissionModal');
+        submissionModal.style.display = "flex";
+        document.body.classList.add('modal-open');
+        loadLeads();
+      } catch (error) {
+        alert("Error saving lead: " + error.message);
+      }
+    }
+
+    // Task Management Functions for Firebase - FIXED VERSION
+    async function loadTasks() {
+        const taskList = document.querySelector('.task-list');
+        if (!taskList) {
+            return;
+        }
+        
+        taskList.innerHTML = '<div style="padding: 20px; text-align: center;">Loading tasks...</div>';
+        
+        const taskFilter = document.getElementById('taskFilter').value;
+        
+        try {
+            const querySnapshot = await getDocs(collection(db, "tasks"));
+            
+            const tasks = [];
+            querySnapshot.forEach((docSnap) => {
+                const taskData = { id: docSnap.id, ...docSnap.data() };
+                
+                if (taskFilter === 'all' || taskData.status === taskFilter) {
+                    tasks.push(taskData);
+                }
+            });
+            
+            if (tasks.length === 0) {
+                taskList.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No tasks found. Create your first task!</div>';
+            } else {
+                displayTasks(tasks);
+            }
+        } catch (error) {
+            taskList.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Error loading tasks: ' + error.message + '</div>';
+        }
+    }
+
+    function displayTasks(tasks) {
+        const taskList = document.querySelector('.task-list');
+        if (!taskList) return;
+        
+        taskList.innerHTML = '';
+        
+        tasks.forEach(task => {
+            const taskItem = document.createElement('div');
+            taskItem.classList.add('task-item');
+            taskItem.dataset.id = task.id;
+            taskItem.dataset.task = JSON.stringify(task);
+            
+            let statusDisplay = 'Pending';
+            if (task.status === 'completed') statusDisplay = 'Completed';
+            
+            const taskType = task.type === 'other' ? task.otherTask : task.type;
+            
+            taskItem.innerHTML = `
+                <div class="font-bold">${taskType}</div>
+                <div class="text-sm text-gray-600">${task.description}</div>
+                <div class="text-xs text-gray-500">Due: ${task.dueDate || 'Not set'} | Status: ${statusDisplay}</div>
+            `;
+            
+            taskList.appendChild(taskItem);
+        });
+
+        // Add click event to task items - FIXED
+        taskList.querySelectorAll('.task-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const taskData = JSON.parse(this.dataset.task);
+                openTask(taskData);
+            });
+        });
+    }
+
+    async function saveTaskFirebase(taskData) {
+        try {
+            if (isEditingTask && currentTaskId) {
+                // Update existing task
+                const taskRef = doc(db, "tasks", currentTaskId);
+                await updateDoc(taskRef, taskData);
+                alert("Task updated successfully!");
+            } else {
+                // Create new task
+                taskData.createdAt = new Date();
+                taskData.status = 'pending';
+                await addDoc(collection(db, "tasks"), taskData);
+                alert("Task created successfully!");
+            }
+            
+            document.getElementById('taskDetail').style.display = 'none';
+            loadTasks(); // Refresh the task list
+        } catch (error) {
+            alert("Error saving task: " + error.message);
+        }
+    }
+
+    async function completeTaskFirebase() {
+        if (currentTaskId) {
+            try {
+                const taskRef = doc(db, "tasks", currentTaskId);
+                await updateDoc(taskRef, {
+                    status: 'completed',
+                    completedAt: new Date()
+                });
+                alert("Task marked as complete!");
+                document.getElementById('taskDetail').style.display = 'none';
+                loadTasks(); // Refresh the task list
+            } catch (error) {
+                alert("Error completing task: " + error.message);
+            }
+        }
+    }
+
+    async function deleteTaskFirebase() {
+        if (currentTaskId && confirm("Are you sure you want to delete this task?")) {
+            try {
+                const taskRef = doc(db, "tasks", currentTaskId);
+                await deleteDoc(taskRef);
+                alert("Task deleted!");
+                document.getElementById('taskDetail').style.display = 'none';
+                loadTasks(); // Refresh the task list
+            } catch (error) {
+                alert("Error deleting task: " + error.message);
+            }
+        }
+    }
+
+    // Update the global saveTask function to use the Firebase version
+    window.saveTask = async function() {
+        const taskType = document.getElementById('taskType').value;
+        const otherTask = document.getElementById('otherTask').value;
+        const taskDescription = document.getElementById('taskDescription').value;
+        const taskDueDate = document.getElementById('taskDueDate').value;
+
+        const taskData = {
+            type: taskType,
+            description: taskDescription,
+            dueDate: taskDueDate,
+            otherTask: otherTask,
+            updatedAt: new Date()
+        };
+        
+        await saveTaskFirebase(taskData);
+    }
+
+    // Update the global completeTask function
+    window.completeTask = completeTaskFirebase;
+
+    // Update the global deleteTask function
+    window.deleteTask = deleteTaskFirebase;
+
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      let data = {};
+      for (let [key, value] of formData.entries()) {
+          data[key] = value;
+      }
+      
+      await saveLead(data);
+      this.reset();
+    });
+
+    document.getElementById('taskDetail').querySelector('.btn-save').addEventListener('click', saveTask);
+    
+    document.getElementById('leadFilter').addEventListener('change', loadLeads);
+    document.getElementById('taskFilter').addEventListener('change', loadTasks);
+
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.target.id === 'backOffice' && mutation.target.style.display === 'block') {
+                loadLeads();
+                loadTasks();
+            }
+        });
+    });
+    
+    const backOfficeElement = document.getElementById('backOffice');
+    observer.observe(backOfficeElement, { attributes: true, attributeFilter: ['style'] });
+    
+    window.addEventListener("load", loadLeads);
+    
+    window.moveLead = moveLead;
+    window.deleteLeadFromFirebase = deleteLeadFromFirebase;
+    window.openLead = openLead;
+    window.saveLeadEditsToFirebase = saveLeadEditsToFirebase;
+    window.loadTasks = loadTasks;
+    window.displayTasks = displayTasks;
+    window.saveLeadToFirebase = saveLead;
+    window.initializeRealTimeListeners = function() {
+        leadsUnsubscribe = setupRealTimeLeadsListener();
+        tasksUnsubscribe = setupRealTimeTasksListener();
+    };
+</script>
+</body>
+</html>
