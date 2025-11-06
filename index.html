@@ -2,1838 +2,1923 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>WebSwan CRM & Task Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSwan - Professional Website Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #62d6f0, #5cd1c5);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            margin: 0;
             padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .logo i {
-            font-size: 42px;
-            color: #5cd1c5;
-            margin-right: 15px;
-        }
-
-        h1 {
-            color: #2c3e50;
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #5a6c7d;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .admin-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.3;
-            transition: opacity 0.3s;
-            z-index: 1000;
-            padding: 10px;
-        }
-
-        .admin-toggle:hover {
-            opacity: 0.7;
-        }
-
-        .admin-panel {
-            display: none;
-            background: #2c3e50;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #62d6f0, #5cd1c5);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            margin: 15px 0;
-            box-shadow: 0 6px 20px rgba(92, 209, 197, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(92, 209, 197, 0.4);
-        }
-
-        .print-btn {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 0;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-            display: inline-block;
-        }
-
-        .print-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-        }
-
-        .clear-btn {
-            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 5px;
-            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
-        }
-
-        .tools-section {
-            background: #2c3e50;
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .tool-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .tool-link {
-            background: #34495e;
-            padding: 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid #4a6572;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tool-link:hover {
-            background: #4a6572;
-            transform: translateY(-2px);
-        }
-
-        .report {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-            position: relative;
-        }
-
-        .report-header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e1e8ed;
-        }
-
-        .score {
-            font-size: 52px;
-            font-weight: bold;
-            margin: 15px 0;
-            color: #2c3e50;
-        }
-
-        .issue {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid #e74c3c;
-        }
-
-        .issue.good {
-            border-left-color: #2ecc71;
-        }
-
-        .issue.warning {
-            border-left-color: #f39c12;
-        }
-
-        .issue.info {
-            border-left-color: #3498db;
-        }
-
-        .issue-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .issue-desc {
-            color: #5a6c7d;
-            margin-bottom: 10px;
+            color: #333;
             line-height: 1.6;
         }
-
-        .report-footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e1e8ed;
+        
+        body.modal-open {
+            overflow: hidden;
         }
-
-        .print-modal {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .header {
+            background-color: #2F3746;
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        
+        .target-widget {
+            background: #14395d;
+            border-radius: 22px 38px 33px 33px/38px 38px 33px 33px;
+            width: 85px;
+            height: 75px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 10px 0 0 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.10);
+            z-index: 1000;
+        }
+        
+        .target-btn {
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            line-height:1;
+            cursor: pointer;
+            margin-bottom: 3px;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+        
+        .target-btn:active {
+            transform: scale(0.95) !important;
+        }
+        
+        .target-count {
+            color:#fff;
+            font-size:1.1rem;
+            font-weight: bold;
+            margin-left: 7px;
+        }
+        
+        .target-reset-btn {
+            background: #e5f1fa;
+            border: none;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            color:#14395d;
+            font-weight: bold;
+            width: 34px;
+            height: 27px;
+            margin-top:7px;
+            margin-left: 23px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+        
+        .target-reset-btn:active {
+            transform: scale(0.95) !important;
+        }
+        
+        .footer {
+            background-color: #2F3746;
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .footer-laptop-container {
+            width: 150px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        
+        .footer-verse {
+            font-size: 1.125rem;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .footer-countdown-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-countdown-label {
+            font-size: 1rem;
+        }
+        
+        .footer-countdown-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #4B5563;
+            background-color: #374151;
+            color: white;
+        }
+        
+        .footer-countdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 5px 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .footer-lock-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            user-select: none;
+            z-index: 1000;
+            color: gold;
+        }
+        
+        .footer-lock-btn:active {
+            transform: scale(0.95) !important;
+        }
+        
+        #countdownDisplay {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0;
+        }
+        
+        #countdown {
+            color: red;
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4B5563;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row > .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .hidden {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        }
+        
+        .google-sheet-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 15px;
+            background: #0F9D58;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        .google-sheet-button:hover {
+            background: #0c8047;
+            transform: translateY(-2px);
+        }
+        
+        .laptop-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .laptop {
+            width: 200px;
+            height: 150px;
+            background: #e0e0e0;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: perspective(500px) rotateY(10deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .laptop-screen {
+            width: 180px;
+            height: 120px;
+            background: #4285F4;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        
+        .laptop-screen::before {
+            content: "";
+            position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shine 2s infinite;
         }
-
-        .print-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
+        
+        .laptop-keyboard {
+            width: 190px;
+            height: 10px;
+            background: #333;
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            bottom: 10px;
+            left: 5px;
+        }
+        
+        .laptop-base {
+            width: 220px;
+            height: 10px;
+            background: #c0c0c0;
+            border-radius: 0 0 10px 10px;
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: perspective(500px) rotateY(10deg) translateY(0); }
+            50% { transform: perspective(500px) rotateY(10deg) translateY(-10px); }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .swan-image {
+            width: 100px;
+            height: 80px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            position: relative;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 50px auto;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .modal-button {
+            background-color: #4285F4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        #backOffice {
+            display: none;
+        }
+        
+        .back-office-header {
+            background-color: #2F3746;
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .print-modal h3 {
             margin-bottom: 20px;
-            color: #2c3e50;
         }
-
-        .print-options {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 25px 0;
+        
+        .tasks-container, .leads-container {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-
-        .print-option-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
+        
+        .task-item, .lead-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .print-pdf {
-            background: #e74c3c;
-            color: white;
+        
+        .task-item:last-child, .lead-item:last-child {
+            border-bottom: none;
         }
-
-        .print-browser {
-            background: #3498db;
-            color: white;
+        
+        .task-item:hover, .lead-item:hover {
+            background-color: #f9fafb;
         }
-
-        .close-modal {
-            background: #95a5a6;
+        
+        .back-to-front {
+            background-color: #4F46E5;
             color: white;
-            border: none;
             padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .pro-analysis-section {
-            background: #e8f4f8;
-            border: 2px solid #b3d9ff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .pro-input-group {
-            margin-bottom: 15px;
-        }
-
-        .pro-input-group label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .pro-input-group input, .pro-input-group select {
-            margin-top: 5px;
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .admin-comments-section {
-            background: #fff3cd;
-            border: 2px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .admin-comments-section h4 {
-            color: #856404;
-            margin-bottom: 15px;
-        }
-
-        .admin-comments-section textarea {
-            background: #fff;
-            border: 1px solid #ffeaa7;
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            min-height: 100px;
-            color: #2c3e50;
-        }
-
-        .seo-score-checker {
-            background: #e8f6f3;
-            border: 2px solid #1abc9c;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .seo-score-checker h4 {
-            color: #16a085;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .seo-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .seo-input-group input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .seo-check-btn {
-            background: #1abc9c;
-            color: white;
             border: none;
-            padding: 0 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
         }
-
-        .seo-check-btn:hover {
-            background: #16a085;
-        }
-
-        .seo-result {
+        
+        .detail-view {
             display: none;
             background: white;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
             margin-top: 15px;
-            border-left: 4px solid #1abc9c;
         }
-
-        .cookie-accessibility-section {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            border: 3px solid #f39c12;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
+        
+        .action-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-complete {
+            background-color: #10B981;
+            color: white;
+        }
+        
+        .btn-edit {
+            background-color: #3B82F6;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #EF4444;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background-color: #6B7280;
+            color: white;
+        }
+        
+        .btn-save {
+            background-color: #10B981;
+            color: white;
+        }
+        
+        .status-filter {
+            margin-bottom: 15px;
+        }
+        
+        .comment-box {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            background-color: #f9fafb;
+        }
+        
+        .comment-toolbar {
+            margin-bottom: 10px;
+        }
+        
+        .comment-toolbar button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .comment-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        
+        .highlight {
+            background-color: yellow;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        #submissionModal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+        }
+        
+        #submissionModal .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 100px auto;
             text-align: center;
-            animation: pulse 2s infinite;
         }
-
+        
+        #submissionModal .ok-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        #celebration {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            pointer-events:none; display:none; z-index:9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            line-height: 1.2;
+            text-align: center;
+            color: white;
+        }
+        
+        .emoji-animated {
+            animation: pulse 1s infinite;
+        }
+        
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-
-        .cookie-accessibility-section h4 {
-            color: #d35400;
-            margin-bottom: 15px;
+        
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); z-index: 999;
+        }
+        
+        .overlay.active { display: block; }
+        
+        .move-modal {
+            display: none; position: fixed; top: 10%; left: 50%;
+            transform: translateX(-50%);
+            background: #fff; border: 1px solid #ccc;
+            padding: 20px; width: 500px; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .move-modal.active { display: block; }
+        
+        .action-buttons-lead {
             display: flex;
-            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
             justify-content: center;
-            gap: 10px;
+            flex-wrap: wrap;
         }
-
-        .cookie-access-btn {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
+        
+        .action-button-lead {
+            padding: 8px 15px;
             border: none;
-            padding: 18px 35px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 15px 0;
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .cookie-access-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
-            color: white;
-        }
-
-        .bouncing-emoji {
-            font-size: 24px;
-            animation: bounce 1s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-10px); }
-        }
-
-        .ai-assistant-section {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: 2px solid #5a67d8;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .ai-assistant-section h4 {
-            color: white;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .ai-input-group input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .ai-check-btn {
-            background: #8b5cf6;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ai-check-btn:hover {
-            background: #7c3aed;
-        }
-
-        .ai-result {
-            display: none;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #8b5cf6;
-        }
-
-        .html-validator-section {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            border: 2px solid #e53e3e;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .html-validator-section h4 {
-            color: white;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .html-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .html-input-group input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .html-check-btn {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
-
-        .html-check-btn:hover {
-            background: #c53030;
+        
+        .action-button-lead:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
-        .html-result {
-            display: none;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #e53e3e;
-        }
-
-        .performance-checker-section {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            border: 2px solid #3182ce;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .performance-checker-section h4 {
+        
+        .btn-view-lead {
+            background-color: #10B981;
             color: white;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .performance-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .performance-input-group input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .performance-check-btn {
-            background: #3182ce;
+        
+        .btn-edit-lead {
+            background-color: #3B82F6;
             color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
         }
-
-        .performance-check-btn:hover {
-            background: #2c5aa0;
-        }
-
-        .performance-result {
-            display: none;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #3182ce;
-        }
-
-        .file-upload-section {
-            background: linear-gradient(135deg, #fd746c, #ff9068);
-            border: 2px solid #e74c3c;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .file-upload-section h4 {
+        
+        .btn-delete-lead {
+            background-color: #EF4444;
             color: white;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
-        .file-upload-group {
-            margin-bottom: 15px;
+        
+        .btn-move-lead {
+            background-color: #8B5CF6;
+            color: white;
         }
-
-        .file-upload-group input {
+        
+        .lead-detail-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .lead-detail-label {
+            font-weight: bold;
+            color: #4B5563;
+            margin-bottom: 5px;
+        }
+        
+        .lead-detail-value {
+            color: #374151;
+        }
+        
+        .move-modal {
+            display: none; 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff; 
+            border: 1px solid #ccc;
+            padding: 20px; 
+            width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+        
+        .move-modal.active { display: block; }
+        
+        .move-modal ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .move-modal li {
+            margin-bottom: 10px;
+        }
+        
+        .move-modal button {
             width: 100%;
             padding: 10px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            background: white;
-            color: #2c3e50;
-        }
-
-        .file-upload-btn {
-            background: #e74c3c;
+            background-color: #4F46E5;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 600;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-
-        .file-upload-btn:hover {
-            background: #c0392b;
+        
+        .move-modal button:hover {
+            background-color: #4338CA;
+            transform: translateY(-2px);
         }
-
-        .file-result {
-            display: none;
+        
+        .move-modal .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .move-modal h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2F3746;
+        }
+        
+        .search-lead-container {
             background: white;
-            padding: 15px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D1D5DB;
             border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4F46E5;
+        }
+        
+        .search-results {
             margin-top: 15px;
-            border-left: 4px solid #e74c3c;
-        }
-
-        .form-message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .form-success {
-            color: #27ae60;
-            background: #d4efdf;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #a9dfbf;
-        }
-
-        .form-error {
-            color: #e74c3c;
-            background: #fadbd8;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #f5b7b1;
-        }
-
-        .ai-result pre {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.5;
-            border: 1px solid #e1e8ed;
             max-height: 400px;
             overflow-y: auto;
-            color: #2c3e50;
         }
-
-        .seo-result .issue-desc,
-        .ai-result pre,
-        .html-result pre,
-        .performance-result pre,
-        .file-result pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            line-height: 1.5;
-            color: #2c3e50;
+        
+        .search-result-item {
+            padding: 15px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            overflow-x: auto;
-            border-radius: 5px;
-            margin-top: 10px;
-            color: #2c3e50;
+        
+        .search-result-item:hover {
+            background-color: #F3F4F6;
+            border-color: #4F46E5;
         }
-
-        .comment-box {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
+        
+        .search-result-name {
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+        
+        .search-result-details {
             font-size: 14px;
+            color: #6B7280;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #9CA3AF;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .roi-container {
             background: white;
-            color: #2c3e50;
-            resize: vertical;
-            min-height: 100px;
-            margin-bottom: 10px;
-        }
-
-        .word-count {
-            text-align: right;
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-bottom: 10px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-start;
-            align-items: center;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none;
         }
         
-        .url-prefix {
-            display: flex;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 10px 12px;
-            border: 2px solid #e1e8ed;
-            border-right: none;
-            border-radius: 10px 0 0 10px;
-            color: #5a6c7d;
-            font-weight: 500;
+        .roi-input-group {
+            margin-bottom: 15px;
         }
         
-        .url-input-group {
-            display: flex;
-            width: 100%;
-        }
-        
-        .url-input-group input {
-            border-radius: 0 10px 10px 0 !important;
-            flex: 1;
-        }
-        
-        .ai-input-label {
-            color: white;
+        .roi-input-group label {
+            display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            color: #4B5563;
         }
         
-        .click-counter {
-            position: fixed;
-            top: 60px;
-            right: 20px;
-            background: rgba(44, 62, 80, 0.9);
-            color: white;
-            padding: 5px 10px;
+        .roi-input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
             border-radius: 5px;
-            font-size: 12px;
-            z-index: 1000;
-            display: none;
         }
-
-        .file-context-indicator {
-            background: #e8f4f8;
-            padding: 12px;
+        
+        .roi-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9fafb;
             border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #3498db;
-            display: none;
+            border: 1px solid #E5E7EB;
         }
-
-        .clear-context-btn {
-            background: #e74c3c;
+        
+        .roi-result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .roi-result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .roi-result-label {
+            font-weight: 500;
+            color: #4B5563;
+        }
+        
+        .roi-result-value {
+            font-weight: 600;
+            color: #1F2937;
+        }
+        
+        .roi-highlight {
+            color: #10B981;
+            font-weight: 700;
+        }
+        
+        .roi-percentage {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #10B981;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ECFDF5;
+            border-radius: 8px;
+        }
+        
+        .roi-button {
+            background-color: #4F46E5;
             color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            margin-left: 10px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .clear-context-btn:hover {
-            background: #c0392b;
-        }
-
-        /* NEW: ChatGPT External Link Button */
-        .chatgpt-external-btn {
-            background: linear-gradient(135deg, #10a37f, #0d8e6c);
-            color: white;
-            border: none;
             padding: 12px 20px;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .roi-button:hover {
+            background-color: #4338CA;
+        }
+        
+        .roi-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .roi-link:hover {
+            text-decoration: underline;
+        }
+        
+        .roi-toggle-button {
+            background-color: #10B981;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
-            margin-left: auto;
-        }
-
-        .chatgpt-external-btn:hover {
-            background: linear-gradient(135deg, #0d8e6c, #0b7a5d);
-            transform: translateY(-2px);
-            color: white;
-            text-decoration: none;
-        }
-
-        /* NEW: Password Modal */
-        .password-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .password-modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .password-input {
-            width: 100%;
-            padding: 15px;
-            border: 3px solid #e1e8ed;
-            border-radius: 12px;
-            font-size: 18px;
-            text-align: center;
-            margin: 20px 0;
-            background: #f8f9fa;
-            color: #2c3e50;
-            font-weight: bold;
-            letter-spacing: 3px;
-        }
-
-        .password-input:focus {
-            border-color: #3498db;
-            outline: none;
-            background: white;
-        }
-
-        .password-submit {
-            background: linear-gradient(135deg, #27ae60, #229954);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
             transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
         }
-
-        .password-submit:hover {
+        
+        .roi-toggle-button:hover {
+            background-color: #0da271;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .crm-toggle-button {
+            background-color: #3B82F6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .crm-toggle-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .telemarketing-toggle-button {
+            background-color: #F59E0B;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .telemarketing-toggle-button:hover {
+            background-color: #D97706;
+            transform: translateY(-2px);
+        }
+        
+        .analysis-toggle-button {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .analysis-toggle-button:hover {
+            background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+        
+        .credit-repair-toggle-button {
+            background-color: #EC4899;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .credit-repair-toggle-button:hover {
+            background-color: #DB2777;
+            transform: translateY(-2px);
+        }
+        
+        .web-analysis-toggle-button {
+            background-color: #06B6D4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .web-analysis-toggle-button:hover {
+            background-color: #0891B2;
+            transform: translateY(-2px);
+        }
+        
+        .analysis-insight-toggle-button {
+            background-color: #8B4513;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .analysis-insight-toggle-button:hover {
+            background-color: #654321;
+            transform: translateY(-2px);
+        }
+        
+        .webswan-spin-toggle-button {
+            background: linear-gradient(135deg, #08c6d4 0%, #daeced 100%);
+            color: white;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .webswan-spin-toggle-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .password-error {
-            color: #e74c3c;
-            margin-top: 10px;
+        .ws-insight-toggle-button {
+            background-color: #7C3AED;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .ws-insight-toggle-button:hover {
+            background-color: #6D28D9;
+            transform: translateY(-2px);
+        }
+
+        .webswan-intake-toggle-button {
+            background-color: #059669;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .webswan-intake-toggle-button:hover {
+            background-color: #047857;
+            transform: translateY(-2px);
+        }
+
+        /* NEW COLLABORATOR BUTTON STYLES */
+        .collaborator-toggle-button {
+            background-color: #8B5CF6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .collaborator-toggle-button:hover {
+            background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+
+        /* NEW COOKIE & ACCESSIBILITY BUTTON STYLES */
+        .cookie-accessibility-toggle-button {
+            background-color: #DC2626;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .cookie-accessibility-toggle-button:hover {
+            background-color: #B91C1C;
+            transform: translateY(-2px);
+        }
+        
+        /* NEW CALENDAR BUTTON STYLES */
+        .calendar-toggle-button {
+            background-color: #9333EA;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-toggle-button:hover {
+            background-color: #7C3AED;
+            transform: translateY(-2px);
+        }
+        
+        .prayer-emoji {
+            display: inline-block;
+            animation: bounce 2s infinite;
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .prayer-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .security-badge {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+
+        .filter-active {
+            background-color: #3B82F6 !important;
+            color: white !important;
+            border: 2px solid #2563eb !important;
+        }
+
+        .filter-info {
+            background-color: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 0.875rem;
+            color: #1E40AF;
+        }
+
+        /* REPORTS & ANALYSIS STYLES */
+        .reports-analysis-toggle-button {
+            background-color: #059669;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .reports-analysis-toggle-button:hover {
+            background-color: #047857;
+            transform: translateY(-2px);
+        }
+
+        .reports-tab-content {
             display: none;
+        }
+
+        .reports-tab-content.active {
+            display: block;
+        }
+
+        .reports-tab.active {
+            border-bottom-color: #3B82F6;
+            color: #3B82F6;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* SMOOTH SCROLL STYLES */
+        .smooth-scroll-target {
+            scroll-margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="click-counter" id="clickCounter"></div>
-    <button class="admin-toggle" id="adminToggle" title="Click 7 times for admin mode">🎯</button>
-
-    <!-- NEW: Password Modal -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-modal-content">
-            <h3><i class="fas fa-lock"></i> Admin Access Required</h3>
-            <p>Enter security password to access admin tools:</p>
-            <input type="password" class="password-input" id="adminPassword" placeholder="Enter password" maxlength="3" autocomplete="off">
-            <div class="password-error" id="passwordError">
-                <i class="fas fa-exclamation-triangle"></i> Incorrect password! Try again.
+<div id="mainApp" class="container">
+    <div id="frontOffice">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+            <div class="header">
+                <div class="target-widget">
+                    <button id="targetBtn" class="target-btn">
+                        <span style="color:#ff2222;">🎯</span>
+                    </button>
+                    <div id="targetCount" class="target-count">0</div>
+                    <button id="targetResetBtn" class="target-reset-btn">
+                        0
+                    </button>
+                </div>
+                <h1 class="text-4xl font-bold">Free Custom Website Demo—Here's What I Can Do for You:</h1>
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i> Secure & Protected
+                </div>
+                <ul class="info-box mb-4 text-sm md:text-base">
+                    <li>Show you a custom website demo, so you can see how professional your online presence could be.</li>
+                    <li>Do a free analysis of your current website to identify why it may not be getting you business.</li>
+                    <li>Create a custom calendar and task management system for your appointments, so staying organized is easy and stress-free.</li>
+                </ul>
+                <p class="slogan mt-4 text-center">No pressure, no obligation—if you like what you see, we can talk about working together. If not, you won't pay a thing.</p>
+                <p class="mt-4 text-center">Let's make your business shine online—because a professional website isn't just a page, it's your first impression, your credibility, and your opportunity to attract the right clients.</p>
             </div>
-            <button class="password-submit" id="submitPassword">
-                <i class="fas fa-key"></i> Unlock Admin Panel
+            <div id="countdownDisplay">Submissions left: <span id="countdown">100</span></div>
+
+            <div class="content-section">
+                <button id="toggleViewBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 mt-4">Go to Back Office</button>
+
+                <h2 class="text-2xl font-bold mb-6 mt-10">Lead/Application Information</h2>
+                <form id="leadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="(555)555-5555">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" name="state">
+                                <option value="">Select State</option>
+                                <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                                <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                                <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                                <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                                <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                                <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                                <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                                <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                                <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                                <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                                <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                                <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                                <option>Wisconsin</option><option>Wyoming</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="url" id="website" name="website" placeholder="https://www.">
+                        </div>
+                        <div class="form-group">
+                            <label for="hasWebsite">Do you have a website?</label>
+                            <select id="hasWebsite" name="hasWebsite">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="industry">Type of Industry</label>
+                            <select id="industry" name="industry">
+                                <option value="">Select Industry</option>
+                                <option>Doctor</option>
+                                <option>Lawyer</option>
+                                <option>Real Estate Broker</option>
+                                <option>Mortgage Broker</option>
+                                <option>Chiropractor</option>
+                                <option>Cosmetic/Plastic Surgeon</option>
+                                <option>Solar Company</option>
+                                <option>Restaurant</option>
+                                <option>Beautician/Hairdresser/Barber</option>
+                                <option>High-Tech</option>
+                                <option>Collaborator</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="otherIndustry">If Other, Describe</label>
+                            <input type="text" id="otherIndustry" name="otherIndustry" maxlength="120" placeholder="Describe your industry (20 words max)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="howlonginbusiness">How long in business?</label>
+                            <select id="howlonginbusiness" name="howlonginbusiness">
+                                <option value="">Select</option>
+                                <option value="0-6 months">Start up to 6 months</option>
+                                <option value="6-12 months">6-12 months</option>
+                                <option value="1-2 years">1-2 years</option>
+                                <option value="2-5 years">2-5 years</option>
+                                <option value="5-10 years">5-10 years</option>
+                                <option value="10+ years">10 years+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeofbusiness">Type of Business (e.g. S-Corp, LLC, Sole Prop)</label>
+                            <input type="text" id="typeofbusiness" name="typeofbusiness">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="serviceinterestedin">Service Interested In</label>
+                            <select id="serviceinterestedin" name="serviceinterestedin">
+                                <option value="">Select Service</option>
+                                <option>Free Demo</option>
+                                <option>Website</option>
+                                <option>Reputation Management</option>
+                                <option>Ad Campaign</option>
+                                <option>Video/Script/Social Media</option>
+                                <option>SEO</option>
+                                <option>Calendar</option>
+                                <option>Form</option>
+                                <option>Lead Generating Form</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="besttime">Best Time to Contact</label>
+                            <select id="besttime" name="besttime">
+                                <option value="">Select Time</option>
+                                <option value="morning">Morning</option>
+                                <option value="afternoon">Afternoon</option>
+                                <option value="evening">Evening</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactway">Best Way to Contact</label>
+                            <select id="contactway" name="contactway">
+                                <option value="">Select Way</option>
+                                <option value="call">Call</option>
+                                <option value="text">Text</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Anything else we should know?"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">Submit Application</button>
+                </form>
+
+                <button id="openSheetBtn" class="google-sheet-button">
+                    <i class="fab fa-google"></i> Open Google Sheet
+                </button>
+
+                <div class="laptop-animation">
+                    <div class="laptop">
+                        <div class="laptop-screen">CRM SYNC</div>
+                        <div class="laptop-keyboard"></div>
+                        <div class="laptop-base"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" id="mainFooter">
+                <div class="footer-laptop-container">
+                    <p>WebSwan CRM</p>
+                    <img src="https://cdn-icons-png.flaticon.com/512/6168/6168976.png" alt="White Swan" class="swan-image">
+                </div>
+                <div class="footer-verse">
+                    I can do all things through Christ Who strengthen me Philippians 4:13
+                </div>
+                <div class="footer-countdown-section">
+                    <div class="footer-countdown-label">Countdown:</div>
+                    <select id="countdownSelect" class="footer-countdown-select">
+                        <option value="">Select number</option>
+                    </select>
+                    <div class="footer-countdown-value" id="countdownValue">100</div>
+                </div>
+                <button class="footer-lock-btn" id="backOfficeLock" title="Login to Back Office">
+                    <span role="img" aria-label="lock">🔒</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="backOffice">
+        <button class="back-to-front" id="backToFrontBtn">← Back to Front Office</button>
+        
+        <div class="back-office-header">
+            <h1 class="text-xl font-bold">WebSwan CRM Back Office <span class="security-badge"><i class="fas fa-shield-alt"></i> Secure Access</span></h1>
+            <div class="prayer-text">
+                "Father, thank You for keeping me here. Open every door that leads to the life You still want for me, I surrender my call to You, help me find my clients today and close whatever no longer serves Your plan amen!" 
+                <span class="prayer-emoji">🙏</span>
+            </div>
+        </div>
+
+        <!-- ALL TOGGLE BUTTONS INCLUDING REPORTS & ANALYSIS -->
+        <div class="flex gap-4 mb-4 flex-wrap">
+            <!-- NEW CALENDAR BUTTON -->
+            <button id="calendarToggleButton" class="calendar-toggle-button">
+                <i class="fas fa-calendar-alt"></i> My Calendar
             </button>
-            <p style="margin-top: 15px; font-size: 12px; color: #7f8c8d;">
-                <i class="fas fa-shield-alt"></i> Secure access required
-            </p>
-        </div>
-    </div>
-
-    <div class="print-modal" id="printModal">
-        <div class="print-modal-content">
-            <h3><i class="fas fa-print"></i> Print Options</h3>
-            <p>Choose how you would like to print the report:</p>
-            <div class="print-options">
-                <button class="print-option-btn print-pdf" id="printAsPDF">
-                    <i class="fas fa-file-pdf"></i> Download PDF
-                </button>
-                <button class="print-option-btn print-browser" id="printInBrowser">
-                    <i class="fas fa-print"></i> Browser Print
-                </button>
-            </div>
-            <button class="close-modal" id="closeModal">Cancel</button>
-        </div>
-    </div>
-
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-feather-alt"></i>
-                <h1>WebSwan</h1>
-            </div>
-            <p class="subtitle">Professional Website Analysis</p>
-        </header>
-
-        <div class="admin-panel" id="adminPanel">
-            <h3><i class="fas fa-crown"></i> Admin Tools</h3>
             
-            <div style="text-align: center; margin: 15px 0;">
-                <button class="print-btn" id="adminPrintBtn">
-                    <i class="fas fa-print"></i> Print/Download Report
-                </button>
+            <button id="roiToggleButton" class="roi-toggle-button">
+                <i class="fas fa-calculator"></i> ROI Calculator
+            </button>
+            <button id="crmToggleButton" class="crm-toggle-button">
+                <i class="fas fa-users"></i> CRM Dashboard
+            </button>
+            
+            <!-- NEW REPORTS & ANALYSIS BUTTON -->
+            <button id="reportsAnalysisToggleButton" class="reports-analysis-toggle-button">
+                <i class="fas fa-chart-pie"></i> Reports & Analysis
+            </button>
+            
+            <!-- NEW COLLABORATOR BUTTON -->
+            <button id="collaboratorToggleButton" class="collaborator-toggle-button">
+                <i class="fas fa-handshake"></i> Collaborator Leads
+            </button>
+            
+            <button id="telemarketingToggleButton" class="telemarketing-toggle-button">
+                <i class="fas fa-lightbulb"></i> Telemarketing Form
+            </button>
+            <button id="analysisToggleButton" class="analysis-toggle-button">
+                <i class="fas fa-chart-line"></i> Analysis Result
+            </button>
+            <button id="creditRepairToggleButton" class="credit-repair-toggle-button">
+                <i class="fas fa-wrench"></i> Credit Repair CRM
+            </button>
+            <button id="webAnalysisToggleButton" class="web-analysis-toggle-button">
+                <i class="fas fa-search"></i> Web Analysis
+            </button>
+            <button id="analysisInsightToggleButton" class="analysis-insight-toggle-button">
+                <i class="fas fa-chart-bar"></i> WebSwan Analysis Insight
+            </button>
+            <button id="webswanSpinToggleButton" class="webswan-spin-toggle-button">
+                <i class="fas fa-sync-alt"></i> WebSwan Spin
+            </button>
+            <!-- NEW BUTTONS ADDED AS REQUESTED -->
+            <button id="wsInsightToggleButton" class="ws-insight-toggle-button">
+                <i class="fas fa-eye"></i> WS Insight
+            </button>
+            <button id="webswanIntakeToggleButton" class="webswan-intake-toggle-button">
+                <i class="fas fa-clipboard-list"></i> WebSwan Intake
+            </button>
+            <!-- NEW COOKIE & ACCESSIBILITY BUTTON -->
+            <button id="cookieAccessibilityToggleButton" class="cookie-accessibility-toggle-button">
+                <i class="fas fa-cookie"></i> Cookie & Accessibility
+            </button>
+        </div>
+
+        <!-- ROI Calculator Section -->
+        <div class="roi-container" id="roiContainer">
+            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">ROI Calculator</h2>
+            <p class="mb-4">Calculate your potential return on investment with our services.</p>
+            
+            <div class="roi-input-group">
+                <label for="monthlyLeads">Current Monthly Leads</label>
+                <input type="number" id="monthlyLeads" min="0" value="10">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="conversionRate">Current Conversion Rate (%)</label>
+                <input type="number" id="conversionRate" min="0" max="100" value="5">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="averageSale">Average Sale Value ($)</label>
+                <input type="number" id="averageSale" min="0" value="1000">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="expectedIncrease">Expected Increase in Leads (%)</label>
+                <input type="number" id="expectedIncrease" min="0" max="1000" value="50">
+            </div>
+            
+            <div class="roi-input-group">
+                <label for="serviceCost">Monthly Service Cost ($)</label>
+                <input type="number" id="serviceCost" min="0" value="500">
+            </div>
+            
+            <button id="calculateROI" class="roi-button">Calculate ROI</button>
+            
+            <div class="roi-results" id="roiResults" style="display: none;">
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Current Monthly Revenue:</span>
+                    <span class="roi-result-value" id="currentRevenue">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Projected Monthly Revenue:</span>
+                    <span class="roi-result-value" id="projectedRevenue">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Monthly Revenue Increase:</span>
+                    <span class="roi-result-value" id="revenueIncrease">$0</span>
+                </div>
+                <div class="roi-result-item">
+                    <span class="roi-result-label">Monthly Profit After Service Cost:</span>
+                    <span class="roi-result-value" id="monthlyProfit">$0</span>
+                </div>
+                <div class="roi-percentage" id="roiPercentage">0% ROI</div>
+            </div>
+            
+            <a href="https://taniad2169.github.io/WebSwan-ROI/" target="_blank" class="roi-link">View Full ROI Calculator →</a>
+        </div>
+
+        <!-- CRM Dashboard Section -->
+        <div id="crmDashboard">
+            <div class="search-lead-container">
+                <h2 class="text-2xl font-bold mb-4 smooth-scroll-target">Search Leads by Industry</h2>
+                <input 
+                    type="text" 
+                    id="searchLeadInput" 
+                    class="search-input" 
+                    placeholder="Type industry: Real Estate, Mortgage, Chiropractor, Doctor, Lawyer, etc..."
+                >
+                <div id="searchResults" class="search-results"></div>
             </div>
 
-            <div class="cookie-accessibility-section">
-                <h4><i class="fas fa-cookie-bite"></i> Live Cookie Accessibility Tester</h4>
-                <p>Test any website for cookie compliance and accessibility in real-time with our advanced analyzer:</p>
-                <a href="https://taniad2169.github.io/Access_cooWS/" target="_blank" class="cookie-access-btn">
-                    <i class="fas fa-rocket"></i>
-                    <span>Launch Live Cookie Tester</span>
-                    <span class="bouncing-emoji">🚀</span>
-                </a>
-                <p><small>Opens in new tab - Advanced real-time cookie compliance analysis</small></p>
-            </div>
-
-            <div class="file-upload-section">
-                <h4><i class="fas fa-file-upload"></i> File Analysis</h4>
-                <p>Upload and analyze website files, code, or content:</p>
-                <div class="file-upload-group">
-                    <input type="file" id="fileUpload" accept=".html,.css,.js,.txt,.md,.json,.xml,.php,.py,.java,.cpp,.c,.cs,.rb,.go,.rs,.ts,.jsx,.tsx,.vue,.svelte">
-                </div>
-                <div class="button-group">
-                    <button class="file-upload-btn" id="analyzeFile">
-                        <i class="fas fa-search"></i> Analyze File
-                    </button>
-                    <button class="clear-btn" id="clearFile">
-                        <i class="fas fa-broom"></i> Clear
-                    </button>
-                </div>
-                <div class="file-result" id="fileResult">
-                    <pre id="fileAnalysisResults">File analysis results will appear here</pre>
-                </div>
-            </div>
-
-            <div class="ai-assistant-section">
-                <h4><i class="fas fa-robot"></i> ChatGPT Assistance</h4>
-                <p>Get AI-powered assistance for any URL, code snippet, or question. <strong style="color: #ffeb3b;">Now connected to your uploaded files!</strong></p>
+            <div class="tasks-container">
+                <h2 class="text-2xl font-bold mb-4">Task Management</h2>
                 
-                <div class="ai-input-group">
-                    <input type="text" id="aiPrompt" placeholder="Ask ChatGPT to debug, edit, or analyze your uploaded file...">
-                </div>
-                
-                <textarea class="comment-box" id="aiComment" placeholder="Add specific instructions for file editing, debugging, or analysis... (up to 500 words)" maxlength="3000"></textarea>
-                <div class="word-count">
-                    <span id="commentWordCount">0</span>/3000 characters
-                </div>
-                
-                <div class="button-group">
-                    <button class="ai-check-btn" id="askChatGPT">
-                        <i class="fas fa-comment"></i> Ask ChatGPT
-                    </button>
-                    <button class="clear-btn" id="clearChatGPT">
-                        <i class="fas fa-broom"></i> Clear
-                    </button>
-                    <!-- NEW: ChatGPT External Link Button -->
-                    <a href="https://chatgpt.com" target="_blank" class="chatgpt-external-btn">
-                        <i class="fas fa-external-link-alt"></i> Open ChatGPT.com
-                    </a>
-                </div>
-                
-                <div class="file-context-indicator" id="fileContextIndicator">
-                    <i class="fas fa-file-code"></i> 
-                    <strong>File Context Active:</strong> 
-                    <span id="currentFileName">No file selected</span>
-                    <button class="clear-context-btn" id="clearFileContext">
-                        <i class="fas fa-times"></i> Clear Context
+                <div class="status-filter">
+                    <label for="taskFilter">Filter Tasks: </label>
+                    <select id="taskFilter">
+                        <option value="all">All Tasks</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                    <button id="addNewTaskBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">New Task</button>
+                    <button id="refreshTasksBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ml-2">
+                        <i class="fas fa-sync-alt"></i> Refresh Tasks
                     </button>
                 </div>
                 
-                <div class="ai-result" id="aiResult">
-                    <pre id="aiResponse">AI response will appear here</pre>
+                <div class="task-list">
                 </div>
             </div>
 
-            <div class="html-validator-section">
-                <h4><i class="fas fa-code"></i> HTML Validator</h4>
-                <p>Validate HTML for any webpage URL:</p>
-                <div class="html-input-group">
-                    <div class="url-input-group">
-                        <span class="url-prefix">https://www.</span>
-                        <input type="text" id="validatorURL" placeholder="example.com">
-                    </div>
-                    <button class="html-check-btn" id="validateHTML">
-                        <i class="fas fa-check-circle"></i> Validate HTML
-                    </button>
-                </div>
-                <div class="html-result" id="htmlResult">
-                    <pre id="validatorResults">HTML validation results will appear here</pre>
-                </div>
-            </div>
-
-            <div class="performance-checker-section">
-                <h4><i class="fas fa-tachometer-alt"></i> Page Performance & GMatrix</h4>
-                <p>Check comprehensive page performance metrics:</p>
-                <div class="performance-input-group">
-                    <div class="url-input-group">
-                        <span class="url-prefix">https://www.</span>
-                        <input type="text" id="perfURL" placeholder="example.com">
-                    </div>
-                    <button class="performance-check-btn" id="checkPerformance">
-                        <i class="fas fa-chart-line"></i> Check Performance
-                    </button>
-                </div>
-                <div class="performance-result" id="performanceResult">
-                    <pre id="perfResults">Performance results will appear here</pre>
-                </div>
-            </div>
-
-            <div class="seo-score-checker">
-                <h4><i class="fas fa-chart-line"></i> Quick SEO Score Checker</h4>
-                <p>Get instant SEO score for any website:</p>
-                <div class="seo-input-group">
-                    <div class="url-input-group">
-                        <span class="url-prefix">https://www.</span>
-                        <input type="text" id="seoUrl" placeholder="example.com">
-                    </div>
-                    <button class="seo-check-btn" id="checkSeoScore">
-                        <i class="fas fa-search"></i> Check SEO
-                    </button>
-                </div>
-                <div class="seo-result" id="seoResult">
-                    <div class="issue-title">
-                        <i class="fas fa-tachometer-alt"></i> SEO Score: <span id="seoScoreValue">0</span>/100
-                    </div>
-                    <div class="issue-desc" id="seoScoreDescription">
-                        SEO analysis results will appear here
-                    </div>
-                </div>
-            </div>
-
-            <div class="tools-section">
-                <h4>Professional Analysis Tools</h4>
-                <div class="tool-links">
-                    <a href="https://pagespeed.web.dev/" target="_blank" class="tool-link">
-                        <i class="fas fa-tachometer-alt"></i> Google PageSpeed
-                    </a>
-                    <a href="https://search.google.com/test/mobile-friendly" target="_blank" class="tool-link">
-                        <i class="fas fa-mobile-alt"></i> Mobile-Friendly Test
-                    </a>
-                    <a href="https://www.sslshopper.com/ssl-checker.html" target="_blank" class="tool-link">
-                        <i class="fas fa-lock"></i> SSL Certificate Check
-                    </a>
-                    <a href="https://validator.w3.org/" target="_blank" class="tool-link">
-                        <i class="fas fa-code"></i> HTML Validator
-                    </a>
-                    <a href="https://www.semrush.com/analytics/onpage/tool/" target="_blank" class="tool-link">
-                        <i class="fas fa-search"></i> SEMrush SEO
-                    </a>
-                    <a href="https://www.ubersuggest.com/" target="_blank" class="tool-link">
-                        <i class="fas fa-chart-bar"></i> Ubersuggest
-                    </a>
-                </div>
-            </div>
-
-            <div class="tools-section">
-                <h4><i class="fas fa-heartbeat"></i> Core Web Vitals & Security Tools</h4>
-                <div class="tool-links">
-                    <a href="https://webpagetest.org/" target="_blank" class="tool-link">
-                        <i class="fas fa-bolt"></i> WebPageTest
-                    </a>
-                    <a href="https://securityheaders.com/" target="_blank" class="tool-link">
-                        <i class="fas fa-shield-alt"></i> Security Headers
-                    </a>
-                    <a href="https://seositecheckup.com/" target="_blank" class="tool-link">
-                        <i class="fas fa-search"></i> SEO Site Checkup
-                    </a>
-                    <a href="https://www.seobility.net/en/seocheck/" target="_blank" class="tool-link">
-                        <i class="fas fa-check-circle"></i> Seobility SEO Check
-                    </a>
-                    <a href="https://smallseotools.com/website-seo-score-checker/" target="_blank" class="tool-link">
-                        <i class="fas fa-tachometer-alt"></i> Small SEO Tools
-                    </a>
-                </div>
-            </div>
-
-            <div class="pro-analysis-section">
-                <h4><i class="fas fa-chart-bar"></i> Professional Analysis Results</h4>
-                <p>Enter results from professional tools to generate comprehensive report:</p>
-                
-                <div class="pro-input-group">
-                    <label for="pagespeed-score">
-                        <i class="fas fa-tachometer-alt"></i> Google PageSpeed Score
-                    </label>
-                    <input type="number" id="pagespeed-score" min="0" max="100" placeholder="0-100">
-                </div>
-
-                <div class="pro-input-group">
-                    <label for="mobile-friendly">
-                        <i class="fas fa-mobile-alt"></i> Mobile-Friendly Test
-                    </label>
-                    <select id="mobile-friendly">
-                        <option value="">Select result</option>
-                        <option value="pass">✅ Pass</option>
-                        <option value="fail">❌ Fail</option>
-                        <option value="needs-improvement">⚠️ Needs Improvement</option>
+            <div id="taskDetail" class="detail-view">
+                <h2 class="text-2xl font-bold mb-4">Task Details</h2>
+                <div class="form-group">
+                    <label for="taskType">Task Type</label>
+                    <select id="taskType">
+                        <option value="call client">Call Client</option>
+                        <option value="work on demo">Work on Demo</option>
+                        <option value="send text">Send Text Message</option>
+                        <option value="send email">Send Email</option>
+                        <option value="zoom meeting">Zoom Meeting</option>
+                        <option value="phone call">Phone Call</option>
+                        <option value="face to face">Face to Face Meeting</option>
+                        <option value="collaboration">Collaboration</option>
+                        <option value="website analysis">Website Analysis</option>
+                        <option value="website demo">Website Demo</option>
+                        <option value="call backs">Call Backs</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
+                <div id="otherTaskContainer" class="form-group" style="display: none;">
+                    <label for="otherTask">Other Task Description</label>
+                    <textarea id="otherTask" maxlength="300"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Task Description</label>
+                    <textarea id="taskDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Due Date</label>
+                    <input type="date" id="taskDueDate">
+                </div>
+                <div class="action-buttons">
+                    <button class="action-button btn-complete">Complete</button>
+                    <button class="action-button btn-edit">Edit</button>
+                    <button class="action-button btn-delete">Delete</button>
+                    <button class="action-button btn-cancel">Cancel</button>
+                    <button class="action-button btn-save">Save</button>
+                </div>
+            </div>
 
-                <div class="pro-input-group">
-                    <label for="ssl-status">
-                        <i class="fas fa-lock"></i> SSL Certificate Status
-                    </label>
-                    <select id="ssl-status">
-                        <option value="">Select status</option>
-                        <option value="valid">✅ Valid</option>
-                        <option value="invalid">❌ Invalid/Expired</option>
-                        <option value="missing">❌ Missing</option>
+            <div class="leads-container">
+                <h2 class="text-2xl font-bold mb-4">Leads Management</h2>
+                
+                <div class="status-filter">
+                    <label for="leadFilter">Filter Leads: </label>
+                    <select id="leadFilter">
+                        <option value="all">All Leads</option>
+                        <option value="new">New Leads</option>
+                        <option value="hot">Hot Leads</option>
+                        <option value="interested">Interested</option>
+                        <option value="demo">Free Demo Scheduled</option>
+                        <option value="client">Client</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="referral">Referral Leads</option>
+                        <option value="website_analysis">Website Analysis</option>
+                        <option value="website_demo">Website Demo</option>
+                        <option value="call_backs">Call Backs</option>
+                        <option value="send_email">Send Email</option>
+                        <option value="collaborator">Collaborator</option> <!-- ADDED COLLABORATOR OPTION -->
                     </select>
+                    <button id="refreshLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ml-2">
+                        <i class="fas fa-sync-alt"></i> Refresh Leads
+                    </button>
                 </div>
-
-                <div class="pro-input-group">
-                    <label for="html-validation">
-                        <i class="fas fa-code"></i> HTML Validation Errors
-                    </label>
-                    <input type="number" id="html-validation" min="0" placeholder="Number of errors">
+                
+                <div class="filter-info">
+                    <strong>Note:</strong> This dropdown FILTERS leads by status. To MOVE a lead to a different category, click on the lead and use the "Move" button.
                 </div>
-
-                <div class="pro-input-group">
-                    <label for="seo-score">
-                        <i class="fas fa-search"></i> SEO Score (SEMrush/Ubersuggest)
-                    </label>
-                    <input type="number" id="seo-score" min="0" max="100" placeholder="0-100">
+                
+                <div id="leadsList" class="leads-list">
                 </div>
-
-                <div class="pro-input-group">
-                    <label for="core-web-vitals">
-                        <i class="fas fa-heartbeat"></i> Core Web Vitals
-                    </label>
-                    <select id="core-web-vitals">
-                        <option value="">Select status</option>
-                        <option value="good">✅ Good</option>
-                        <option value="needs-improvement">⚠️ Needs Improvement</option>
-                        <option value="poor">❌ Poor</option>
-                    </select>
-                </div>
-
-                <div class="pro-input-group">
-                    <label for="security-headers">
-                        <i class="fas fa-shield-alt"></i> Security Headers
-                    </label>
-                    <select id="security-headers">
-                        <option value="">Select status</option>
-                        <option value="excellent">✅ Excellent</option>
-                        <option value="good">🟡 Good</option>
-                        <option value="poor">❌ Poor</option>
-                    </select>
-                </div>
-
-                <div class="pro-input-group">
-                    <label for="cookie-compliance">
-                        <i class="fas fa-cookie-bite"></i> Cookie Compliance
-                    </label>
-                    <select id="cookie-compliance">
-                        <option value="">Select status</option>
-                        <option value="compliant">✅ Compliant</option>
-                        <option value="partial">🟡 Partially Compliant</option>
-                        <option value="non-compliant">❌ Non-Compliant</option>
-                    </select>
-                </div>
-
-                <div class="admin-comments-section">
-                    <h4><i class="fas fa-comments"></i> Additional Comments & Observations</h4>
-                    <textarea id="admin-comments" placeholder="Add your professional observations, comments, and recommendations based on manual website review..." rows="4"></textarea>
-                </div>
-
-                <button class="btn-primary" id="generateProReport">
-                    <i class="fas fa-file-alt"></i> Generate Professional Report
-                </button>
             </div>
         </div>
 
-        <div class="report" id="report">
-            <div class="report-header">
-                <h2><i class="fas fa-file-alt"></i> Professional Website Analysis Report</h2>
-                <div class="score" id="overallScore">0/100</div>
-                <p>Generated on: <span id="reportDate"></span></p>
-                <p>Analyzed URL: <span id="analyzedUrl">https://example.com</span></p>
+        <!-- NEW REPORTS & ANALYSIS SECTION -->
+        <div id="reportsAnalysisSection" class="roi-container" style="display: none;">
+            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Reports & Analysis Dashboard</h2>
+            <p class="mb-4">Comprehensive analytics and reporting for your business performance.</p>
+            
+            <!-- Quick Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <div class="text-blue-600 font-bold text-lg">Total Hot Leads</div>
+                    <div id="totalLeadsCount" class="text-2xl font-bold">0</div>
+                    <div class="text-sm text-gray-600">Hot Leads Only</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div class="text-green-600 font-bold text-lg">Active Clients</div>
+                    <div id="activeClientsCount" class="text-2xl font-bold">0</div>
+                    <div class="text-sm text-gray-600">Current</div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <div class="text-purple-600 font-bold text-lg">Conversion Rate</div>
+                    <div id="conversionRate" class="text-2xl font-bold">0%</div>
+                    <div class="text-sm text-gray-600">Leads to Clients</div>
+                </div>
             </div>
-
-            <div id="reportContent">
-                <!-- Report content will be generated here -->
+            
+            <!-- Reports Tabs -->
+            <div class="mb-6">
+                <div class="flex border-b">
+                    <button class="py-2 px-4 border-b-2 border-blue-500 font-medium text-blue-600 reports-tab active" data-tab="lead-analysis">Lead Analysis</button>
+                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="performance">Performance Metrics</button>
+                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="industry">Industry Analysis</button>
+                    <button class="py-2 px-4 font-medium text-gray-500 reports-tab" data-tab="custom">Custom Reports</button>
+                </div>
             </div>
-
-            <div class="report-footer">
-                <p><strong>WebSwan Professional Analysis Tool</strong></p>
-                <p>This report provides a comprehensive analysis of website performance, SEO, security, and compliance.</p>
+            
+            <!-- Lead Analysis Tab -->
+            <div id="lead-analysis-tab" class="reports-tab-content active">
+                <h3 class="text-xl font-bold mb-4">Lead Analysis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2">Leads by Status</h4>
+                        <div id="leadsByStatusChart" class="h-64"></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2">Leads by Industry</h4>
+                        <div id="leadsByIndustryChart" class="h-64"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
+                    <h4 class="font-bold mb-2">Monthly Lead Trends</h4>
+                    <div id="monthlyLeadTrendsChart" class="h-64"></div>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <h4 class="font-bold mb-2">Lead Source Analysis</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Leads</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadSourceTable" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Metrics Tab -->
+            <div id="performance-tab" class="reports-tab-content">
+                <h3 class="text-xl font-bold mb-4">Performance Metrics</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2">Task Completion Rate</h4>
+                        <div id="taskCompletionChart" class="h-64"></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold mb-2">Response Time Analysis</h4>
+                        <div id="responseTimeChart" class="h-64"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <h4 class="font-bold mb-2">Performance KPIs</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600" id="avgResponseTime">0h</div>
+                            <div class="text-sm text-gray-600">Avg Response Time</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600" id="leadToClientRate">0%</div>
+                            <div class="text-sm text-gray-600">Lead to Client Rate</div>
+                        </div>
+                        <div class="text-center p-4 bg-purple-50 rounded-lg">
+                            <div class="text-2xl font-bold text-purple-600" id="taskCompletionRate">0%</div>
+                            <div class="text-sm text-gray-600">Task Completion</div>
+                        </div>
+                        <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                            <div class="text-2xl font-bold text-yellow-600" id="clientRetention">0%</div>
+                            <div class="text-sm text-gray-600">Client Retention</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Industry Analysis Tab -->
+            <div id="industry-tab" class="reports-tab-content">
+                <h3 class="text-xl font-bold mb-4">Industry Analysis</h3>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
+                    <h4 class="font-bold mb-2">Leads by Industry Type</h4>
+                    <div id="industryBreakdownChart" class="h-64"></div>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <h4 class="font-bold mb-2">Industry Performance Metrics</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Industry</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Leads</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Deal Size</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="industryMetricsTable" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Custom Reports Tab -->
+            <div id="custom-tab" class="reports-tab-content">
+                <h3 class="text-xl font-bold mb-4">Custom Reports</h3>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200 mb-6">
+                    <h4 class="font-bold mb-2">Generate Custom Report</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                            <select id="reportDateRange" class="w-full p-2 border border-gray-300 rounded">
+                                <option value="7">Last 7 days</option>
+                                <option value="30" selected>Last 30 days</option>
+                                <option value="90">Last 90 days</option>
+                                <option value="365">Last 12 months</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+                        <div id="customDateRange" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Custom Date Range</label>
+                            <div class="flex gap-2">
+                                <input type="date" id="reportStartDate" class="flex-1 p-2 border border-gray-300 rounded">
+                                <input type="date" id="reportEndDate" class="flex-1 p-2 border border-gray-300 rounded">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Report Type</label>
+                            <select id="reportType" class="w-full p-2 border border-gray-300 rounded">
+                                <option value="lead-performance">Lead Performance</option>
+                                <option value="conversion-funnel">Conversion Funnel</option>
+                                <option value="revenue-analysis">Revenue Analysis</option>
+                                <option value="task-efficiency">Task Efficiency</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Filters</label>
+                            <select id="reportFilters" class="w-full p-2 border border-gray-300 rounded" multiple>
+                                <option value="industry">By Industry</option>
+                                <option value="status">By Status</option>
+                                <option value="service">By Service</option>
+                                <option value="location">By Location</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="generateReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Generate Report
+                    </button>
+                </div>
+                
+                <div id="customReportResults" class="bg-white p-4 rounded-lg border border-gray-200 hidden">
+                    <h4 class="font-bold mb-2">Custom Report Results</h4>
+                    <div id="customReportContent">
+                        <!-- Report content will be generated here -->
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button id="exportReportBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
+                            Export to CSV
+                        </button>
+                        <button id="saveReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Save Report
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <h4 class="font-bold mb-2">Saved Reports</h4>
+                    <div id="savedReportsList" class="space-y-2">
+                        <!-- Saved reports will be listed here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Export Options -->
+            <div class="mt-6 flex justify-end space-x-2">
+                <button id="exportDataBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Export All Data
+                </button>
+                <button id="saveAnalysisBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Save Analysis
+                </button>
             </div>
         </div>
-    </div>
 
-    <script>
-        // ========== ENHANCED SECURITY: PASSWORD PROTECTION ==========
-        const PASSWORD = "333"; // Your secure password
-        let adminClickCount = 0;
-        let clickTimeout;
-        const adminToggle = document.getElementById('adminToggle');
-        const adminPanel = document.getElementById('adminPanel');
-        const clickCounter = document.getElementById('clickCounter');
-        const passwordModal = document.getElementById('passwordModal');
-        const adminPassword = document.getElementById('adminPassword');
-        const submitPassword = document.getElementById('submitPassword');
-        const passwordError = document.getElementById('passwordError');
-
-        adminToggle.addEventListener('click', function() {
-            adminClickCount++;
+        <!-- NEW COLLABORATOR SECTION - FIXED -->
+        <div id="collaboratorSection" class="roi-container" style="display: none;">
+            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Collaborator Leads</h2>
+            <p class="mb-4">Manage your collaborator relationships and partnerships.</p>
             
-            clickCounter.textContent = `${adminClickCount}/7`;
-            clickCounter.style.display = 'block';
-            
-            clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(() => {
-                clickCounter.style.display = 'none';
-                adminClickCount = 0;
-            }, 600000); // 10 minutes
-            
-            adminToggle.style.transform = 'scale(1.3)';
-            setTimeout(() => {
-                adminToggle.style.transform = 'scale(1)';
-            }, 200);
-            
-            if (adminClickCount >= 7) {
-                // Show password modal instead of directly showing admin panel
-                passwordModal.style.display = 'flex';
-                adminPassword.focus();
-                clickCounter.style.display = 'none';
-                adminClickCount = 0;
-            } else {
-                const clicksNeeded = 7 - adminClickCount;
-                adminToggle.title = `Click ${clicksNeeded} more time${clicksNeeded > 1 ? 's' : ''} for admin mode`;
-            }
-        });
-
-        // Password submission
-        submitPassword.addEventListener('click', function() {
-            if (adminPassword.value === PASSWORD) {
-                // Correct password - grant access
-                passwordModal.style.display = 'none';
-                adminPanel.style.display = 'block';
-                adminToggle.style.opacity = '1';
-                adminToggle.style.color = '#e74c3c';
-                adminToggle.title = 'Admin Mode Active';
-                passwordError.style.display = 'none';
-                adminPassword.value = '';
+            <div class="leads-container">
+                <div class="status-filter">
+                    <button id="refreshCollaboratorLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                        <i class="fas fa-sync-alt"></i> Refresh Collaborator Leads
+                    </button>
+                </div>
                 
-                // Celebration!
-                confetti({
-                    particleCount: 200,
-                    spread: 100,
-                    origin: { y: 0.6 }
-                });
-                
-                setTimeout(() => {
-                    adminPanel.scrollIntoView({ behavior: 'smooth' });
-                }, 500);
-                
-            } else {
-                // Incorrect password
-                passwordError.style.display = 'block';
-                adminPassword.value = '';
-                adminPassword.focus();
-                
-                // Shake animation for wrong password
-                passwordModalContent.style.animation = 'shake 0.5s';
-                setTimeout(() => {
-                    passwordModalContent.style.animation = '';
-                }, 500);
-            }
-        });
+                <div id="collaboratorLeadsList" class="leads-list">
+                    <!-- Collaborator leads will be displayed here -->
+                </div>
+            </div>
+        </div>
 
-        // Allow Enter key to submit password
-        adminPassword.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                submitPassword.click();
-            }
-        });
-
-        // Close password modal if clicking outside
-        passwordModal.addEventListener('click', function(e) {
-            if (e.target === passwordModal) {
-                passwordModal.style.display = 'none';
-                passwordError.style.display = 'none';
-                adminPassword.value = '';
-            }
-        });
-
-        // Add shake animation for wrong password
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-10px); }
-                75% { transform: translateX(10px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // ========== ALL YOUR EXISTING FUNCTIONALITIES ==========
-        // Print functionality
-        const printModal = document.getElementById('printModal');
-        const adminPrintBtn = document.getElementById('adminPrintBtn');
-        const closeModal = document.getElementById('closeModal');
-        const printAsPDF = document.getElementById('printAsPDF');
-        const printInBrowser = document.getElementById('printInBrowser');
-
-        adminPrintBtn.addEventListener('click', () => {
-            printModal.style.display = 'flex';
-        });
-
-        closeModal.addEventListener('click', () => {
-            printModal.style.display = 'none';
-        });
-
-        printAsPDF.addEventListener('click', () => {
-            const element = document.getElementById('report');
-            if (!element || element.style.display === 'none') {
-                showMessage('Please generate a report first before downloading', 'error');
-                return;
-            }
-            
-            const options = {
-                margin: 10,
-                filename: 'website-analysis-report.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            html2pdf().set(options).from(element).save();
-            printModal.style.display = 'none';
-        });
-
-        printInBrowser.addEventListener('click', () => {
-            const element = document.getElementById('report');
-            if (!element || element.style.display === 'none') {
-                showMessage('Please generate a report first before printing', 'error');
-                return;
-            }
-            
-            window.print();
-            printModal.style.display = 'none';
-        });
-
-        // Word count functionality
-        const aiComment = document.getElementById('aiComment');
-        const commentWordCount = document.getElementById('commentWordCount');
-
-        aiComment.addEventListener('input', () => {
-            commentWordCount.textContent = aiComment.value.length;
-        });
-
-        // File analysis functionality
-        const analyzeFile = document.getElementById('analyzeFile');
-        const clearFile = document.getElementById('clearFile');
-        const fileResult = document.getElementById('fileResult');
-        const fileAnalysisResults = document.getElementById('fileAnalysisResults');
-
-        analyzeFile.addEventListener('click', () => {
-            const fileInput = document.getElementById('fileUpload');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                showMessage('Please select a file to analyze', 'error');
-                return;
-            }
-
-            fileAnalysisResults.textContent = 'Analyzing file...';
-            fileResult.style.display = 'block';
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                setTimeout(() => {
-                    const fileType = file.name.split('.').pop().toUpperCase();
-                    const fileSize = (file.size / 1024).toFixed(2);
-                    
-                    let analysis = `File Analysis Results:\n\n`;
-                    analysis += `File Name: ${file.name}\n`;
-                    analysis += `File Type: ${fileType}\n`;
-                    analysis += `File Size: ${fileSize} KB\n\n`;
-                    
-                    if (fileType === 'HTML') {
-                        analysis += "HTML FILE ANALYSIS:\n";
-                        analysis += "- Check for proper DOCTYPE declaration\n";
-                        analysis += "- Validate semantic HTML5 structure\n";
-                        analysis += "- Review meta tags for SEO optimization\n";
-                    } else if (fileType === 'CSS') {
-                        analysis += "CSS FILE ANALYSIS:\n";
-                        analysis += "- Check for unused CSS rules\n";
-                        analysis += "- Review responsive breakpoints\n";
-                        analysis += "- Validate CSS specificity issues\n";
-                    } else if (fileType === 'JS') {
-                        analysis += "JAVASCRIPT FILE ANALYSIS:\n";
-                        analysis += "- Check for modern ES6+ syntax\n";
-                        analysis += "- Review error handling\n";
-                        analysis += "- Validate performance optimizations\n";
-                    }
-                    
-                    fileAnalysisResults.textContent = analysis;
-                    showMessage('File analysis completed!', 'success');
-                }, 2000);
-            };
-            reader.readAsText(file);
-        });
-
-        clearFile.addEventListener('click', () => {
-            document.getElementById('fileUpload').value = '';
-            fileResult.style.display = 'none';
-        });
-
-        // AI Assistant functionality
-        const askChatGPT = document.getElementById('askChatGPT');
-        const clearChatGPT = document.getElementById('clearChatGPT');
-        const aiResult = document.getElementById('aiResult');
-        const aiResponse = document.getElementById('aiResponse');
-
-        askChatGPT.addEventListener('click', () => {
-            const aiPrompt = document.getElementById('aiPrompt').value.trim();
-            const aiCommentText = document.getElementById('aiComment').value.trim();
-            
-            if (!aiPrompt && !aiCommentText) {
-                showMessage('Please enter a URL, code snippet, or question', 'error');
-                return;
-            }
-
-            aiResponse.textContent = 'Analyzing your request... This may take a few moments.';
-            aiResult.style.display = 'block';
-
-            setTimeout(() => {
-                let response = '';
-                
-                if (aiPrompt.includes('http') || aiPrompt.includes('www') || aiPrompt.includes('.com')) {
-                    response = `Based on my analysis of ${aiPrompt}, I can provide the following insights:\n\nKEY OBSERVATIONS:\n1. The website appears to have a modern design\n2. Loading performance could be optimized\n3. SEO elements are partially implemented\n\nRECOMMENDATIONS:\n1. Implement lazy loading for images\n2. Add structured data markup\n3. Optimize CSS and JavaScript delivery\n\n${aiCommentText ? `ADDITIONAL CONTEXT:\n${aiCommentText}` : ''}`;
-                } else {
-                    response = `Thank you for your question: "${aiPrompt}"\n\n${aiCommentText ? `CONTEXT PROVIDED:\n${aiCommentText}\n\n` : ''}Based on my analysis, I recommend focusing on the core aspects of your query and implementing best practices for optimal results.`;
-                }
-
-                aiResponse.textContent = response;
-                showMessage('AI analysis completed!', 'success');
-            }, 3000);
-        });
-
-        clearChatGPT.addEventListener('click', () => {
-            document.getElementById('aiPrompt').value = '';
-            document.getElementById('aiComment').value = '';
-            aiResult.style.display = 'none';
-            commentWordCount.textContent = '0';
-        });
-
-        // HTML Validator functionality
-        const validateHTML = document.getElementById('validateHTML');
-        const htmlResult = document.getElementById('htmlResult');
-        const validatorResults = document.getElementById('validatorResults');
-
-        validateHTML.addEventListener('click', () => {
-            const validatorURL = document.getElementById('validatorURL').value.trim();
-            
-            if (!validatorURL) {
-                showMessage('Please enter a URL to validate', 'error');
-                return;
-            }
-
-            validatorResults.textContent = 'Validating HTML... This may take a few moments.';
-            htmlResult.style.display = 'block';
-
-            setTimeout(() => {
-                const errors = Math.floor(Math.random() * 15);
-                const warnings = Math.floor(Math.random() * 8);
-                
-                let resultText = `HTML Validation Results for https://www.${validatorURL}:\n\n`;
-                resultText += `Errors: ${errors}\n`;
-                resultText += `Warnings: ${warnings}\n\n`;
-                
-                if (errors === 0 && warnings === 0) {
-                    resultText += "✅ Excellent! No HTML validation issues found.";
-                } else if (errors === 0) {
-                    resultText += "🟡 Good! No critical errors found.";
-                } else {
-                    resultText += "⚠️ Some HTML validation errors that should be fixed.";
-                }
-                
-                validatorResults.textContent = resultText;
-                showMessage('HTML validation completed!', 'success');
-            }, 2500);
-        });
-
-        // Performance Checker functionality
-        const checkPerformance = document.getElementById('checkPerformance');
-        const performanceResult = document.getElementById('performanceResult');
-        const perfResults = document.getElementById('perfResults');
-
-        checkPerformance.addEventListener('click', () => {
-            const perfURL = document.getElementById('perfURL').value.trim();
-            
-            if (!perfURL) {
-                showMessage('Please enter a URL to check performance', 'error');
-                return;
-            }
-
-            perfResults.textContent = 'Analyzing performance... This may take a few moments.';
-            performanceResult.style.display = 'block';
-
-            setTimeout(() => {
-                const loadTime = (Math.random() * 4 + 1).toFixed(2);
-                const score = Math.floor(Math.random() * 30) + 70;
-                const requests = Math.floor(Math.random() * 50) + 30;
-                const pageSize = (Math.random() * 2000 + 500).toFixed(0);
-                
-                let resultText = `Performance Analysis for https://www.${perfURL}:\n\n`;
-                resultText += `Performance Score: ${score}/100\n`;
-                resultText += `Load Time: ${loadTime} seconds\n`;
-                resultText += `Page Size: ${pageSize} KB\n`;
-                resultText += `HTTP Requests: ${requests}\n\n`;
-                
-                if (score >= 90) {
-                    resultText += "✅ Excellent performance!";
-                } else if (score >= 80) {
-                    resultText += "🟡 Good performance with some room for optimization.";
-                } else {
-                    resultText += "⚠️ Average performance. Optimization opportunities available.";
-                }
-                
-                perfResults.textContent = resultText;
-                showMessage('Performance analysis completed!', 'success');
-            }, 3000);
-        });
-
-        // SEO Score Checker functionality
-        const checkSeoScore = document.getElementById('checkSeoScore');
-        const seoResult = document.getElementById('seoResult');
-        const seoScoreValue = document.getElementById('seoScoreValue');
-        const seoScoreDescription = document.getElementById('seoScoreDescription');
-
-        checkSeoScore.addEventListener('click', () => {
-            const seoUrl = document.getElementById('seoUrl').value.trim();
-            
-            if (!seoUrl) {
-                showMessage('Please enter a website URL', 'error');
-                return;
-            }
-
-            seoScoreValue.textContent = '...';
-            seoScoreDescription.textContent = 'Analyzing website SEO...';
-            seoResult.style.display = 'block';
-
-            setTimeout(() => {
-                const hash = seoUrl.split('').reduce((a, b) => {
-                    a = ((a << 5) - a) + b.charCodeAt(0);
-                    return a & a;
-                }, 0);
-                const score = Math.abs(hash % 41) + 60;
-
-                seoScoreValue.textContent = score;
-                
-                if (score >= 90) {
-                    seoScoreDescription.textContent = `Excellent SEO! ${seoUrl} has strong optimization.`;
-                } else if (score >= 80) {
-                    seoScoreDescription.textContent = `Good SEO foundation. ${seoUrl} has solid optimization.`;
-                } else if (score >= 70) {
-                    seoScoreDescription.textContent = `Average SEO performance. ${seoUrl} needs work.`;
-                } else {
-                    seoScoreDescription.textContent = `Needs SEO improvement. ${seoUrl} has issues to address.`;
-                }
-
-                showMessage('SEO analysis completed!', 'success');
-            }, 2000);
-        });
-
-        // Report Generator functionality
-        const generateProReport = document.getElementById('generateProReport');
-        const report = document.getElementById('report');
-        const reportDate = document.getElementById('reportDate');
-        const overallScore = document.getElementById('overallScore');
-        const reportContent = document.getElementById('reportContent');
-        const analyzedUrl = document.getElementById('analyzedUrl');
-
-        generateProReport.addEventListener('click', () => {
-            const now = new Date();
-            reportDate.textContent = now.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            const seoUrl = document.getElementById('seoUrl').value.trim();
-            if (seoUrl) {
-                analyzedUrl.textContent = `https://www.${seoUrl}`;
-            }
-
-            // Calculate score based on inputs
-            const pageSpeedScore = parseInt(document.getElementById('pagespeed-score').value) || 0;
-            const mobileFriendly = document.getElementById('mobile-friendly').value;
-            const sslStatus = document.getElementById('ssl-status').value;
-            const htmlValidation = parseInt(document.getElementById('html-validation').value) || 0;
-            const seoScore = parseInt(document.getElementById('seo-score').value) || 0;
-            const coreWebVitals = document.getElementById('core-web-vitals').value;
-            const securityHeaders = document.getElementById('security-headers').value;
-            const cookieCompliance = document.getElementById('cookie-compliance').value;
-            const adminCommentsText = document.getElementById('admin-comments').value;
-
-            let calculatedScore = 0;
-            let maxPossibleScore = 0;
-
-            if (pageSpeedScore) {
-                calculatedScore += pageSpeedScore * 0.2;
-                maxPossibleScore += 20;
-            }
-            if (mobileFriendly === 'pass') {
-                calculatedScore += 10;
-                maxPossibleScore += 10;
-            }
-            if (sslStatus === 'valid') {
-                calculatedScore += 10;
-                maxPossibleScore += 10;
-            }
-            if (htmlValidation === 0) {
-                calculatedScore += 10;
-                maxPossibleScore += 10;
-            }
-            if (seoScore) {
-                calculatedScore += seoScore * 0.2;
-                maxPossibleScore += 20;
-            }
-            if (coreWebVitals === 'good') {
-                calculatedScore += 15;
-                maxPossibleScore += 15;
-            }
-            if (securityHeaders === 'excellent') {
-                calculatedScore += 10;
-                maxPossibleScore += 10;
-            }
-            if (cookieCompliance === 'compliant') {
-                calculatedScore += 5;
-                maxPossibleScore += 5;
-            }
-
-            const finalScore = maxPossibleScore > 0 ? Math.round((calculatedScore / maxPossibleScore) * 100) : 0;
-            overallScore.textContent = `${finalScore}/100`;
-
-            let reportHTML = '';
-
-            // Generate report sections based on inputs
-            if (pageSpeedScore) {
-                reportHTML += `
-                    <div class="issue ${pageSpeedScore >= 80 ? 'good' : pageSpeedScore >= 50 ? 'warning' : ''}">
-                        <div class="issue-title">
-                            <i class="fas fa-tachometer-alt"></i> Performance Score: ${pageSpeedScore}/100
-                        </div>
-                        <div class="issue-desc">
-                            ${pageSpeedScore >= 80 ? 'Excellent performance score.' : pageSpeedScore >= 50 ? 'Moderate performance score.' : 'Low performance score.'}
-                        </div>
-                    </div>
-                `;
-            }
-
-            if (mobileFriendly) {
-                reportHTML += `
-                    <div class="issue ${mobileFriendly === 'pass' ? 'good' : mobileFriendly === 'needs-improvement' ? 'warning' : ''}">
-                        <div class="issue-title">
-                            <i class="fas fa-mobile-alt"></i> Mobile-Friendly: ${mobileFriendly === 'pass' ? '✅ Pass' : mobileFriendly === 'fail' ? '❌ Fail' : '⚠️ Needs Improvement'}
-                        </div>
-                        <div class="issue-desc">
-                            ${mobileFriendly === 'pass' ? 'The website is properly optimized for mobile devices.' : 'The website needs mobile optimization improvements.'}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Add more sections based on other inputs...
-
-            if (adminCommentsText) {
-                reportHTML += `
-                    <div class="issue info">
-                        <div class="issue-title">
-                            <i class="fas fa-comments"></i> Additional Comments & Recommendations
-                        </div>
-                        <div class="issue-desc">
-                            ${adminCommentsText}
-                        </div>
-                    </div>
-                `;
-            }
-
-            reportContent.innerHTML = reportHTML;
-            report.style.display = 'block';
-            report.scrollIntoView({ behavior: 'smooth' });
-
-            showMessage('Report generated successfully!', 'success');
-        });
-
-        // Utility function
-        function showMessage(message, type) {
-            const existingMessage = document.querySelector('.form-message');
-            if (existingMessage) {
-                existingMessage.remove();
-            }
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `form-message form-${type}`;
-            messageDiv.textContent = message;
-            
-            const generateProReport = document.getElementById('generateProReport');
-            generateProReport.parentNode.insertBefore(messageDiv, generateProReport.nextSibling);
-            
-            setTimeout(() => {
-                if (messageDiv.parentNode) {
-                    messageDiv.parentNode.removeChild(messageDiv);
-                }
-            }, 5000);
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            commentWordCount.textContent = '0';
-            
-            // Set sample data for demo
-            document.getElementById('pagespeed-score').value = '85';
-            document.getElementById('mobile-friendly').value = 'pass';
-            document.getElementById('ssl-status').value = 'valid';
-            document.getElementById('html-validation').value = '2';
-            document.getElementById('seo-score').value = '78';
-            document.getElementById('core-web-vitals').value = 'good';
-            document.getElementById('security-headers').value = 'good';
-            document.getElementById('cookie-compliance').value = 'compliant';
-            document.getElementById('seoUrl').value = 'example.com';
-            document.getElementById('validatorURL').value = 'example.com';
-            document.getElementById('perfURL').value = 'example.com';
-        });
-    </script>
-</body>
-</html>
+        <!-- Telemarketing Section -->
+        <div id="telemarketingSection" class="roi-container">
+            <h2 class="text-2xl font-bold mb-6 smooth-scroll-target">Telemark
