@@ -265,9 +265,11 @@
                             <label for="industry">Type of Industry</label>
                             <select id="industry" name="industry">
                                 <option value="">Select Industry</option>
-                                <option>Doctor</option><option>Lawyer</option><option>Real Estate Broker</option>
+                                <option>Doctor</option><option>Dentist</option><option>Dermatologist</option>
+                                <option>Lawyer</option><option>Real Estate Broker</option>
                                 <option>Mortgage Broker</option><option>Chiropractor</option><option>Cosmetic/Plastic Surgeon</option>
-                                <option>Solar Company</option><option>Restaurant</option><option>Beautician/Hairdresser/Barber</option>
+                                <option>Spa</option><option>Solar Company</option><option>Restaurant</option>
+                                <option>Beautician/Hairdresser/Barber</option>
                                 <option>High-Tech</option><option>Other</option>
                             </select>
                         </div>
@@ -323,6 +325,62 @@
                                 <option value="text">Text</option>
                                 <option value="email">Email</option>
                             </select>
+                        </div>
+                    </div>
+                    <!-- Call Log Fields -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calltime">📞 Time of Call</label>
+                            <select id="calltime" name="calltime">
+                                <option value="">Select Time</option>
+                                <option value="8:00 AM">8:00 AM</option>
+                                <option value="8:30 AM">8:30 AM</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="9:30 AM">9:30 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="10:30 AM">10:30 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="11:30 AM">11:30 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="12:30 PM">12:30 PM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="1:30 PM">1:30 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="2:30 PM">2:30 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="3:30 PM">3:30 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                                <option value="4:30 PM">4:30 PM</option>
+                                <option value="5:00 PM">5:00 PM</option>
+                                <option value="5:30 PM">5:30 PM</option>
+                                <option value="6:00 PM">6:00 PM</option>
+                                <option value="6:30 PM">6:30 PM</option>
+                                <option value="7:00 PM">7:00 PM</option>
+                                <option value="7:30 PM">7:30 PM</option>
+                                <option value="8:00 PM">8:00 PM</option>
+                                <option value="8:30 PM">8:30 PM</option>
+                                <option value="9:00 PM">9:00 PM</option>
+                                <option value="9:30 PM">9:30 PM</option>
+                                <option value="10:00 PM">10:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calltimezone">🌎 Time Zone</label>
+                            <select id="calltimezone" name="calltimezone">
+                                <option value="">Select Time Zone</option>
+                                <option value="Eastern">Eastern (ET)</option>
+                                <option value="Central">Central (CT)</option>
+                                <option value="Mountain">Mountain (MT)</option>
+                                <option value="Pacific">Pacific (PT)</option>
+                                <option value="Alaska">Alaska (AKT)</option>
+                                <option value="Hawaii">Hawaii (HT)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calldate">📅 Date of Call</label>
+                            <input type="date" id="calldate" name="calldate">
                         </div>
                     </div>
                     <div class="form-group"><label for="notes">Additional Notes</label><textarea id="notes" name="notes" rows="3" placeholder="Anything else we should know?"></textarea></div>
@@ -602,6 +660,9 @@
                 <div class="lead-detail-group"><div class="lead-detail-label">Best Time to Contact</div><div id="leadBestTimeDisplay" class="lead-detail-value"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Best Way to Contact</div><div id="leadContactWayDisplay" class="lead-detail-value"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Additional Notes</div><div id="leadNotesDisplay" class="lead-detail-value"></div></div>
+                <div class="lead-detail-group"><div class="lead-detail-label">📞 Time of Call</div><div id="leadCallTimeDisplay" class="lead-detail-value"></div></div>
+                <div class="lead-detail-group"><div class="lead-detail-label">🌎 Time Zone</div><div id="leadTimezoneDisplay" class="lead-detail-value"></div></div>
+                <div class="lead-detail-group"><div class="lead-detail-label">📅 Date of Call</div><div id="leadCallDateDisplay" class="lead-detail-value"></div></div>
             </div>
             <div class="action-buttons-lead">
                 <button class="action-button-lead btn-edit-lead" id="editLeadBtn">✏️ Edit</button>
@@ -953,7 +1014,9 @@
             ['leadIndustryDisplay','industry'],['leadOtherIndustryDisplay','otherIndustry'],
             ['leadHowLongDisplay','howlonginbusiness'],['leadBusinessTypeDisplay','typeofbusiness'],
             ['leadServiceDisplay','serviceinterestedin'],['leadBestTimeDisplay','besttime'],
-            ['leadContactWayDisplay','contactway'],['leadNotesDisplay','notes']
+            ['leadContactWayDisplay','contactway'],['leadNotesDisplay','notes'],
+            ['leadCallTimeDisplay','calltime'],['leadTimezoneDisplay','calltimezone'],
+            ['leadCallDateDisplay','calldate']
         ];
         fields.forEach(function(f) {
             var el = document.getElementById(f[0]);
@@ -1073,6 +1136,12 @@
     function triggerCelebration(count) {
         var cel = document.getElementById('celebration');
         cel.style.display='flex';
+        // Play bell sound
+        var bell = document.getElementById('bellSound');
+        if (bell) {
+            bell.currentTime = 0;
+            bell.play().catch(function(e){ console.log('Audio autoplay blocked, will play on next user interaction:', e); });
+        }
         var emojis = count>0?['🔔','💪','👍','💰','💯']:['👏','💰','🔥','🥂','🎯'];
         var i=0, el=document.getElementById('celebrationEmojis');
         emojiInterval=setInterval(function(){el.innerHTML='<span class="emoji-animated">'+emojis[i%emojis.length]+'</span>';i++;},1000);
@@ -1087,6 +1156,8 @@
             cel.style.display='none';
             clearInterval(emojiInterval);
             clearInterval(confettiInterval);
+            var bell = document.getElementById('bellSound');
+            if (bell) { bell.pause(); bell.currentTime = 0; }
         },8000);
     }
 
