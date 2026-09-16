@@ -778,6 +778,33 @@
     // ============================================================
     document.addEventListener('DOMContentLoaded', function() {
 
+        // --- Prefill Lead/Application form from URL parameters ---
+        // Lets other WebSwan tools (like the Daily Task app) hand off a
+        // lead directly into THIS form only - nothing else in the CRM
+        // (not Firestore, not the back office) is touched until Tania
+        // actually reviews it and clicks Submit herself.
+        (function prefillLeadFormFromUrl() {
+            var params = new URLSearchParams(window.location.search);
+            if (![...params.keys()].length) return;
+
+            var nameEl = document.getElementById('name');
+            var phoneEl = document.getElementById('phone');
+            var emailEl = document.getElementById('email');
+            var websiteEl = document.getElementById('website');
+            var notesEl = document.getElementById('notes');
+
+            if (params.get('name') && nameEl) nameEl.value = params.get('name');
+            if (params.get('phone') && phoneEl) phoneEl.value = formatPhoneNumber(params.get('phone'));
+            if (params.get('email') && emailEl) emailEl.value = params.get('email');
+            if (params.get('url') && websiteEl) websiteEl.value = params.get('url');
+            if (params.get('comment') && notesEl) notesEl.value = params.get('comment');
+
+            if (nameEl && nameEl.value) {
+                var leadFormSection = document.getElementById('leadForm');
+                if (leadFormSection) leadFormSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        })();
+
         // --- Target widget ---
         var storedCount = parseInt(localStorage.getItem('targetCount') || '0');
         AppState.targetCount = storedCount;
@@ -1255,6 +1282,29 @@
     };
 
     // -------------------------------------------------------
+    // GOOGLE SHEET SYNC
+    // Sends each new lead to the same sheet the "Open Google Sheet"
+    // button points to, matching its actual columns: Name,
+    // EmailAddress, PhoneNumber, CompanyName, typeofbusiness, State.
+    // -------------------------------------------------------
+    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzokZGWuFYBcwHAGEDjt7u80C2kuIXcbPsOwxYn_x5STSudMJY1aJtOkuIXMKGHpywI/exec';
+
+    async function sendLeadToGoogleSheet(data) {
+        try {
+            await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                mode: 'no-cors' // Apps Script web apps don't return normal CORS headers
+            });
+        } catch (err) {
+            // Firebase already has the lead even if this fails - don't
+            // block the form submission over a sheet-sync hiccup.
+            console.error('Google Sheet sync failed:', err);
+        }
+    }
+
+    // -------------------------------------------------------
     // FORM SUBMIT - SINGLE LISTENER (no duplicates!)
     // -------------------------------------------------------
     document.getElementById('leadForm').addEventListener('submit', async function(e) {
@@ -1278,6 +1328,12 @@
             console.log('Saving lead with status:', data.status, 'service:', service);
 
             await addDoc(collection(db, "leads"), data);
+
+            // Also send this lead to the Google Sheet, matching its real
+            // columns (Name/EmailAddress/PhoneNumber/CompanyName/
+            // typeofbusiness/State) - runs alongside the Firebase save,
+            // not instead of it.
+            sendLeadToGoogleSheet(data);
 
             // Show success modal with category info
             const statusLabels = {
