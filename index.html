@@ -720,6 +720,19 @@
     </ul>
 </div>
 
+<!-- Follow-up date when a lead goes to Future (Nov 2026) -->
+<div id="futureDateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:14px;padding:20px;max-width:380px;width:92%;box-shadow:0 20px 50px rgba(0,0,0,.3);">
+        <h3 style="margin:0 0 6px;font-weight:800;color:#3730A3;">🗓️ When should we follow up?</h3>
+        <p id="futureDateWho" style="font-size:13px;color:#6B7280;margin:0 0 10px;"></p>
+        <input type="date" id="futureDateInput" style="width:100%;border:1.5px solid #c4b5fd;border-radius:8px;padding:8px;">
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;">
+            <button type="button" id="futureDateSkip" style="border:1px solid #c4b5fd;border-radius:8px;padding:6px 12px;font-weight:700;color:#6B21A8;background:#fff;">Skip</button>
+            <button type="button" id="futureDateSave" style="border-radius:8px;padding:6px 12px;font-weight:700;color:#fff;background:#7c3aed;">Save + add to Google Calendar</button>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
@@ -1082,6 +1095,14 @@
     }
 
     // Google Calendar reminder (opens Tania's calendar with the event filled in; nothing is sent anywhere)
+    function calendarUrl(l, d) {
+        var day = d.replace(/-/g, ''), next = new Date(d + 'T12:00:00'); next.setDate(next.getDate() + 1);
+        var end = next.toISOString().slice(0, 10).replace(/-/g, '');
+        var text = 'Follow up: ' + (l.name || '') + (l.company ? ' (' + l.company + ')' : '');
+        var details = 'WebSwan CRM lead. Phone: ' + (l.phone || '') + '. Email: ' + (l.email || '') + '. How it started: ' + (pitchOf(l) || 'not set') + '. Category: ' + (STATUS_LABELS[l.status] || l.status || '') + '.';
+        return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(text) + '&dates=' + day + '/' + end + '&details=' + encodeURIComponent(details);
+    }
+    window.calendarUrl = calendarUrl;
     function updateCalendarLink(l) {
         var a = document.getElementById('leadCalendarLink'); if (!a) return;
         var d = document.getElementById('leadFollowUpInput').value;
@@ -1479,6 +1500,28 @@
                 updatedAt: new Date()
             });
             const STATUS_LABELS = window.STATUS_LABELS || {};
+            if (category === 'future' || category.indexOf('fc_') === 0) {
+                // Future leads: ask for the follow-up date, save it, then open Google Calendar with the reminder filled in.
+                const lead = (window.AppState.allLeads || []).find(l => l.id === leadId) || {};
+                Object.assign(lead, { status: category });
+                document.getElementById('moveModal').style.display = 'none';
+                document.getElementById('leadModal').style.display = 'none';
+                const m = document.getElementById('futureDateModal');
+                document.getElementById('futureDateWho').textContent = (lead.name || lead.company || 'This lead') + ' moved to ' + (STATUS_LABELS[category] || category) + '. Pick the day to follow up; it goes on your Google Calendar.';
+                document.getElementById('futureDateInput').value = lead.followUpDate || '';
+                m.style.display = 'flex';
+                await new Promise(resolve => {
+                    document.getElementById('futureDateSkip').onclick = () => { m.style.display = 'none'; resolve(); };
+                    document.getElementById('futureDateSave').onclick = async () => {
+                        const d = document.getElementById('futureDateInput').value;
+                        if (!d) { alert('Pick a date first (or press Skip).'); return; }
+                        const w = window.open(window.calendarUrl(lead, d), '_blank', 'noopener');
+                        try { await updateDoc(doc(db, "leads", leadId), { followUpDate: d, updatedAt: new Date() }); lead.followUpDate = d; } catch (e) { alert('Could not save the date: ' + e.message); }
+                        if (!w) alert('Your browser blocked the Google Calendar window. Open the lead and press "Add reminder to Google Calendar".');
+                        m.style.display = 'none'; resolve();
+                    };
+                });
+            } else
             alert('✅ Lead moved to: ' + (STATUS_LABELS[category] || category));
             // Close move modal
             document.getElementById('moveModal').style.display = 'none';
