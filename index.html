@@ -511,6 +511,10 @@
             </div>
             <div class="leads-container">
                 <h2 class="text-2xl font-bold mb-4">Leads Management</h2>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-6px 0 12px;">
+                    <a href="https://taniad2169.github.io/Daily-task/" target="_blank" rel="noopener" style="background:#0077b6;color:#fff;font-weight:700;border-radius:8px;padding:6px 12px;text-decoration:none;"><i class="fas fa-feather-alt"></i> Open WorkPilot</a>
+                    <a href="https://taniad2169.github.io/webswan-dagigoia-task/voice-studio/" target="_blank" rel="noopener" style="background:#111827;color:#fff;font-weight:700;border-radius:8px;padding:6px 12px;text-decoration:none;"><i class="fas fa-microphone-lines"></i> Open Voice Studio</a>
+                </div>
                 <div class="status-filter">
                     <label for="leadFilter">Filter Leads: </label>
                     <select id="leadFilter">
@@ -682,6 +686,8 @@
                 <button class="action-button-lead btn-edit-lead" id="editLeadBtn">✏️ Edit</button>
                 <button class="action-button-lead btn-delete-lead" id="deleteLeadBtn">🗑️ Delete</button>
                 <button class="action-button-lead btn-move-lead" id="moveLeadBtn">📁 Move to Category</button>
+                <button class="action-button-lead" id="toWorkPilotBtn" type="button" style="background:#0077b6;color:#fff;">📤 Send to WorkPilot</button>
+                <button class="action-button-lead" id="toVoiceStudioBtn" type="button" style="background:#111827;color:#fff;">🎙 Send to Voice Studio</button>
             </div>
             <div class="toolbar flex items-center mt-4" style="gap:5px;">
                 <button class="p-2 border rounded" onclick="document.execCommand('bold')"><b>B</b></button>
@@ -1088,6 +1094,28 @@
         a.style.display = '';
     }
     window.updateCalendarLink = updateCalendarLink;
+
+    // Send the open lead to WorkPilot (adds it to the lead list, highlighted) or Voice Studio (import screen asks to confirm).
+    function plainNotes(l) { var t = document.createElement('div'); t.innerHTML = l.comments || ''; return [l.notes || '', t.textContent || ''].filter(Boolean).join(' · ').slice(0, 600); }
+    function sendToWorkPilot() {
+        var l = AppState.currentLeadData; if (!l) return;
+        var p = new URLSearchParams({ addlead: '1', name: l.name || l.company || '', phone: l.phone || '', email: l.email || '', url: l.website || '',
+            comment: ['From CRM', l.company, pitchOf(l) && 'Pitch: ' + pitchOf(l), STATUS_LABELS[l.status] || l.status, plainNotes(l)].filter(Boolean).join(' · ').slice(0, 900), color: 'indigo' });
+        window.open('https://taniad2169.github.io/Daily-task/?' + p.toString(), '_blank', 'noopener');
+    }
+    function sendToVoiceStudio() {
+        var l = AppState.currentLeadData; if (!l) return;
+        if (!String(l.phone || '').replace(/\D/g, '')) { alert('This lead has no phone number, so Voice Studio cannot call it.'); return; }
+        var ind = /lawyer|attorney|legal|law/i.test((l.industry || '') + ' ' + (l.typeofbusiness || '')) ? 'Attorney / legal' : /doctor|dentist|dermatolog|chiropract|surgeon|medical|therap/i.test((l.industry || '') + ' ' + (l.typeofbusiness || '')) ? 'Doctor / medical' : 'Other business';
+        var data = { v: 1, src: 'WebSwan CRM', at: Date.now(), leads: [{ lpId: 'crm_' + l.id, name: l.name || '', business: l.company || '', phone: l.phone || '', email: l.email || '', city: l.city || '', state: l.state || '', website: l.website || '',
+            type: l.typeofbusiness || l.industry || '', industry: ind, status: '', noSite: l.hasWebsite === 'no', notes: [pitchOf(l) && 'How it started: ' + pitchOf(l), plainNotes(l)].filter(Boolean).join(' · ').slice(0, 600) }] };
+        var b64 = btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        window.open('https://taniad2169.github.io/webswan-dagigoia-task/voice-studio/#import=' + b64, '_blank', 'noopener');
+    }
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'toWorkPilotBtn') sendToWorkPilot();
+        if (e.target && e.target.id === 'toVoiceStudioBtn') sendToVoiceStudio();
+    });
 
     function openLeadById(id) {
         var lead = AppState.allLeads.find(function(l) { return l.id === id; });
