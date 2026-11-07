@@ -1539,7 +1539,8 @@
             if ((done + failed) % 10 === 0) btn.textContent = 'Sorting… ' + (done + failed) + ' / ' + move.length;
         }
         btn.disabled = false;
-        alert('✅ Sorted ' + done + ' lead(s) into Miscellaneous.' + (failed ? ' ' + failed + ' could not be updated; press the button again to retry them.' : ''));
+        alert('✅ Sorted ' + done + ' lead(s) into Miscellaneous.' + (failed ? ' ' + failed + ' could not be updated; press the button again to retry them.' : '') + '\nShowing Miscellaneous now. Pick another category in "Filter Leads" anytime.');
+        document.getElementById('leadFilter').value = 'misc';
         await firebaseLoadLeads();
     });
     document.getElementById('undoSortBtn').addEventListener('click', async () => {
