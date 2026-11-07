@@ -196,6 +196,12 @@
         .status-cancelled { background: #F3F4F6; color: #6B7280; }
         .status-referral { background: #ECFDF5; color: #059669; }
         .status-all { background: #E0F2FE; color: #0369A1; }
+        .status-call_backs { background: #FFEDD5; color: #C2410C; }
+        .status-closed_client { background: #E5E7EB; color: #374151; }
+        .status-future, .status-fc_doctors, .status-fc_attorneys, .status-fc_advertising, .status-fc_swandesk { background: #E0E7FF; color: #3730A3; }
+        .status-misc { background: #F5F5F4; color: #57534E; }
+        .pitch-badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; margin-left:6px; background:#F3E8FF; color:#6B21A8; }
+        .due-badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; margin-left:6px; background:#FEF3C7; color:#92400E; }
     </style>
 </head>
 <body>
@@ -509,24 +515,30 @@
                     <label for="leadFilter">Filter Leads: </label>
                     <select id="leadFilter">
                         <option value="all">All Leads</option>
-                        <option value="new">New Leads</option>
-                        <option value="hot">Hot Leads</option>
-                        <option value="interested">Interested</option>
-                        <option value="demo">Free Demo Scheduled</option>
-                        <option value="client">Client</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="referral">Referral Leads</option>
-                        <option value="website_analysis">Website Analysis</option>
-                        <option value="website_demo">Website Demo</option>
-                        <option value="call_backs">Call Backs</option>
-                        <option value="send_email">Send Email</option>
-                        <option value="free_demo">Free Demo</option>
-                        <option value="website">Website</option>
-                        <option value="seo">SEO</option>
+                        <option value="new">🆕 New Leads</option>
+                        <option value="hot">🔥 Hot Leads</option>
+                        <option value="interested">⭐ Interested</option>
+                        <option value="call_backs">📞 Call Backs</option>
+                        <option value="client">✅ Clients</option>
+                        <option value="closed_client">🏁 Closed Clients</option>
+                        <option value="future">🗓️ Future Leads (follow up later)</option>
+                        <option value="fc_doctors">🩺 Future Call Campaign: Doctors</option>
+                        <option value="fc_attorneys">⚖️ Future Call Campaign: Attorneys</option>
+                        <option value="fc_advertising">📣 Future Call Campaign: Advertising</option>
+                        <option value="fc_swandesk">🤖 Future Call Campaign: SwanDesk AI</option>
+                        <option value="misc">🗂️ Miscellaneous</option>
+                        <optgroup label="Old categories (before the Nov 2026 sort)"><option value="demo">Free Demo Scheduled</option><option value="cancelled">Cancelled</option><option value="referral">Referral Leads</option><option value="website_analysis">Website Analysis</option><option value="website_demo">Website Demo</option><option value="send_email">Send Email</option><option value="free_demo">Free Demo</option><option value="website">Website</option><option value="seo">SEO</option></optgroup>
                     </select>
                     <button id="refreshLeadsBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ml-2"><i class="fas fa-sync-alt"></i> Refresh</button>
                 </div>
-                <div class="filter-info"><strong>Note:</strong> Use the dropdown to FILTER leads. To MOVE a lead to a different category, click on the lead and use the "Move" button.</div>
+                <div class="status-filter" style="margin-top:8px;">
+                    <label for="pitchFilter">How the lead started: </label>
+                    <select id="pitchFilter"><option value="all">Any pitch</option><option>Free demo</option><option>Website analysis</option><option>Compliance audit</option><option>SwanDesk AI</option><option>E-card</option><option>Advertising (WSMN)</option><option>Phone app</option><option>Other</option><option value="none">Not set yet</option></select>
+                    <button id="sortExistingBtn" type="button" style="margin-left:8px;background:#7c3aed;color:#fff;font-weight:700;border-radius:8px;padding:6px 12px;">🗂️ Sort existing leads (one time)</button>
+                    <button id="undoSortBtn" type="button" style="margin-left:4px;background:#fff;color:#7c3aed;border:1px solid #7c3aed;font-weight:700;border-radius:8px;padding:6px 12px;display:none;">↺ Undo the sort</button>
+                </div>
+                <div id="futureReminders"></div>
+                <div class="filter-info"><strong>Note:</strong> Use the dropdown to FILTER leads. To MOVE a lead to a different category, click on the lead and use the "Move" button. Each lead shows how it started (free demo, website analysis, compliance audit, SwanDesk AI, e-card…).</div>
                 <div id="leadsList" class="leads-list"></div>
             </div>
         </div>
@@ -656,6 +668,8 @@
                 <div class="lead-detail-group"><div class="lead-detail-label">How Long in Business</div><div id="leadHowLongDisplay" class="lead-detail-value"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Type of Business</div><div id="leadBusinessTypeDisplay" class="lead-detail-value"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Service Interested In</div><div id="leadServiceDisplay" class="lead-detail-value"></div></div>
+                <div class="lead-detail-group"><div class="lead-detail-label">🎯 How the lead started (what we pitched)</div><div class="lead-detail-value"><select id="leadPitchSelect" style="border:1px solid #c4b5fd;border-radius:6px;padding:4px 6px;"><option value="">Not set yet</option><option>Free demo</option><option>Website analysis</option><option>Compliance audit</option><option>SwanDesk AI</option><option>E-card</option><option>Advertising (WSMN)</option><option>Phone app</option><option>Other</option></select> <button type="button" id="savePitchBtn" style="margin-left:4px;background:#7c3aed;color:#fff;border-radius:6px;padding:3px 10px;font-weight:700;">Save</button></div></div>
+                <div class="lead-detail-group"><div class="lead-detail-label">🗓️ Follow up on (future leads)</div><div class="lead-detail-value"><input type="date" id="leadFollowUpInput" style="border:1px solid #c4b5fd;border-radius:6px;padding:3px 6px;"> <button type="button" id="saveFollowUpBtn" style="margin-left:4px;background:#7c3aed;color:#fff;border-radius:6px;padding:3px 10px;font-weight:700;">Save</button> <a id="leadCalendarLink" href="#" target="_blank" rel="noopener" style="margin-left:6px;color:#4F46E5;font-weight:700;display:none;">📅 Add reminder to Google Calendar</a></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Current Status / Category</div><div id="leadStatusDisplay" class="lead-detail-value" style="font-weight:bold; color:#4F46E5;"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Best Time to Contact</div><div id="leadBestTimeDisplay" class="lead-detail-value"></div></div>
                 <div class="lead-detail-group"><div class="lead-detail-label">Best Way to Contact</div><div id="leadContactWayDisplay" class="lead-detail-value"></div></div>
@@ -688,17 +702,15 @@
         <li><button onclick="executeMoveLead('new')">🆕 New Leads</button></li>
         <li><button onclick="executeMoveLead('hot')">🔥 Hot Leads</button></li>
         <li><button onclick="executeMoveLead('interested')">⭐ Interested</button></li>
-        <li><button onclick="executeMoveLead('demo')">📅 Free Demo Scheduled</button></li>
-        <li><button onclick="executeMoveLead('client')">✅ Client</button></li>
-        <li><button onclick="executeMoveLead('cancelled')">❌ Cancelled</button></li>
-        <li><button onclick="executeMoveLead('referral')">👥 Referral Leads</button></li>
-        <li><button onclick="executeMoveLead('website_analysis')">🔍 Website Analysis</button></li>
-        <li><button onclick="executeMoveLead('website_demo')">💻 Website Demo</button></li>
         <li><button onclick="executeMoveLead('call_backs')">📞 Call Backs</button></li>
-        <li><button onclick="executeMoveLead('send_email')">📧 Send Email</button></li>
-        <li><button onclick="executeMoveLead('free_demo')">🎁 Free Demo</button></li>
-        <li><button onclick="executeMoveLead('website')">🌐 Website</button></li>
-        <li><button onclick="executeMoveLead('seo')">📈 SEO</button></li>
+        <li><button onclick="executeMoveLead('client')">✅ Clients</button></li>
+        <li><button onclick="executeMoveLead('closed_client')">🏁 Closed Clients</button></li>
+        <li><button onclick="executeMoveLead('future')">🗓️ Future Leads (follow up later)</button></li>
+        <li><button onclick="executeMoveLead('fc_doctors')">🩺 Future Call Campaign: Doctors</button></li>
+        <li><button onclick="executeMoveLead('fc_attorneys')">⚖️ Future Call Campaign: Attorneys</button></li>
+        <li><button onclick="executeMoveLead('fc_advertising')">📣 Future Call Campaign: Advertising</button></li>
+        <li><button onclick="executeMoveLead('fc_swandesk')">🤖 Future Call Campaign: SwanDesk AI</button></li>
+        <li><button onclick="executeMoveLead('misc')">🗂️ Miscellaneous</button></li>
     </ul>
 </div>
 
@@ -724,11 +736,14 @@
     // ============================================================
     var STATUS_LABELS = {
         'all': 'All Leads',
+        // Nov 2026 categories
+        'closed_client': 'Closed Clients', 'future': 'Future Leads', 'fc_doctors': 'Future Calls: Doctors', 'fc_attorneys': 'Future Calls: Attorneys',
+        'fc_advertising': 'Future Calls: Advertising', 'fc_swandesk': 'Future Calls: SwanDesk AI', 'misc': 'Miscellaneous',
         'new': 'New Leads',
         'hot': 'Hot Leads',
         'interested': 'Interested',
         'demo': 'Free Demo Scheduled',
-        'client': 'Client',
+        'client': 'Clients',
         'cancelled': 'Cancelled',
         'referral': 'Referral Leads',
         'website_analysis': 'Website Analysis',
@@ -1052,10 +1067,27 @@
         var statusEl = document.getElementById('leadStatusDisplay');
         if (statusEl) statusEl.textContent = STATUS_LABELS[leadData.status] || leadData.status || 'All Leads';
         document.getElementById('commentBox').innerHTML = leadData.comments || '';
+        document.getElementById('leadPitchSelect').value = pitchOf(leadData) || '';
+        document.getElementById('leadFollowUpInput').value = leadData.followUpDate || '';
+        updateCalendarLink(leadData);
         document.getElementById('leadModal').style.display = 'block';
         document.getElementById('overlay').classList.add('active');
         document.body.classList.add('modal-open');
     }
+
+    // Google Calendar reminder (opens Tania's calendar with the event filled in; nothing is sent anywhere)
+    function updateCalendarLink(l) {
+        var a = document.getElementById('leadCalendarLink'); if (!a) return;
+        var d = document.getElementById('leadFollowUpInput').value;
+        if (!d) { a.style.display = 'none'; return; }
+        var day = d.replace(/-/g, ''), next = new Date(d + 'T12:00:00'); next.setDate(next.getDate() + 1);
+        var end = next.toISOString().slice(0, 10).replace(/-/g, '');
+        var text = 'Follow up: ' + (l.name || '') + (l.company ? ' (' + l.company + ')' : '');
+        var details = 'WebSwan CRM lead. Phone: ' + (l.phone || '') + '. Email: ' + (l.email || '') + '. How it started: ' + (pitchOf(l) || 'not set') + '. Category: ' + (STATUS_LABELS[l.status] || l.status || '') + '.';
+        a.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(text) + '&dates=' + day + '/' + end + '&details=' + encodeURIComponent(details);
+        a.style.display = '';
+    }
+    window.updateCalendarLink = updateCalendarLink;
 
     function openLeadById(id) {
         var lead = AppState.allLeads.find(function(l) { return l.id === id; });
@@ -1191,12 +1223,38 @@
     // ============================================================
     // DISPLAY HELPERS (called by Firebase module)
     // ============================================================
+    // How the lead started (what we pitched). Saved as "pitch"; until set, guessed from the old category / service.
+    var PITCH_FROM = { demo: 'Free demo', free_demo: 'Free demo', website_demo: 'Free demo', website_analysis: 'Website analysis', website: 'Free demo', seo: 'Website analysis',
+        ad_campaign: 'Advertising (WSMN)', reputation: 'Advertising (WSMN)', video_social: 'Advertising (WSMN)', calendar: 'SwanDesk AI', form: 'Phone app', lead_form: 'Phone app' };
+    function pitchOf(l) { return l.pitch || PITCH_FROM[l.previousStatus] || PITCH_FROM[l.status] || PITCH_FROM[l.serviceinterestedin] || ''; }
+    window.pitchOf = pitchOf;
+    function daysUntil(d) { if (!d) return null; var t = new Date(d + 'T12:00:00'); return Math.round((t - new Date()) / 864e5); }
+    function renderReminders(leads) {
+        var box = document.getElementById('futureReminders'); if (!box) return;
+        var due = leads.filter(function(l) { var n = daysUntil(l.followUpDate); return n !== null && n <= 7 && l.status !== 'client' && l.status !== 'closed_client'; })
+            .sort(function(a, b) { return String(a.followUpDate).localeCompare(String(b.followUpDate)); });
+        box.innerHTML = due.length ? '<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:8px;padding:10px 12px;margin:8px 0;"><b>⏰ ' + due.length + ' follow-up' + (due.length > 1 ? 's' : '') + ' due within 7 days</b>' + due.slice(0, 12).map(function(l) { var n = daysUntil(l.followUpDate); return '<div style="font-size:13px;margin-top:3px;cursor:pointer;" onclick="openLeadById(\'' + l.id + '\')">• <b>' + (l.name || l.company || 'Lead') + '</b> · ' + (l.company || '') + ' · ' + (n < 0 ? '<span style="color:#B91C1C">overdue ' + (-n) + ' day' + (n === -1 ? '' : 's') + '</span>' : n === 0 ? 'today' : 'in ' + n + ' day' + (n === 1 ? '' : 's')) + '</div>'; }).join('') + '</div>' : '';
+    }
+    function updateFilterCounts(leads) {
+        var c = {}; leads.forEach(function(l) { c[l.status || 'new'] = (c[l.status || 'new'] || 0) + 1; });
+        document.querySelectorAll('#leadFilter option').forEach(function(o) {
+            if (!o.dataset.base) o.dataset.base = o.textContent;
+            var n = o.value === 'all' ? leads.length : (c[o.value] || 0);
+            o.textContent = o.dataset.base + ' (' + n + ')';
+        });
+        var legacy = leads.filter(function(l) { return !['new','hot','interested','call_backs','client','closed_client','future','fc_doctors','fc_attorneys','fc_advertising','fc_swandesk','misc'].includes(l.status || 'new'); }).length;
+        var sortBtn = document.getElementById('sortExistingBtn'); if (sortBtn) { sortBtn.style.display = legacy ? '' : 'none'; sortBtn.textContent = '🗂️ Sort existing leads (' + legacy + ' in old categories)'; }
+        var undoBtn = document.getElementById('undoSortBtn'); if (undoBtn) undoBtn.style.display = leads.some(function(l) { return l.sortedAt; }) ? '' : 'none';
+    }
     window.displayLeads = function(leads) {
         AppState.allLeads = leads;
+        updateFilterCounts(leads); renderReminders(leads);
         var list = document.getElementById('leadsList');
         if (!list) return;
         var filter = document.getElementById('leadFilter').value;
-        var filtered = filter === 'all' ? leads : leads.filter(function(l) { return l.status === filter; });
+        var pf = (document.getElementById('pitchFilter') || {}).value || 'all';
+        var filtered = filter === 'all' ? leads : leads.filter(function(l) { return (l.status || 'new') === filter; });
+        if (pf !== 'all') filtered = filtered.filter(function(l) { return pf === 'none' ? !pitchOf(l) : pitchOf(l) === pf; });
         if (!filtered.length) {
             list.innerHTML = '<div style="padding:20px;text-align:center;color:#666;">No leads found. ' + (filter!=='all'?'Try selecting "All Leads" or submit a form.':'Submit a form to create your first lead!') + '</div>';
             return;
@@ -1210,6 +1268,8 @@
             item.innerHTML = '<div style="display:flex;align-items:center;flex-wrap:wrap;">' +
                 '<span style="font-weight:bold;">' + (lead.name||'Unknown') + '</span>' +
                 '<span class="status-badge ' + statusClass + '">' + statusLabel + '</span>' +
+                (pitchOf(lead) ? '<span class="pitch-badge">🎯 ' + pitchOf(lead) + '</span>' : '') +
+                (lead.followUpDate ? '<span class="due-badge">🗓️ ' + lead.followUpDate + '</span>' : '') +
                 '</div>' +
                 '<div style="font-size:13px;color:#6B7280;margin-top:3px;">' + (lead.company||'No company') + ' &bull; ' + (lead.industry||'No industry') + '</div>';
             item.addEventListener('click', function() {
@@ -1320,9 +1380,12 @@
                 data[key] = value;
             }
 
-            // AUTO-ASSIGN STATUS BASED ON SERVICE SELECTED
+            // AUTO-ASSIGN: every hand-entered lead lands in New Leads (Nov 2026 categories);
+            // what we pitched is kept in "pitch" (e.g. Free demo), so the service still shows on the lead.
             const service = data.serviceinterestedin || '';
-            data.status = SERVICE_TO_STATUS[service] || 'new';
+            data.status = 'new';
+            const PITCH_FOR_SERVICE = { free_demo: 'Free demo', website: 'Free demo', seo: 'Website analysis', ad_campaign: 'Advertising (WSMN)', reputation: 'Advertising (WSMN)', video_social: 'Advertising (WSMN)', calendar: 'SwanDesk AI', form: 'Phone app', lead_form: 'Phone app' };
+            if (PITCH_FOR_SERVICE[service]) data.pitch = PITCH_FOR_SERVICE[service];
             data.createdAt = new Date();
 
             console.log('Saving lead with status:', data.status, 'service:', service);
@@ -1387,13 +1450,7 @@
                 status: category,
                 updatedAt: new Date()
             });
-            const STATUS_LABELS = {
-                'new':'New Leads','hot':'Hot Leads','interested':'Interested','demo':'Free Demo Scheduled',
-                'client':'Client','cancelled':'Cancelled','referral':'Referral Leads',
-                'website_analysis':'Website Analysis','website_demo':'Website Demo',
-                'call_backs':'Call Backs','send_email':'Send Email','free_demo':'Free Demo',
-                'website':'Website','seo':'SEO'
-            };
+            const STATUS_LABELS = window.STATUS_LABELS || {};
             alert('✅ Lead moved to: ' + (STATUS_LABELS[category] || category));
             // Close move modal
             document.getElementById('moveModal').style.display = 'none';
@@ -1408,6 +1465,63 @@
         }
     }
     window.firebaseMoveLead = firebaseMoveLead;
+
+    // -------------------------------------------------------
+    // PITCH + FOLLOW-UP DATE (Nov 2026)
+    // -------------------------------------------------------
+    async function firebaseSetLeadFields(leadId, fields, okMsg) {
+        if (!leadId) return;
+        try {
+            await updateDoc(doc(db, "leads", leadId), { ...fields, updatedAt: new Date() });
+            const lead = (window.AppState.allLeads || []).find(l => l.id === leadId); if (lead) Object.assign(lead, fields);
+            if (okMsg) alert(okMsg);
+            if (window.displayLeads) window.displayLeads(window.AppState.allLeads);
+        } catch (err) { alert('Error saving: ' + err.message); }
+    }
+    document.getElementById('savePitchBtn').addEventListener('click', () => {
+        const v = document.getElementById('leadPitchSelect').value;
+        firebaseSetLeadFields(window.AppState.currentLeadId, { pitch: v }, '✅ Saved: ' + (v || 'not set'));
+    });
+    document.getElementById('saveFollowUpBtn').addEventListener('click', () => {
+        const v = document.getElementById('leadFollowUpInput').value;
+        firebaseSetLeadFields(window.AppState.currentLeadId, { followUpDate: v }, v ? '✅ Follow-up date saved. Use "Add reminder to Google Calendar" to put it on your calendar.' : 'Follow-up date cleared.');
+        const lead = (window.AppState.allLeads || []).find(l => l.id === window.AppState.currentLeadId) || {};
+        if (window.updateCalendarLink) window.updateCalendarLink(Object.assign({}, lead, { followUpDate: v }));
+    });
+    document.getElementById('leadFollowUpInput').addEventListener('change', () => { const lead = (window.AppState.allLeads || []).find(l => l.id === window.AppState.currentLeadId) || {}; if (window.updateCalendarLink) window.updateCalendarLink(lead); });
+    document.getElementById('pitchFilter').addEventListener('change', () => { if (window.displayLeads) window.displayLeads(window.AppState.allLeads || []); });
+
+    // -------------------------------------------------------
+    // ONE-TIME SORT (Tania, Nov 7 2026): Hot, Interested, Call Backs, Clients and New stay where they are;
+    // every lead in an old category moves to Miscellaneous. The old category is kept in "previousStatus"
+    // and what we pitched is kept in "pitch", so nothing is lost and "Undo the sort" puts everything back.
+    // -------------------------------------------------------
+    const KEEP = ['new', 'hot', 'interested', 'call_backs', 'client', 'closed_client', 'future', 'fc_doctors', 'fc_attorneys', 'fc_advertising', 'fc_swandesk', 'misc'];
+    document.getElementById('sortExistingBtn').addEventListener('click', async () => {
+        const all = window.AppState.allLeads || [];
+        const move = all.filter(l => !KEEP.includes(l.status || 'new'));
+        if (!move.length) { alert('Nothing to sort: every lead is already in a new category.'); return; }
+        if (!confirm(move.length + ' lead(s) in old categories will move to Miscellaneous.\nHot Leads, Interested, Call Backs, Clients and New Leads stay where they are.\nEach lead keeps its old category and what we pitched, and you can undo this.\n\nSort them now?')) return;
+        const btn = document.getElementById('sortExistingBtn'); btn.disabled = true;
+        let done = 0, failed = 0;
+        for (const l of move) {
+            const fields = { previousStatus: l.status || 'new', status: 'misc', sortedAt: new Date().toISOString() };
+            const p = window.pitchOf ? window.pitchOf(l) : ''; if (p && !l.pitch) fields.pitch = p;
+            try { await updateDoc(doc(db, "leads", l.id), fields); Object.assign(l, fields); done++; } catch (e) { failed++; }
+            if ((done + failed) % 10 === 0) btn.textContent = 'Sorting… ' + (done + failed) + ' / ' + move.length;
+        }
+        btn.disabled = false;
+        alert('✅ Sorted ' + done + ' lead(s) into Miscellaneous.' + (failed ? ' ' + failed + ' could not be updated; press the button again to retry them.' : ''));
+        await firebaseLoadLeads();
+    });
+    document.getElementById('undoSortBtn').addEventListener('click', async () => {
+        const all = (window.AppState.allLeads || []).filter(l => l.sortedAt && l.previousStatus && l.status === 'misc');
+        if (!all.length) { alert('Nothing to undo (leads you already moved out of Miscellaneous stay where you put them).'); return; }
+        if (!confirm('Put ' + all.length + ' lead(s) back in their old categories?')) return;
+        for (const l of all) { try { await updateDoc(doc(db, "leads", l.id), { status: l.previousStatus, sortedAt: null }); } catch (e) {} }
+        alert('↺ Done.'); await firebaseLoadLeads();
+    });
+
 
     // Expose executeMoveLead globally (called from onclick in move modal buttons)
     window.executeMoveLead = function(category) {
