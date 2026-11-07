@@ -726,8 +726,16 @@
         <h3 style="margin:0 0 6px;font-weight:800;color:#3730A3;">🗓️ When should we follow up?</h3>
         <p id="futureDateWho" style="font-size:13px;color:#6B7280;margin:0 0 10px;"></p>
         <input type="date" id="futureDateInput" style="width:100%;border:1.5px solid #c4b5fd;border-radius:8px;padding:8px;">
+        <div style="font-size:12px;color:#6B7280;margin:8px 0 4px;">No exact day? Pick roughly when:</div>
+        <div id="futureQuick" style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button type="button" data-days="7" style="border:1px solid #c4b5fd;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#6B21A8;background:#faf5ff;">In 1 week</button>
+            <button type="button" data-days="14" style="border:1px solid #c4b5fd;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#6B21A8;background:#faf5ff;">In 2 weeks</button>
+            <button type="button" data-months="1" style="border:1px solid #c4b5fd;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#6B21A8;background:#faf5ff;">In 1 month</button>
+            <button type="button" data-months="3" style="border:1px solid #c4b5fd;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#6B21A8;background:#faf5ff;">In 3 months</button>
+            <button type="button" data-months="6" style="border:1px solid #c4b5fd;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:#6B21A8;background:#faf5ff;">In 6 months</button>
+        </div>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap;">
-            <button type="button" id="futureDateSkip" style="border:1px solid #c4b5fd;border-radius:8px;padding:6px 12px;font-weight:700;color:#6B21A8;background:#fff;">Skip</button>
+            <button type="button" id="futureDateSkip" style="border:1px solid #c4b5fd;border-radius:8px;padding:6px 12px;font-weight:700;color:#6B21A8;background:#fff;">📌 Future (no date yet)</button>
             <button type="button" id="futureDateSave" style="border-radius:8px;padding:6px 12px;font-weight:700;color:#fff;background:#7c3aed;">Save + add to Google Calendar</button>
         </div>
     </div>
@@ -1103,6 +1111,16 @@
         return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(text) + '&dates=' + day + '/' + end + '&details=' + encodeURIComponent(details);
     }
     window.calendarUrl = calendarUrl;
+    document.addEventListener('click', function(e) {
+        var b = e.target.closest && e.target.closest('#futureQuick button'); if (!b) return;
+        var d = new Date();
+        if (b.dataset.days) d.setDate(d.getDate() + Number(b.dataset.days));
+        if (b.dataset.months) d.setMonth(d.getMonth() + Number(b.dataset.months));
+        if (d.getDay() === 6) d.setDate(d.getDate() + 2); else if (d.getDay() === 0) d.setDate(d.getDate() + 1); // land on a weekday
+        var inp = document.getElementById('futureDateInput');
+        inp.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        document.querySelectorAll('#futureQuick button').forEach(function(x) { x.style.background = x === b ? '#7c3aed' : '#faf5ff'; x.style.color = x === b ? '#fff' : '#6B21A8'; });
+    });
     function updateCalendarLink(l) {
         var a = document.getElementById('leadCalendarLink'); if (!a) return;
         var d = document.getElementById('leadFollowUpInput').value;
@@ -1514,7 +1532,7 @@
                     document.getElementById('futureDateSkip').onclick = () => { m.style.display = 'none'; resolve(); };
                     document.getElementById('futureDateSave').onclick = async () => {
                         const d = document.getElementById('futureDateInput').value;
-                        if (!d) { alert('Pick a date first (or press Skip).'); return; }
+                        if (!d) { alert('Pick a date or one of the "In 1 week / 1 month…" buttons, or press "Future (no date yet)".'); return; }
                         const w = window.open(window.calendarUrl(lead, d), '_blank', 'noopener');
                         try { await updateDoc(doc(db, "leads", leadId), { followUpDate: d, updatedAt: new Date() }); lead.followUpDate = d; } catch (e) { alert('Could not save the date: ' + e.message); }
                         if (!w) alert('Your browser blocked the Google Calendar window. Open the lead and press "Add reminder to Google Calendar".');
