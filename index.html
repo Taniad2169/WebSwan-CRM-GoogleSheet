@@ -1533,7 +1533,7 @@
                     document.getElementById('futureDateSave').onclick = async () => {
                         const d = document.getElementById('futureDateInput').value;
                         if (!d) { alert('Pick a date or one of the "In 1 week / 1 month…" buttons, or press "Future (no date yet)".'); return; }
-                        const w = window.open(window.calendarUrl(lead, d), '_blank', 'noopener');
+                        const w = window.open(window.calendarUrl(lead, d), '_blank'); if (w) { try { w.opener = null; } catch (x) {} } // (with 'noopener' the browser always returns null, which looked like a block)
                         try { await updateDoc(doc(db, "leads", leadId), { followUpDate: d, updatedAt: new Date() }); lead.followUpDate = d; } catch (e) { alert('Could not save the date: ' + e.message); }
                         if (!w) alert('Your browser blocked the Google Calendar window. Open the lead and press "Add reminder to Google Calendar".');
                         m.style.display = 'none'; resolve();
